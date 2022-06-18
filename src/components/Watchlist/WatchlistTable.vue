@@ -4,6 +4,19 @@
       <div
         class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto overflow-y-auto"
       >
+        <div
+          class="flex flex-shrink w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+          role="alert"
+        >
+          <Icon icon="entypo:info-with-circle" :inline="true" />
+          <div>
+            <span class="font-medium pl-2"
+              >If a watchlist add does not go through, that means the api
+              reached its limit. Until the API is upgraded, there is a
+              limit.</span
+            >
+          </div>
+        </div>
         <div class="inline-block w-1/2 shadow-md rounded-lg overflow-hidden">
           <!-- Table -->
           <table class="min-w-full overflow-auto">
