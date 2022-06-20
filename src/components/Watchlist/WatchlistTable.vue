@@ -11,9 +11,8 @@
           <Icon icon="entypo:info-with-circle" :inline="true" />
           <div>
             <span class="font-medium pl-2"
-              >If a watchlist add does not go through, that means the api
-              reached its limit. Until the API is upgraded, there is a
-              limit.</span
+              >Note: If a watchlist add does not go through, that means the api
+              reached its daily limit and can not fetch anymore data.</span
             >
           </div>
         </div>

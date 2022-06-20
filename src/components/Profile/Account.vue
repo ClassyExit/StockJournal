@@ -1,5 +1,21 @@
 <template>
   <div class="text-left text-4xl font-medium pb-4">Account Details</div>
+  <div
+    v-if="success"
+    class="alert bg-green-200 rounded-lg text-base text-green-700 inline-flex items-center w-auto alert-dismissible fade show"
+    role="alert"
+  >
+    <strong class="mr-1">Success! </strong> Account name updated!
+    <button
+      type="button"
+      class="btn-close box-content w-4 h-4 p-1 ml-auto border-none rounded-none"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+      @click="success = false"
+    >
+      X
+    </button>
+  </div>
 
   <form
     class="w-2/5 grid grid-rows-3 gap-4 place-items-left"
@@ -32,13 +48,15 @@ export default {
     const { user } = userStore;
     const changes = ref({ name: `${user.displayName}` });
 
+    const success = ref(false);
+
     const updateDisplayName = (changes) => {
       updateProfile(user, {
         displayName: `${changes.name}`,
       })
         .then(() => {
           // Profile updated!
-          // ...
+          success.value = true;
         })
         .catch((error) => {
           // An error occurred
@@ -50,6 +68,7 @@ export default {
       user,
       updateDisplayName,
       changes,
+      success,
     };
   },
 };
