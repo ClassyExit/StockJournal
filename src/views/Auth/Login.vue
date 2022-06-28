@@ -51,7 +51,7 @@
       <section class="px-4 py-4 text-gray-400 text-lg text-center">
         Need an account?
         <router-link class="text-white" :to="{ path: '/register' }"
-          >Sign Up</router-link
+          >Register Here</router-link
         >
       </section>
     </div>

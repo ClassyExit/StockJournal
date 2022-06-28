@@ -16,10 +16,10 @@
         <div class="flex-none px-5 py-4 mx-10">
           <ul class="menu menu-horizontal space-x-4 p-0 px-48">
             <li class="rounded-lg border border-violet-500 hover:bg-violet-900">
-              <router-link to="/login">Login</router-link>
+              <router-link to="/login">LOG IN</router-link>
             </li>
             <li class="rounded-lg border border-violet-500 hover:bg-violet-900">
-              <router-link to="/register">Register</router-link>
+              <router-link to="/register">REGISTER</router-link>
             </li>
           </ul>
         </div>

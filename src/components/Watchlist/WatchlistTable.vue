@@ -5,14 +5,19 @@
         class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto overflow-y-auto"
       >
         <div
-          class="flex flex-shrink w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+          class="flex flex-shrink max-w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
           role="alert"
         >
-          <Icon icon="entypo:info-with-circle" :inline="true" />
+          <Icon
+            icon="entypo:info-with-circle"
+            :inline="true"
+            width="20"
+            height="20"
+          />
           <div>
             <span class="font-medium pl-2"
-              >Note: If a watchlist add does not go through, that means the api
-              reached its daily limit and can not fetch anymore data.</span
+              >Currently there is an API limit for requests. If a request does
+              not go through, the API reached its limit.</span
             >
           </div>
         </div>

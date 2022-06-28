@@ -92,6 +92,10 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
       if (!this.watchlistData) return;
 
+      // If market is closed, don't update
+      const timeUTC = new Date().getUTCHours();
+      if (timeUTC >= 20 || timeUTC <= 10) return;
+
       try {
         for (let i = 0; i < this.watchlistData.length; i++) {
           let newData = await this.fetchPrice(this.watchlistData[i].ticker);
@@ -103,7 +107,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
           this.watchlistData[i].price = newData.price;
         }
       } catch (err) {
-        console.log(err);
         console.error("Error getting price updates");
       }
     },

@@ -209,8 +209,6 @@ export const useUserStore = defineStore("User", {
       const deleteMsg = "Input current passsword to confirm account deletion";
       let currentPassword = prompt(deleteMsg);
 
-      console.log(currentPassword);
-
       if (!currentPassword) return;
 
       const auth = getAuth();

@@ -5,7 +5,13 @@
     class="alert bg-green-200 rounded-lg text-base text-green-700 inline-flex items-center w-auto alert-dismissible fade show"
     role="alert"
   >
-    <strong class="mr-1">Success! </strong> Account name updated!
+    <Icon
+      icon="entypo:info-with-circle"
+      :inline="true"
+      width="20"
+      height="20"
+    />
+    <span><strong class="mr-1">Success! </strong> Account name updated!</span>
     <button
       type="button"
       class="btn-close box-content w-4 h-4 p-1 ml-auto border-none rounded-none"
