@@ -45,7 +45,7 @@
       class="modal-header flex p-2 justify-between border-b-2 border-gray-600"
     >
       <div class="align-middle">
-        <h1 class="text-lg text-white font-bold">SEND FEEDBACK</h1>
+        <h1 class="text-lg text-white font-bold">SEND TICKET</h1>
       </div>
       <div>
         <button class="btn btn-square btn-sm" @click="hideEmailModal">
@@ -109,11 +109,11 @@
           <div class="flex justify-end">
             <div class="px-4 py-2">
               <button
-                class="shadow btn-success text-white font-bold py-2 px-4 rounded"
+                class="shadow btn-success text-black font-bold py-2 px-4 rounded"
                 type="button"
                 @click="submitTicket(ticketForm)"
               >
-                Submit Ticket
+                Submit
               </button>
             </div>
           </div>
@@ -138,12 +138,10 @@ export default {
 
     const hideEmailModal = () => {
       emailModal.value = false;
-      console.log(emailModal.value);
     };
 
     const showEmailModal = () => {
       emailModal.value = true;
-      console.log(emailModal.value);
     };
 
     const submitTicket = (ticketForm) => {

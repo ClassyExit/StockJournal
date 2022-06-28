@@ -16,7 +16,12 @@
       class="flex p-4 w-max mb-4 text-sm text-green-700 mt-2 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
       role="alert"
     >
-      <Icon icon="entypo:info-with-circle" :inline="true" />
+      <Icon
+        icon="entypo:info-with-circle"
+        :inline="true"
+        width="20"
+        height="20"
+      />
       <div>
         <span class="font-medium pl-2"> {{ passwordChangeSuccess }}</span>
       </div>
@@ -73,6 +78,11 @@ export default {
     let passwordForm = ref({});
 
     const changePasswordValid = (passwordForm) => {
+      if (!passwordForm.currentPassword || !passwordForm.newPassword) {
+        userStore.passwordChangeErrors =
+          "Fill out all fields to change password";
+        return;
+      }
       if (Object.keys(passwordForm).length === 0) {
         return;
       } else if (passwordForm.newPassword !== passwordForm.confirmPassword) {
