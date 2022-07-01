@@ -78,12 +78,11 @@
     <template #content>
       <div class="container mx-auto">
         <div class="p-2">
-          <form class="w-full" @submit.prevent="onSubmit(formData)">
+          <form class="w-full" novalidate @submit.prevent="onSubmit(formData)">
             <div class="grid grid-cols-4 gap-4">
               <div class="flex flex-col">
                 <label class="uppercase">Ticker</label>
                 <input
-                  required
                   id="ticker"
                   placeholder="e.g. AAPL"
                   v-model="formData.ticker"
@@ -94,7 +93,6 @@
               <div class="flex flex-col">
                 <label class="uppercase">Qty</label>
                 <input
-                  required
                   placeholder="10"
                   id="qty"
                   v-model="formData.qty"
@@ -105,7 +103,6 @@
               <div class="flex flex-col">
                 <label class="uppercase">Entry Price</label>
                 <input
-                  required
                   id="entryPrice"
                   placeholder="10.00"
                   v-model="formData.entryPrice"
@@ -145,7 +142,11 @@
     <template #content>
       <div class="container mx-auto">
         <div class="p-2">
-          <form class="w-full" @submit.prevent="onSubmitWatch(watchTicker)">
+          <form
+            class="w-full"
+            novalidate
+            @submit.prevent="onSubmitWatch(watchTicker)"
+          >
             <div class="grid grid-cols-1 gap-4">
               <div class="flex flex-col">
                 <label class="uppercase">Ticker</label>

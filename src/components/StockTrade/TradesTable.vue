@@ -74,7 +74,7 @@
                   /></router-link>
                 </BaseTableRows>
 
-                <!-- Edit Modal -->
+                
               </tr>
             </tbody>
           </table>
@@ -92,7 +92,7 @@
           <form class="w-full">
             <div class="grid grid-cols-4 gap-4">
               <div class="flex flex-col">
-                <label class="uppercase" required>Ticker</label>
+                <label class="uppercase">Ticker</label>
                 <input
                   id="ticker"
                   type="text"
@@ -100,7 +100,7 @@
                   class="text-black rounded bg-gray-500"
                 />
               </div>
-              <div class="flex flex-col" required>
+              <div class="flex flex-col">
                 <label class="uppercase">Qty</label>
                 <input
                   id="qty"
@@ -109,7 +109,7 @@
                   class="text-black rounded bg-gray-500"
                 />
               </div>
-              <div class="flex flex-col" required>
+              <div class="flex flex-col">
                 <label class="uppercase">Entry Price</label>
                 <input
                   id="entryPrice"

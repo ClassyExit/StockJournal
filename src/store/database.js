@@ -37,7 +37,7 @@ export const useDatabaseStore = defineStore("db", {
 
       // No data passed in
       if (!data) {
-        return console.error("Error: No data");
+        return;
       }
 
       try {
@@ -253,7 +253,6 @@ export const useDatabaseStore = defineStore("db", {
 
   async updateWatch(userId, newData) {
     if (!newData) return;
-    
 
     try {
       const watchlistRef = doc(

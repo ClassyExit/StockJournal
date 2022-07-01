@@ -92,7 +92,8 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
       if (!this.watchlistData) return;
 
-      // If market is closed, don't update
+      // If market is closed, don't update prices
+      // Market hours UTC: [10,20]
       const timeUTC = new Date().getUTCHours();
       if (timeUTC >= 20 || timeUTC <= 10) return;
 

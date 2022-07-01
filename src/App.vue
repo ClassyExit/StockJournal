@@ -6,6 +6,7 @@
 import { onBeforeMount } from "vue";
 import { useUserStore } from "@/store/user.js";
 
+import { resetStore } from "@/store/reset-store.js";
 import "@/assets/tailwind.css";
 
 export default {
