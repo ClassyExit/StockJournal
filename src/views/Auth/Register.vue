@@ -42,7 +42,7 @@
           type="submit"
           class="text-white w-full px-4 py-2 border border-violet-900 rounded-lg hover:bg-violet-900"
         >
-          LOG IN
+          REGISTER
         </button>
       </form>
       <section class="px-4 py-4 text-gray-400 text-lg text-center">

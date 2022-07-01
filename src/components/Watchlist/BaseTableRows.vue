@@ -3,7 +3,7 @@
     <div class="grid grid-cols-4 justify-items-center py-4">
       <!-- Stock Ticker -->
       <td>
-        <div class="flex text-white">
+        <div class="flex text-white uppercase">
           <label :value="ticker">{{ ticker }}</label>
         </div>
       </td>

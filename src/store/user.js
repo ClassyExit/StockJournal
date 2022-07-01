@@ -13,6 +13,8 @@ import {
   updatePassword,
 } from "firebase/auth";
 
+import { resetStore } from "./reset-store";
+
 export const useUserStore = defineStore("User", {
   state: () => ({
     user: null,
@@ -114,6 +116,7 @@ export const useUserStore = defineStore("User", {
 
       // Reset store
       this.$reset();
+      resetStore();
 
       router.push("/home");
     },
