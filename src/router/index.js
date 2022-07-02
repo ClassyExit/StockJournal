@@ -63,6 +63,8 @@ const router = createRouter({
   routes,
 });
 
+router.onBeforeMount
+
 router.beforeEach((to, from, next) => {
   // If logged in, push to dashboard
   if ((to.path === "/login" || to.path === "/register") && auth.currentUser) {

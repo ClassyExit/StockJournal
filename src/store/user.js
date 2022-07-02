@@ -133,7 +133,7 @@ export const useUserStore = defineStore("User", {
             userId: auth.currentUser.uid,
           });
 
-          router.push("/dashboard");
+          // router.push("/dashboard");
         }
       });
     },
