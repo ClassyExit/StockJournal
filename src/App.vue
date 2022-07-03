@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { onBeforeMount } from "vue";
+import { onBeforeMount, onMounted } from "vue";
 import { useUserStore } from "@/store/user.js";
 
 import "@/assets/tailwind.css";

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { auth, isAuthenticated } from "../firebase";
+import { auth } from "../firebase";
 
 //Component layouts
 import DefaultLayout from "../components/Layouts/DefaultLayout.vue";
@@ -63,14 +63,14 @@ const router = createRouter({
   routes,
 });
 
-router.onBeforeMount
-
 router.beforeEach((to, from, next) => {
-  // If logged in, push to dashboard
-  if ((to.path === "/login" || to.path === "/register") && auth.currentUser) {
+  if (
+    (to.name === "Login" || to.name === "Register" || to.name === "Home") &&
+    auth.currentUser
+  ) {
     next({ name: "Dashboard" });
   }
-  // Requires auth, check if logged in
+  // Check for auth for pages that require auth to access
   else if (
     to.matched.some((record) => record.meta.requiresAuth) &&
     !auth.currentUser
