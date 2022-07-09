@@ -64,7 +64,7 @@
 
     <nav data-dev-hint="second-main-navigation or footer navigation">
       <a
-        href="1"
+        href="#"
         class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
       >
         <Icon icon="ant-design:github-filled" />
