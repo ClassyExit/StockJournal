@@ -3,34 +3,58 @@
   <!-- bg-gray-800 text-gray-100 md:w-64 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex md:flex-col md:justify-between overflow-y-auto -->
   <aside
     id="sidebar"
-    class="bg-gray-800 text-gray-100 w-12 space-y-6 pt-6 px-0 transition duration-200 ease-in-out flex flex-col justify-between overflow-y-auto md:w-64"
+    class="bg-gray-800 text-gray-100 relative w-24 space-y-6 pt-6 px-0 transition duration-200 ease-in-out flex flex-col justify-between overflow-y-auto md:w-64"
   >
     <div class="flex flex-col space-y-6">
-      <nav data-dev-hint="main navigation">
+      <nav class="main-nav">
         <!-- Route Links -->
         <router-link
           :to="{ name: 'Dashboard' }"
-          class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
+          class="flex w-full items-center justify-center md:justify-start md:space-x-2 py-2 md:px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
-          <Icon icon="ic:outline-dashboard" class="" />
+          <Icon
+            icon="ic:outline-dashboard"
+            width="20"
+            height="20"
+            class="hidden md:block"
+          />
+          <Icon
+            icon="ic:outline-dashboard"
+            width="25"
+            height="25"
+            class="md:hidden"
+          />
           <span class="hidden md:block">Dashboard</span></router-link
         >
 
         <router-link
           :to="{ name: 'Watchlist' }"
-          class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
+          class="flex items-center justify-center md:justify-start md:space-x-2 py-2 md:px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
-          <Icon icon="ooui:watchlist-rtl" />
+          <Icon
+            icon="ooui:watchlist-rtl"
+            width="20"
+            height="20"
+            class="hidden md:block"
+          />
+          <Icon
+            icon="ooui:watchlist-rtl"
+            width="25"
+            height="25"
+            class="md:hidden"
+          />
           <span class="hidden md:block">Watchlist</span></router-link
         >
       </nav>
 
-      <div class="flex flex-row h-auto pl-2 md:w-full md:p-4">
+      <div
+        class="flex h-auto justify-center md:w-full md:justify-start md:px-4"
+      >
         <!-- Stock trade -->
         <router-link
           v-show="$route.name === 'Dashboard'"
           to=""
-          class="btn btn-success"
+          class="btn-success p-2 rounded md:flex md:font-semibold"
           data-toggle="modal"
           @click="showAddModal"
           ><Icon
@@ -38,35 +62,47 @@
             :inline="true"
             width="25"
             height="25"
-          /><span class="hidden md:block">Add Trade</span></router-link
+          /><span class="hidden pl-2 md:block">Add Trade</span></router-link
         >
 
         <!-- Watchlist -->
         <router-link
           v-show="$route.name === 'Watchlist'"
           to=""
-          class="btn btn-success"
+          class="btn-success p-2 rounded items-center md:flex md:"
           data-toggle="modal"
           @click="showAddWatchModal"
           ><Icon
-            icon="ooui:watchlist-ltr"
+            icon="carbon:add-alt"
+            :inline="true"
             width="25"
             height="25"
-            :rotate="2"
-            :inline="true"
-          /><span class="hidden md:block">Add Watchlist</span></router-link
+          /><span class="hidden pl-2 md:block">Add Watchlist</span></router-link
         >
       </div>
     </div>
 
-    <nav data-dev-hint="second-main-navigation or footer navigation">
-      <a
-        href="#"
-        class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
-      >
-        <Icon icon="ant-design:github-filled" />
-        <span class="hidden md:block">Github</span></a
-      >
+    <nav class="footer">
+      <div class="w-full">
+        <a
+          href="#"
+          class="w-full flex items-center justify-center py-2 hover:bg-gray-700 hover:text-white md:px-4 md:justify-start md:space-x-2"
+        >
+          <Icon
+            icon="ant-design:github-filled"
+            width="25"
+            height="25"
+            class="md:hidden content-center"
+          />
+          <Icon
+            icon="ant-design:github-filled"
+            width="20"
+            height="20"
+            class="hidden md:block"
+          />
+          <span class="hidden md:block md:uppercase">Github</span></a
+        >
+      </div>
     </nav>
   </aside>
 
@@ -76,7 +112,7 @@
       <div class="container mx-auto">
         <div class="p-2">
           <form class="w-full" novalidate @submit.prevent="onSubmit(formData)">
-            <div class="grid grid-cols-4 gap-4">
+            <div class="md:grid md:grid-cols-4 gap-4">
               <div class="flex flex-col">
                 <label class="uppercase">Ticker</label>
                 <input

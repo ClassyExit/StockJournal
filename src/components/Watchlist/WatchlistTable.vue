@@ -13,15 +13,18 @@
             height="20"
           />
           <div>
-            <span class="font-medium pl-2"
-              >Currently there is an API limit for requests. If a request does
-              not go through, the API reached its limit.</span
+            <span class="font-medium pl-2">
+              If a request does not go through, the free API used has
+              unfortunately reached its daily limit. Please try again
+              later.</span
             >
           </div>
         </div>
-        <div class="inline-block w-fit shadow-md rounded-lg overflow-hidden">
+        <div
+          class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+        >
           <!-- Table -->
-          <table class="min-w-full justify-center content-center overflow-auto">
+          <table class="min-w-full overflow-auto">
             <!-- Table Header -->
             <thead>
               <div class="headers bg-gray-800 rounded mb-1">
