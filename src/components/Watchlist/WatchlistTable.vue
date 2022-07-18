@@ -1,11 +1,9 @@
 <template>
-  <div class="container mx-auto sm:px-8">
+  <div class="container mx-auto">
     <div class="py-4">
-      <div
-        class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto overflow-y-auto"
-      >
+      <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
-          class="flex flex-shrink max-w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+          class="flex max-w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg"
           role="alert"
         >
           <Icon
@@ -21,9 +19,9 @@
             >
           </div>
         </div>
-        <div class="inline-block w-1/2 shadow-md rounded-lg overflow-hidden">
+        <div class="inline-block w-fit shadow-md rounded-lg overflow-hidden">
           <!-- Table -->
-          <table class="min-w-full overflow-auto">
+          <table class="min-w-full justify-center content-center overflow-auto">
             <!-- Table Header -->
             <thead>
               <div class="headers bg-gray-800 rounded mb-1">

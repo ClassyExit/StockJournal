@@ -1,27 +1,32 @@
 <template>
-  <!-- Fill the entire screen -->
-
-  <div class="flex h-screen flex-col bg-gray-900">
+  <div class="flex flex-col min-h-screen bg-background">
     <header>
       <!-- Navbar -->
-      <div class="flex h-20 w-full bg-gray-900">
-        <div class="flex px-48 py-5">
+      <div class="flex w-full bg-background">
+        <div class="flex md:px-48 py-5">
           <router-link to="/home" class="w-1/8">
-            <img src="../../assets/images/logo.png" class="h-full" />
+            <img src="../../assets/images/logo.png" class="h-12" />
           </router-link>
         </div>
-        <div class="flex-1"></div>
-
+        <!-- px-5 py-4 md:mx-10 -->
         <!-- Nav Links -->
-        <div class="flex-none px-5 py-4 mx-10">
-          <ul class="menu menu-horizontal space-x-4 p-0 px-48">
-            <li class="rounded-lg border border-violet-500 hover:bg-violet-900">
-              <router-link to="/login">LOG IN</router-link>
-            </li>
-            <li class="rounded-lg border border-violet-500 hover:bg-violet-900">
-              <router-link to="/register">REGISTER</router-link>
-            </li>
-          </ul>
+        <div
+          class="flex flex-grow items-center justify-end space-x-4 mr-4 md:px-48"
+        >
+          <router-link to="/login">
+            <div
+              class="btn bg-background rounded-lg border border-violet-500 hover:bg-violet-900"
+            >
+              LOGIN
+            </div>
+          </router-link>
+          <router-link to="/register">
+            <div
+              class="btn bg-background rounded-lg border border-violet-500 hover:bg-violet-900"
+            >
+              REGISTER
+            </div>
+          </router-link>
         </div>
       </div>
     </header>

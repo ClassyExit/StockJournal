@@ -1,24 +1,23 @@
 <template>
   <!-- Auth -->
   <div class="flex-auto my-32 justify-center bg-background">
-    <div class="mx-auto flex w-[30rem] flex-col bg-gray-800 rounded-xl">
+    <div
+      class="mx-auto flex w-5/6 md:w-[30rem] flex-col bg-bg_light rounded-xl"
+    >
       <!-- Login form -->
-      <form
-        class="flex w-[30rem] flex-col space-y-6 p-4"
-        @submit.prevent="login"
-      >
+      <form class="flex flex-col space-y-6 p-4" @submit.prevent="login">
         <div class="text-center text-4xl font-medium">Login</div>
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
-            class="block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white rounded"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="email"
             placeholder="you@example.com"
             v-model="login_form.email"
           />
           <div
             v-if="authErrors"
-            class="flex w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            class="flex w-max p-4 mb-4 text-sm text-danger mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
             role="alert"
           >
             <Icon icon="entypo:info-with-circle" :inline="true" />
@@ -30,7 +29,7 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Password </label>
           <input
-            class="block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white rounded"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="password"
             placeholder="Password"
             v-model="login_form.password"
@@ -43,12 +42,12 @@
 
         <button
           type="submit"
-          class="text-white w-full px-4 py-2 border border-violet-900 rounded-lg hover:bg-violet-900"
+          class="text-white w-full px-4 py-2 border border-btn_border rounded-lg hover:bg-btn_highlight"
         >
           LOG IN
         </button>
       </form>
-      <section class="px-4 py-4 text-gray-400 text-lg text-center">
+      <section class="px-4 py-4 text-paragraph text-lg text-center">
         Need an account?
         <router-link class="text-white" :to="{ path: '/register' }"
           >Register Here</router-link

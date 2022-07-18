@@ -1,22 +1,19 @@
 <template>
   <!-- Sidebar -->
+  <!-- bg-gray-800 text-gray-100 md:w-64 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex md:flex-col md:justify-between overflow-y-auto -->
   <aside
     id="sidebar"
-    class="bg-gray-800 text-gray-100 md:w-64 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex md:flex-col md:justify-between overflow-y-auto"
-    data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation"
+    class="bg-gray-800 text-gray-100 w-12 space-y-6 pt-6 px-0 transition duration-200 ease-in-out flex flex-col justify-between overflow-y-auto md:w-64"
   >
-    <div
-      class="flex flex-col space-y-6"
-      data-dev-hint="optional div for having an extra footer navigation"
-    >
+    <div class="flex flex-col space-y-6">
       <nav data-dev-hint="main navigation">
         <!-- Route Links -->
         <router-link
           :to="{ name: 'Dashboard' }"
           class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
-          <Icon icon="ic:outline-dashboard" />
-          <span>Dashboard</span></router-link
+          <Icon icon="ic:outline-dashboard" class="" />
+          <span class="hidden md:block">Dashboard</span></router-link
         >
 
         <router-link
@@ -24,11 +21,11 @@
           class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
           <Icon icon="ooui:watchlist-rtl" />
-          <span>Watchlist</span></router-link
+          <span class="hidden md:block">Watchlist</span></router-link
         >
       </nav>
 
-      <div class="flex flex-row w-full p-4 h-auto">
+      <div class="flex flex-row h-auto pl-2 md:w-full md:p-4">
         <!-- Stock trade -->
         <router-link
           v-show="$route.name === 'Dashboard'"
@@ -41,7 +38,7 @@
             :inline="true"
             width="25"
             height="25"
-          /><span class="px-2">Add Trade</span></router-link
+          /><span class="hidden md:block">Add Trade</span></router-link
         >
 
         <!-- Watchlist -->
@@ -57,7 +54,7 @@
             height="25"
             :rotate="2"
             :inline="true"
-          /><span class="px-2">Add Watchlist</span></router-link
+          /><span class="hidden md:block">Add Watchlist</span></router-link
         >
       </div>
     </div>
@@ -68,7 +65,7 @@
         class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
       >
         <Icon icon="ant-design:github-filled" />
-        <span>Github</span></a
+        <span class="hidden md:block">Github</span></a
       >
     </nav>
   </aside>

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="navbar bg-gray-800">
+    <div class="navbar bg-bg_light">
       <div class="flex-1">
         <router-link to="/dashboard" class="w-1/8">
           <img src="../../assets/images/logo.png" class="h-10" />
@@ -145,8 +145,7 @@ export default {
     };
 
     const submitTicket = (ticketForm) => {
-      // console.log(`Email: ${ticketForm.email} - Msg: ${ticketForm.message}`);
-      //TODO: Inset email send here
+      //TODO: Send email
       // https://nodemailer.com/about/
 
       ticketForm.message = null;

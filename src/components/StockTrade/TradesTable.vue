@@ -1,9 +1,7 @@
 <template>
-  <div class="container mx-auto sm:px-8">
+  <div class="container mx-auto">
     <div class="py-4">
-      <div
-        class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto overflow-y-auto"
-      >
+      <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
           class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
         >
@@ -11,21 +9,39 @@
           <table class="min-w-full overflow-auto">
             <!-- Table Header -->
             <thead>
-              <div class="headers bg-gray-800 rounded mb-1">
-                <tr class="grid grid-cols-10 gap-1 justify-items-center py-4">
+              <div class="headers bg-bg_light rounded mb-1">
+                <tr
+                  class="flex flex-row justify-around md:grid md:grid-cols-10 gap-1 justify-items-center py-4"
+                >
                   <th class="text-left font-semibold text-gray-300">Symbol</th>
                   <th class="text-left font-semibold text-gray-300">Status</th>
                   <th class="text-left font-semibold text-gray-300">Qty</th>
-                  <th class="text-left font-semibold text-gray-300">Entry</th>
+                  <th
+                    class="text-left font-semibold text-gray-300 hidden md:block"
+                  >
+                    Entry
+                  </th>
 
-                  <th class="text-left font-semibold text-gray-300">
+                  <th
+                    class="text-left font-semibold text-gray-300 hidden md:block"
+                  >
                     Entry Total
                   </th>
-                  <th class="text-left font-semibold text-gray-300">Exit</th>
-                  <th class="text-left font-semibold text-gray-300">
+                  <th
+                    class="text-left font-semibold text-gray-300 hidden md:block"
+                  >
+                    Exit
+                  </th>
+                  <th
+                    class="text-left font-semibold text-gray-300 hidden md:block"
+                  >
                     Exit Total
                   </th>
-                  <th class="text-left font-semibold text-gray-300">Return</th>
+                  <th
+                    class="text-left font-semibold text-gray-300 hidden md:block"
+                  >
+                    Return
+                  </th>
                   <th class="text-left font-semibold text-gray-300">
                     Return %
                   </th>
@@ -37,6 +53,7 @@
             <tbody class="over-y-scroll h-2/3">
               <tr class="my-2 rounded p-2">
                 <BaseTableRows
+                  class="hidden md:block"
                   v-for="(trade, index) in tradesData"
                   :key="trade.id"
                   :ticker="trade.ticker"
@@ -74,7 +91,39 @@
                   /></router-link>
                 </BaseTableRows>
 
-                
+                <BaseTableRows
+                  class="md:hidden"
+                  v-for="(trade, index) in tradesData"
+                  :key="trade.id"
+                  :ticker="trade.ticker"
+                  :status="trade.status"
+                  :qty="trade.qty"
+                  :returnPercent="trade.returnPercent"
+                >
+                  <router-link
+                    to=""
+                    class="text-blue-600 px-2 modal-button"
+                    @click="getTradeDetails(index, trade.id)"
+                    for="editModal"
+                    ><Icon
+                      icon="akar-icons:edit"
+                      width="20"
+                      height="20"
+                      :inline="true"
+                  /></router-link>
+
+                  <!-- Delete Button -->
+                  <router-link
+                    to=""
+                    class="text-red-600 px-1"
+                    @click="deleteTrade(index, trade.id)"
+                    ><Icon
+                      icon="ant-design:delete-outlined"
+                      width="20"
+                      height="20"
+                      :inline="true"
+                  /></router-link>
+                </BaseTableRows>
               </tr>
             </tbody>
           </table>
@@ -89,8 +138,8 @@
     <template #content>
       <div class="container mx-auto">
         <div class="p-2">
-          <form class="w-full">
-            <div class="grid grid-cols-4 gap-4">
+          <form class="w-5/6 md:w-full">
+            <div class="flex flex-col md:grid md:grid-cols-4 gap-4">
               <div class="flex flex-col">
                 <label class="uppercase">Ticker</label>
                 <input
@@ -128,7 +177,7 @@
                 />
               </div>
             </div>
-            <footer class="flex justify-end align-center pt-6">
+            <footer class="flex md:justify-end align-center pt-6">
               <div
                 type="submit"
                 class="btn btn-success mx-1"

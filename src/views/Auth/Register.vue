@@ -1,17 +1,16 @@
 <template>
   <!-- Auth -->
   <div class="flex-auto my-32 justify-center bg-background">
-    <div class="mx-auto flex w-[30rem] flex-col bg-gray-800 rounded-xl">
+    <div
+      class="mx-auto flex w-5/6 md:w-[30rem] flex-col bg-gray-800 rounded-xl"
+    >
       <!-- Login form -->
-      <form
-        class="flex w-[30rem] flex-col space-y-6 p-4"
-        @submit.prevent="register"
-      >
+      <form class="flex flex-col space-y-6 p-4" @submit.prevent="register">
         <div class="text-center text-4xl font-medium">Register</div>
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
-            class="block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white rounded"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="email"
             placeholder="you@example.com"
             v-model="register_form.email"
@@ -30,7 +29,7 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Password </label>
           <input
-            class="block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white rounded"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="password"
             placeholder="Password"
             v-model="register_form.password"

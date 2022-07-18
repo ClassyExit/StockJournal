@@ -16,7 +16,7 @@
         </div>
       </td>
       <!-- Price -->
-      <td>
+      <td class="">
         <div class="flex text-white">
           <p :value="price">${{ price }}</p>
         </div>

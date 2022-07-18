@@ -1,15 +1,17 @@
 <template>
-  <div class="contents-container rounded bg-gray-800 my-4">
-    <div class="grid grid-cols-10 justify-items-center py-4">
+  <div class="contents-container rounded bg-bg_light my-4">
+    <div
+      class="flex flex-row justify-evenly md:grid md:grid-cols-10 justify-items-center py-4"
+    >
       <!-- Stock Name -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white">
           <label :value="ticker">{{ ticker }}</label>
         </div>
       </td>
       <!-- STATUS -->
       <td>
-        <div class="flex">
+        <div>
           <p
             :value="status"
             class="rounded px-2 py-0.2"
@@ -27,21 +29,21 @@
       </td>
       <!-- QTY -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white">
           <p v-if="qty" :value="qty">{{ qty.toFixed(2) }}</p>
           <p v-else :value="qty">-</p>
         </div>
       </td>
       <!-- ENTRY -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white hidden md:block">
           <p v-if="entry" :value="entry">${{ entry.toFixed(2) }}</p>
           <p v-else :value="entry">-</p>
         </div>
       </td>
       <!-- ENTRY TOTAL -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white hidden md:block">
           <p v-if="entryTotal" :value="entryTotal">
             ${{ entryTotal.toFixed(2) }}
           </p>
@@ -50,7 +52,7 @@
       </td>
       <!-- EXIT -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white hidden md:block">
           <p v-if="exit" :value="exit">${{ exit.toFixed(2) }}</p>
           <p v-else :value="exit">-</p>
         </div>
@@ -58,14 +60,14 @@
 
       <!-- EXIT TOTAL -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white hidden md:block">
           <p v-if="exitTotal" :value="exitTotal">${{ exitTotal.toFixed(2) }}</p>
           <p v-else :value="exitTotal">-</p>
         </div>
       </td>
       <!-- RETURN -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white hidden md:block">
           <p v-if="returnBase != null" :value="returnBase">
             ${{ returnBase.toFixed(2) }}
           </p>
@@ -74,7 +76,7 @@
       </td>
       <!-- Return % -->
       <td>
-        <div class="flex text-white">
+        <div class="text-white">
           <p v-if="returnPercent != null" :value="returnPercent">
             {{ returnPercent.toFixed(2) }}%
           </p>

@@ -7,7 +7,7 @@
     >
       <div class="flex items-center justify-center min-h-screen text-center">
         <div
-          class="bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl w-1/2"
+          class="bg-bg_light rounded-lg text-left overflow-hidden shadow-xl w-3/4 md:w-1/2"
           role="dialog"
           ref="modal"
           aria-modal="true"
