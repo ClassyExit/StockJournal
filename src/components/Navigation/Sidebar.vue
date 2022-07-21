@@ -1,6 +1,4 @@
 <template>
-  <!-- Sidebar -->
-  <!-- bg-gray-800 text-gray-100 md:w-64 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out md:flex md:flex-col md:justify-between overflow-y-auto -->
   <aside
     id="sidebar"
     class="bg-gray-800 text-gray-100 relative w-24 space-y-6 pt-6 px-0 transition duration-200 ease-in-out flex flex-col justify-between overflow-y-auto md:w-64"
@@ -69,7 +67,7 @@
         <router-link
           v-show="$route.name === 'Watchlist'"
           to=""
-          class="btn-success p-2 rounded items-center md:flex md:"
+          class="btn-success p-2 rounded items-center md:flex md:font-semibold"
           data-toggle="modal"
           @click="showAddWatchModal"
           ><Icon

@@ -3,7 +3,7 @@
     <div class="py-4">
       <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
-          class="flex max-w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg"
+          class="flex max-w-full p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg"
           role="alert"
         >
           <Icon

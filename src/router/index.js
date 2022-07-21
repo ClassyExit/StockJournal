@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  useRoute,
+  useRouter,
+} from "vue-router";
 import { auth } from "../firebase";
 
 //Component layouts
@@ -14,6 +19,8 @@ import Home from "../views/Auth/Home.vue";
 import Watchlist from "../views/Dashboard/Watchlist.vue";
 import Reset from "../views/Auth/Reset.vue";
 import Profile from "../views/Dashboard/Profile.vue";
+
+import { useUserStore } from "@/store/user";
 
 const routes = [
   // Landing page
@@ -64,6 +71,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  userStore.lastURL = router.currentRoute.value.fullPath;
+
   if (
     (to.name === "Login" || to.name === "Register" || to.name === "Home") &&
     auth.currentUser

@@ -25,12 +25,9 @@ export const useUserStore = defineStore("User", {
     passwordChangeErrors: false,
     passwordChangeSuccess: false,
     deleteErrors: false,
+    lastURL: null,
   }),
-  getters: {
-    getErrors: (state) => {
-      return state.errorMsg;
-    },
-  },
+  getters: {},
   persist: true,
   actions: {
     async login(details) {
@@ -123,16 +120,19 @@ export const useUserStore = defineStore("User", {
 
     async InitializeAuth() {
       // CHECK TO SEE AUTHENTICATION STATE
+
       auth.onAuthStateChanged(async (user) => {
-        if (user === null) {
-          //reset state
-          this.$reset();
+        if (user) {
+          this.user = auth.currentUser;
+          this.userId = auth.currentUser.uid;
+
+          if (this.lastURL !== ("/login" || "/register" || "home")) {
+            router.push(`${this.lastURL}`);
+          } else {
+            router.push({ name: "Dashboard" });
+          }
         } else {
-          this.$patch({
-            user: auth.currentUser,
-            userId: auth.currentUser.uid,
-          });
-          router.push({ name: "Dashboard" });
+          this.$reset();
         }
       });
     },

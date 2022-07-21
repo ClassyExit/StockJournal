@@ -17,20 +17,16 @@
             >
             <ul
               tabindex="0"
-              class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+              class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-52 mt-4"
             >
               <li>
-                <a class="flex-1"
-                  ><router-link :to="{ name: 'Profile' }"
-                    >Profile</router-link
-                  ></a
+                <router-link class="flex-1" :to="{ name: 'Profile' }"
+                  >Profile</router-link
                 >
               </li>
               <li>
-                <a class="flex-1"
-                  ><router-link to="#" @click="userStore.logout()"
-                    >Logout</router-link
-                  ></a
+                <router-link class="flex-1" to="#" @click="userStore.logout()"
+                  >Logout</router-link
                 >
               </li>
             </ul>
