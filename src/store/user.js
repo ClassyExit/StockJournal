@@ -126,11 +126,7 @@ export const useUserStore = defineStore("User", {
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
 
-          if (this.lastURL !== ("/login" || "/register" || "home")) {
-            router.push(`${this.lastURL}`);
-          } else {
-            router.push({ name: "Dashboard" });
-          }
+          router.push({ name: "Dashboard" });
         } else {
           this.$reset();
         }

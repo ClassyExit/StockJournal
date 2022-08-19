@@ -1,32 +1,18 @@
 <template>
-  <div class="container mx-auto">
-    <div class="py-4">
-      <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
-        <div
-          class="flex max-w-full p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg"
-          role="alert"
-        >
-          <Icon
-            icon="entypo:info-with-circle"
-            :inline="true"
-            width="20"
-            height="20"
-          />
-          <div>
-            <span class="font-medium pl-2">
-              If a request does not go through, the free API used has
-              unfortunately reached its daily limit. Please try again
-              later.</span
-            >
-          </div>
-        </div>
-        <div
-          class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
-        >
-          <!-- Table -->
-          <table class="min-w-full overflow-auto">
-            <!-- Table Header -->
-            <thead>
+  <div class="container mx-auto min-h-full">
+    <!-- Notification container -->
+    <div class="notification m-4 mb-0 align-center" role="alert">
+      <InfoAlert>
+        Requests are limited due to current API constraints.
+      </InfoAlert>
+    </div>
+
+    <div class="px-4 overflow-x-auto overflow-y-auto">
+      <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+        <!-- Table -->
+        <table class="min-w-full">
+          <!-- Table Header -->
+          <!-- <thead>
               <div class="headers bg-gray-800 rounded mb-1">
                 <tr class="grid grid-cols-4 gap-1 justify-items-center py-4">
                   <th class="text-left font-semibold text-gray-300">Ticker</th>
@@ -35,32 +21,33 @@
                   <th class="text-left font-semibold text-gray-300"></th>
                 </tr>
               </div>
-            </thead>
-            <!-- Table Body -->
-            <tbody class="over-y-scroll h-2/3">
-              <tr class="rounded p-2 my-2">
-                <BaseTableRows
-                  v-for="(item, index) in watchlistData"
-                  :key="item.id"
-                  :ticker="item.ticker"
-                  :name="item.name"
-                  :price="item.price"
-                >
-                  <router-link
-                    to=""
-                    class="text-red-600 px-1"
-                    @click="deleteWatch(index, item.id)"
-                    ><Icon
-                      icon="ant-design:delete-outlined"
-                      width="20"
-                      height="20"
-                      :inline="true"
-                  /></router-link>
-                </BaseTableRows>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            </thead> -->
+          <!-- Table Body -->
+          <tbody>
+            <tr
+              class="grid auto-cols-auto md:grid-cols-3 lg:grid-cols-4 rounded p-2 my-2"
+            >
+              <BaseTableRows
+                v-for="(item, index) in watchlistData"
+                :key="item.id"
+                :ticker="item.ticker"
+                :name="item.name"
+                :price="item.price"
+              >
+                <router-link
+                  to=""
+                  class="text-red-600 px-1"
+                  @click="deleteWatch(index, item.id)"
+                  ><Icon
+                    icon="ant-design:delete-outlined"
+                    width="20"
+                    height="20"
+                    :inline="true"
+                /></router-link>
+              </BaseTableRows>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -73,6 +60,11 @@ import { useDatabaseStore } from "@/store/database";
 import { storeToRefs } from "pinia";
 import BaseTableRows from "./BaseTableRows.vue";
 import { onBeforeMount } from "@vue/runtime-core";
+
+import DangerAlert from "@/components/Notifications/DangerAlert.vue";
+import InfoAlert from "@/components/Notifications/InfoAlert.vue";
+import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
+import WarningAlert from "@/components/Notifications/WarningAlert.vue";
 
 export default {
   setup() {
@@ -97,7 +89,13 @@ export default {
       watchlistData,
     };
   },
-  components: { BaseTableRows },
+  components: {
+    BaseTableRows,
+    DangerAlert,
+    InfoAlert,
+    SuccessAlert,
+    WarningAlert,
+  },
 };
 </script>
 
