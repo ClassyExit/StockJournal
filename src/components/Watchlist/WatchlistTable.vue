@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto min-h-full">
+  <div class="container mx-auto max-h-full">
     <!-- Notification container -->
-    <div class="notification m-4 mb-0 align-center" role="alert">
+    <div class="notification mx-4 align-center" role="alert">
       <InfoAlert>
         Requests are limited due to current API constraints.
       </InfoAlert>
@@ -25,7 +25,7 @@
           <!-- Table Body -->
           <tbody>
             <tr
-              class="grid auto-cols-auto md:grid-cols-3 lg:grid-cols-4 rounded p-2 my-2"
+              class="grid auto-cols-auto md:grid-cols-3 lg:grid-cols-6 rounded p-2 my-2"
             >
               <BaseTableRows
                 v-for="(item, index) in watchlistData"
