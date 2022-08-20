@@ -1,19 +1,13 @@
-# stock-journal
+# Stock Journal
 
-## Project setup
-```
-npm install
-```
+## Project Information
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
+This project was developed using the Vue.js framework. The stock journal is a log that can be used to record your trades. By recording your trades, you can reflect upon previous trades and evaluate any future trades. There are currently two main features; the stock trade log and a watchlist.
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Website
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+The project is hosted on Firebase (https://stock-journal-325d0.web.app/home)
+```
