@@ -31,19 +31,31 @@
               class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4"
             >
               <div class="space-y-2 max-w-80 overflow-auto">
-                <li v-for="alert in notifications">
-                  <SuccessAlert v-if="alert.alertType === 'success'">{{
-                    alert.alertMsg
-                  }}</SuccessAlert>
-                  <DangerAlert v-if="alert.alertType === 'danger'">{{
-                    alert.alertMsg
-                  }}</DangerAlert>
-                  <InfoAlert v-if="alert.alertType === 'info'">{{
-                    alert.alertMsg
-                  }}</InfoAlert>
-                  <WarningAlert v-if="alert.alertType === 'warning'">{{
-                    alert.alertMsg
-                  }}</WarningAlert>
+                <li v-for="(alert, index) in notifications">
+                  <SuccessAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'success'"
+                    >{{ alert.alertMsg }}</SuccessAlert
+                  >
+                  <DangerAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'danger'"
+                    >{{ alert.alertMsg }}</DangerAlert
+                  >
+                  <InfoAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'info'"
+                    >{{ alert.alertMsg }}</InfoAlert
+                  >
+                  <WarningAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'warning'"
+                    >{{ alert.alertMsg }}</WarningAlert
+                  >
                 </li>
               </div>
             </ul>
@@ -204,21 +216,10 @@ export default {
       //TODO: Send email
       // https://nodemailer.com/about/
 
-      // Status
-      notificationStore.addNotification("success", "Ticket Submitted!");
-      notificationStore.addGlobalNotification("success", "Ticket Submitted!");
-      notificationStore.addGlobalNotification(
-        "danger",
-        "Error Submitting Ticket! Try again"
-      );
-      notificationStore.addGlobalNotification(
-        "warning",
-        "Error Submitting Ticket! Try again"
-      );
-      notificationStore.addGlobalNotification(
-        "info",
-        "Error Submitting Ticket! Try again"
-      );
+      notificationStore.addNotification("success", "Test Message");
+      notificationStore.addNotification("danger", "Test Message");
+      notificationStore.addNotification("info", "Test Message");
+      notificationStore.addNotification("warning", "Test Message");
 
       ticketForm.message = null;
       emailModal.value = false;

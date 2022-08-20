@@ -1,12 +1,5 @@
 <template>
   <div class="container mx-auto max-h-full">
-    <!-- Notification container -->
-    <div class="notification mx-4 align-center" role="alert">
-      <InfoAlert>
-        Requests are limited due to current API constraints.
-      </InfoAlert>
-    </div>
-
     <div class="px-4 overflow-x-auto overflow-y-auto">
       <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
         <!-- Table -->

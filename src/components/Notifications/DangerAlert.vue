@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-row flex-grow bg-danger items-center px-4 py-3 rounded" role="alert">
+  <div
+    class="flex flex-row flex-grow bg-danger items-center px-4 py-3 rounded"
+    role="alert"
+  >
     <!-- Info svg -->
     <div class="pr-2">
       <svg
@@ -27,11 +30,12 @@
     <!-- Close -->
     <div class="relative top-0 bottom-0 right-0 pl-2">
       <svg
+        :id="id"
         class="fill-current h-6 w-6 text-white"
         role="button"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
-        @click="$el.remove()"
+        @click="deleteNotification(id)"
       >
         <title>Close</title>
         <path
@@ -43,7 +47,21 @@
 </template>
 
 <script>
-export default {};
+import { useNotificationStore } from "@/store/notifications";
+export default {
+  props: {
+    id: {
+      type: [String, Number],
+    },
+  },
+  setup() {
+    const notificationStore = useNotificationStore();
+
+    const { deleteNotification } = notificationStore;
+
+    return { deleteNotification };
+  },
+};
 </script>
 
 <style></style>

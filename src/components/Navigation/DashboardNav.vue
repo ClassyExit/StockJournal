@@ -12,19 +12,31 @@
       <div id="content" class="flex flex-grow flex-col">
         <!-- Global Notifications -->
         <div class="notifications mx-auto w-full p-4 pb-0">
-          <div class="pb-2" v-for="alert in globalNotifications">
-            <SuccessAlert v-if="alert.alertType === 'success'">{{
-              alert.alertMsg
-            }}</SuccessAlert>
-            <DangerAlert v-if="alert.alertType === 'danger'">{{
-              alert.alertMsg
-            }}</DangerAlert>
-            <InfoAlert v-if="alert.alertType === 'info'">{{
-              alert.alertMsg
-            }}</InfoAlert>
-            <WarningAlert v-if="alert.alertType === 'warning'">{{
-              alert.alertMsg
-            }}</WarningAlert>
+          <div class="pb-2" v-for="(alert, index) in globalNotifications">
+            <SuccessAlert
+              :key="index"
+              :id="alert.alertId"
+              v-if="alert.alertType === 'success'"
+              >{{ alert.alertMsg }}</SuccessAlert
+            >
+            <DangerAlert
+              :key="index"
+              :id="alert.alertId"
+              v-if="alert.alertType === 'danger'"
+              >{{ alert.alertMsg }}</DangerAlert
+            >
+            <InfoAlert
+              :key="index"
+              :id="alert.alertId"
+              v-if="alert.alertType === 'info'"
+              >{{ alert.alertMsg }}</InfoAlert
+            >
+            <WarningAlert
+              :key="index"
+              :id="alert.alertId"
+              v-if="alert.alertType === 'warning'"
+              >{{ alert.alertMsg }}</WarningAlert
+            >
           </div>
         </div>
         <router-view :key="$route.path"></router-view>

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { nanoid } from "nanoid";
 import { useUserStore as userStore } from "./user";
 import { useDatabaseStore as databaseStore } from "./database";
+import { useNotificationStore as notificationStore } from "./notifications";
 
 // https://www.stockdata.org/documentation
 const apiKey = "tCN0bkSfgweXGBuCaYu7yF1OYgYm4DpwbWsctC1V";
@@ -31,23 +32,51 @@ export const useWatchlistStore = defineStore("Watchlist", {
       let tickerData = {};
 
       await fetch(url)
-        .then((response) => response.json())
-        .then(
-          (data) =>
-            (tickerData = {
+        .then((response) => {
+          response.json();
+
+          if (!response.ok) {
+            if (response.status === 401) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Invalid Request"
+              );
+              throw new Error("Invalid Request");
+            } else if (response.status === 402) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Unfortunately, the daily request limit has been reached due to current API capabilities. Please try again tommorow! "
+              );
+
+              throw new Error("API Limit Reached");
+            } else {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Something went wrong. Please try again"
+              );
+              throw new Error("Something went wrong");
+            }
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          if (!data) {
+          } else {
+            tickerData = {
               ticker: ticker,
               price: data.data[0].price,
               name: data.data[0].name,
-            })
-        )
-        .catch(
-          (error) =>
-            (tickerData = {
-              ticker: ticker,
-              price: null,
-              name: null,
-            })
-        );
+            };
+          }
+        })
+        .catch((err) => {
+          (tickerData = {
+            ticker: ticker,
+            price: null,
+            name: null,
+          }),
+            console.log(err);
+        });
 
       return tickerData;
     },
@@ -56,8 +85,12 @@ export const useWatchlistStore = defineStore("Watchlist", {
       // ADDS A TICKER TO WATCHLIST
       let tickerData = {};
 
-      tickerData = await this.fetchPrice(ticker);
-      tickerData.id = await this.generateId();
+      try {
+        tickerData = await this.fetchPrice(ticker);
+        tickerData.id = await this.generateId();
+      } catch (error) {
+        console.log("CAUGHT ERROR");
+      }
 
       if (!tickerData) {
         this.addWatchlistModal = false;
