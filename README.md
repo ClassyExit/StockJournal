@@ -6,4 +6,4 @@ This project was developed using the Vue.js framework. The stock journal is a lo
 
 ### Website
 
-The project is hosted on Firebase. [Stock Journal](https://stock-journal-325d0.web.app/home)
+The project is hosted on Firebase. The project can be viewed at [Stock Journal](https://stock-journal-325d0.web.app/home)
