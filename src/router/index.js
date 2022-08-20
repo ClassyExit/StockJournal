@@ -40,7 +40,6 @@ const routes = [
     ],
   },
 
-  // Dashboard
   {
     path: "/dashboard",
     component: DefaultLayout,

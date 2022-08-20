@@ -119,8 +119,7 @@ export const useTradesStore = defineStore("Trades", {
         returnPercent: null,
       };
       // UPDATE VARIABLES
-      // From form data
-
+      
       newTrade.ticker = details.ticker;
       newTrade.qty = details.qty;
       newTrade.entry = details.entryPrice;

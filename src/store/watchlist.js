@@ -59,7 +59,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
           }
         })
         .then((data) => {
-          console.log(data);
           if (!data) {
           } else {
             tickerData = {

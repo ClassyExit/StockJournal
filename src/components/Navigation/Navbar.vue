@@ -216,11 +216,6 @@ export default {
       //TODO: Send email
       // https://nodemailer.com/about/
 
-      notificationStore.addNotification("success", "Test Message");
-      notificationStore.addNotification("danger", "Test Message");
-      notificationStore.addNotification("info", "Test Message");
-      notificationStore.addNotification("warning", "Test Message");
-
       ticketForm.message = null;
       emailModal.value = false;
     };
