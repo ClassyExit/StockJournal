@@ -33,8 +33,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
       await fetch(url)
         .then((response) => {
-          response.json();
-
           if (!response.ok) {
             if (response.status === 401) {
               notificationStore().addGlobalNotification(
@@ -57,24 +55,22 @@ export const useWatchlistStore = defineStore("Watchlist", {
               throw new Error("Something went wrong");
             }
           }
+          return response.json();
         })
         .then((data) => {
-          if (!data) {
-          } else {
-            tickerData = {
-              ticker: ticker,
-              price: data.data[0].price,
-              name: data.data[0].name,
-            };
-          }
+          tickerData = {
+            ticker: ticker,
+            price: data.data[0].price,
+            name: data.data[0].name,
+          };
         })
         .catch((err) => {
-          (tickerData = {
+          console.log(err);
+          tickerData = {
             ticker: ticker,
             price: null,
             name: null,
-          }),
-            console.log(err);
+          };
         });
 
       return tickerData;
@@ -84,22 +80,27 @@ export const useWatchlistStore = defineStore("Watchlist", {
       // ADDS A TICKER TO WATCHLIST
       let tickerData = {};
 
-      try {
-        tickerData = await this.fetchPrice(ticker);
-        tickerData.id = await this.generateId();
-      } catch (error) {
-        console.log("CAUGHT ERROR");
-      }
+      tickerData = await this.fetchPrice(ticker);
+      tickerData.id = await this.generateId();
 
       if (!tickerData) {
         this.addWatchlistModal = false;
+        notificationStore().addGlobalNotification(
+          "danger",
+          "Unable to find requested stock. Please ensure the ticker is correct."
+        );
         return;
       } else {
         if ((tickerData.name || tickerData.price) == null) {
           this.addWatchlistModal = false;
+
+          notificationStore().addGlobalNotification(
+            "danger",
+            `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
+          );
           return;
         }
-        // Push to current store
+
         this.watchlistData.push(tickerData);
 
         // Add to db

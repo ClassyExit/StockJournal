@@ -7,6 +7,7 @@ export const useNotificationStore = defineStore("Notification", {
     alertTypes: ["danger", "info", "success", "warning"],
   }),
   getters: {},
+  persist: true,
   actions: {
     addNotification(alertType, alertMsg) {
       let newNotification = {};
