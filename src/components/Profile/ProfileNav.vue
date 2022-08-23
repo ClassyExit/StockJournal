@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full m-4 bg-gray-800 rounded">
+  <div class="flex w-4/5 h-4/5 m-4 bg-gray-800 rounded">
     <div class="p-2 w-1/5 flex flex-col">
       <div
         class="border-r-[1px] h-full border-slate-700 divide-y divide-slate-700"

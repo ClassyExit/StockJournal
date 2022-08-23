@@ -8,6 +8,59 @@
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal p-0">
+          <!-- Alerts -->
+          <div class="dropdown dropdown-content md:dropdown-end">
+            <label tabindex="0" class="btn btn-ghost rounded-btn">
+              <Icon
+                v-if="!notifications.length"
+                icon="clarity:notification-line"
+                color="white"
+                width="20"
+                height="20"
+              />
+              <Icon
+                v-else
+                icon="clarity:notification-outline-badged"
+                color="white"
+                width="20"
+                height="20"
+              />
+            </label>
+            <ul
+              tabindex="0"
+              class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4"
+            >
+              <div class="space-y-2 max-w-80 overflow-auto">
+                <li v-for="(alert, index) in notifications">
+                  <SuccessAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'success'"
+                    >{{ alert.alertMsg }}</SuccessAlert
+                  >
+                  <DangerAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'danger'"
+                    >{{ alert.alertMsg }}</DangerAlert
+                  >
+                  <InfoAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'info'"
+                    >{{ alert.alertMsg }}</InfoAlert
+                  >
+                  <WarningAlert
+                    :key="index"
+                    :id="alert.alertId"
+                    v-if="alert.alertType === 'warning'"
+                    >{{ alert.alertMsg }}</WarningAlert
+                  >
+                </li>
+              </div>
+            </ul>
+          </div>
+
           <li>
             <router-link to="" @click="showEmailModal">Contact</router-link>
           </li>
@@ -121,12 +174,31 @@
 
 <script>
 import { useUserStore } from "@/store/user";
+import { useNotificationStore } from "@/store/notifications";
+
 import EmailModal from "./EmailModal.vue";
 import { ref } from "vue";
+
+import DangerAlert from "@/components/Notifications/DangerAlert.vue";
+import InfoAlert from "@/components/Notifications/InfoAlert.vue";
+import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
+import WarningAlert from "@/components/Notifications/WarningAlert.vue";
+import { storeToRefs } from "pinia";
+
 export default {
-  components: { EmailModal },
+  components: {
+    EmailModal,
+    DangerAlert,
+    InfoAlert,
+    SuccessAlert,
+    WarningAlert,
+    SuccessAlert,
+  },
   setup() {
     const userStore = useUserStore();
+    const notificationStore = useNotificationStore();
+
+    const { notifications } = storeToRefs(notificationStore);
 
     const emailModal = ref(false);
 
@@ -149,6 +221,7 @@ export default {
     };
 
     return {
+      notifications,
       userStore,
       showEmailModal,
       hideEmailModal,

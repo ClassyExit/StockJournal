@@ -1,6 +1,8 @@
 <template>
   <div class="container mx-auto">
-    <div class="py-4">
+    <!-- Notifications -->
+    <div class="notification align-center" role="alert"></div>
+    <div class="">
       <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
           class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
@@ -203,10 +205,19 @@ import { useUserStore } from "@/store/user";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
+import DangerAlert from "@/components/Notifications/DangerAlert.vue";
+import InfoAlert from "@/components/Notifications/InfoAlert.vue";
+import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
+import WarningAlert from "@/components/Notifications/WarningAlert.vue";
+
 export default {
   components: {
     BaseTableRows,
     BaseModal,
+    DangerAlert,
+    InfoAlert,
+    SuccessAlert,
+    WarningAlert,
   },
 
   setup() {

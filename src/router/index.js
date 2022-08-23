@@ -1,9 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  useRoute,
-  useRouter,
-} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import { auth } from "../firebase";
 
 //Component layouts
@@ -45,7 +40,6 @@ const routes = [
     ],
   },
 
-  // Dashboard
   {
     path: "/dashboard",
     component: DefaultLayout,
@@ -71,21 +65,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-  userStore.lastURL = router.currentRoute.value.fullPath;
+  useUserStore().lastURL = router.currentRoute.value.fullPath;
 
-  if (
-    (to.name === "Login" || to.name === "Register" || to.name === "Home") &&
-    auth.currentUser
-  ) {
+  if (to.path === "/auth" && auth.currentUser) {
     next({ name: "Dashboard" });
   }
   // Check for auth for pages that require auth to access
   else if (
     to.matched.some((record) => record.meta.requiresAuth) &&
-    !auth.currentUser
+    !useUserStore().userId
   ) {
-    next({ path: "/auth" });
+    next({ name: "Login" });
   } else {
     next();
   }

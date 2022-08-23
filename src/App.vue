@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { onBeforeMount, onMounted } from "vue";
 import { useUserStore } from "@/store/user.js";
 
 import "@/assets/tailwind.css";
@@ -12,10 +11,8 @@ export default {
   setup() {
     const userStore = useUserStore();
 
-    onBeforeMount(() => {
-      //Check to see if user exists and/or logged in.
-      userStore.InitializeAuth();
-    });
+    //Check to see if user exists and/or logged in.
+    userStore.InitializeAuth();
   },
 };
 </script>

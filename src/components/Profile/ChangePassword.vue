@@ -28,7 +28,7 @@
     </div>
   </div>
   <form
-    class="w-2/5 grid grid-rows-3 gap-4 place-items-left"
+    class="flex flex-col w-2/5 gap-4 place-items-left"
     @submit.prevent="changePasswordValid(passwordForm)"
   >
     <div class="w-4/5">

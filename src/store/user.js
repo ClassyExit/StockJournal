@@ -14,6 +14,7 @@ import {
 } from "firebase/auth";
 
 import { resetStore } from "./reset-store";
+import { useNotificationStore as notificationStore } from "./notifications";
 
 export const useUserStore = defineStore("User", {
   state: () => ({
@@ -98,6 +99,10 @@ export const useUserStore = defineStore("User", {
         return;
       }
 
+      notificationStore().addNotification(
+        "success",
+        "Hi there! If you run into any problems or have questions, please send in a ticket using the CONTACT button located on top. "
+      );
       // Set user state
       this.$patch({
         user: auth.currentUser,
@@ -126,11 +131,7 @@ export const useUserStore = defineStore("User", {
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
 
-          if (this.lastURL !== ("/login" || "/register" || "home")) {
-            router.push(`${this.lastURL}`);
-          } else {
-            router.push({ name: "Dashboard" });
-          }
+          router.push({ name: "Dashboard" });
         } else {
           this.$reset();
         }
@@ -182,6 +183,10 @@ export const useUserStore = defineStore("User", {
               .then(() => {
                 //Update success
                 this.passwordChangeSuccess = "Success - Password Changed!";
+                notificationStore().addNotification(
+                  "success",
+                  "Your password has been updated successfully!"
+                );
               })
               .catch((error) => {
                 console.log(`Failed - code: ${error.code}`);
