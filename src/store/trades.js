@@ -16,6 +16,7 @@ export const useTradesStore = defineStore("Trades", {
     },
     editModal: false,
     addModal: false,
+    isLoading: false,
   }),
   getters: {
     showAddModalState: (state) => {
@@ -119,7 +120,7 @@ export const useTradesStore = defineStore("Trades", {
         returnPercent: null,
       };
       // UPDATE VARIABLES
-      
+
       newTrade.ticker = details.ticker;
       newTrade.qty = details.qty;
       newTrade.entry = details.entryPrice;

@@ -12,6 +12,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
     watchlistData: [],
     addWatchlistModal: false,
     falseData: null,
+    isLoading: false,
   }),
   getters: {},
   actions: {
@@ -34,6 +35,10 @@ export const useWatchlistStore = defineStore("Watchlist", {
       await fetch(url)
         .then((response) => {
           if (!response.ok) {
+            tickerData = {
+              error: true,
+            };
+
             if (response.status === 401) {
               notificationStore().addGlobalNotification(
                 "danger",
@@ -45,7 +50,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
                 "danger",
                 "Unfortunately, the daily request limit has been reached due to current API capabilities. Please try again tommorow! "
               );
-
               throw new Error("API Limit Reached");
             } else {
               notificationStore().addGlobalNotification(
@@ -66,11 +70,15 @@ export const useWatchlistStore = defineStore("Watchlist", {
         })
         .catch((err) => {
           console.log(err);
-          tickerData = {
-            ticker: ticker,
-            price: null,
-            name: null,
-          };
+
+          if (tickerData.error) {
+          } else {
+            tickerData = {
+              ticker: ticker,
+              price: null,
+              name: null,
+            };
+          }
         });
 
       return tickerData;
@@ -91,7 +99,10 @@ export const useWatchlistStore = defineStore("Watchlist", {
         );
         return;
       } else {
-        if ((tickerData.name || tickerData.price) == null) {
+        if (tickerData.error) {
+          this.addWatchlistModal = false;
+          return;
+        } else if ((tickerData.name || tickerData.price) == null) {
           this.addWatchlistModal = false;
 
           notificationStore().addGlobalNotification(
@@ -99,6 +110,8 @@ export const useWatchlistStore = defineStore("Watchlist", {
             `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
           );
           return;
+        } else {
+          this.addWatchlistModal = false;
         }
 
         this.watchlistData.push(tickerData);
