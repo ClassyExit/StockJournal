@@ -56,7 +56,7 @@ export const useUserStore = defineStore("User", {
             this.authErrors = "Invalid email or password";
             break;
           default:
-            this.authErrors = `Something went wrong - Try again`;
+            this.authErrors = `Invalid email or password`;
         }
         return;
       }
@@ -92,7 +92,7 @@ export const useUserStore = defineStore("User", {
             this.authErrors = "Password must be atleast 6 characters";
             break;
           default:
-            this.authErrors = `Something went wrong - Try again`;
+            this.authErrors = `Enter a valid email or password`;
         }
 
         return;

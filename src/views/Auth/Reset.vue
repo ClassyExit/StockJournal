@@ -12,31 +12,32 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
-            class="block w-full px-2 py-2 text-l font-normal text-black bg-white rounded"
+            v-if="resetErrors"
+            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
             type="email"
             placeholder="example@email.com"
             v-model="email"
           />
-          <div
-            class="flex p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-            role="alert"
-            v-if="resetErrors"
+          <input
+            v-else-if="resetSuccess"
+            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded border-2 border-success"
+            type="email"
+            placeholder="example@email.com"
+            v-model="email"
+          />
+          <input
+            v-else
+            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded"
+            type="email"
+            placeholder="example@email.com"
+            v-model="email"
+          />
+          <span v-if="resetErrors" class="font-medium text-sm text-danger">
+            {{ resetErrors }}</span
           >
-            <Icon icon="entypo:info-with-circle" :inline="true" />
-            <div>
-              <span class="font-medium pl-2"> {{ resetErrors }}</span>
-            </div>
-          </div>
-          <div
-            class="flex p-4 mb-4 text-sm text-green-700 mt-2 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-            role="alert"
-            v-if="resetSuccess"
+          <span v-if="resetSuccess" class="font-medium text-sm text-success">
+            Success - Email sent!</span
           >
-            <Icon icon="entypo:info-with-circle" :inline="true" />
-            <div>
-              <span class="font-medium pl-2"> Success - Email sent!</span>
-            </div>
-          </div>
         </div>
 
         <button

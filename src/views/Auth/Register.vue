@@ -10,25 +10,34 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
+            v-if="authErrors"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
+            type="email"
+            placeholder="you@example.com"
+            v-model="register_form.email"
+          />
+          <input
+            v-else
             class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="email"
             placeholder="you@example.com"
             v-model="register_form.email"
           />
-          <div
-            v-if="authErrors"
-            class="flex w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-            role="alert"
+          <span v-if="authErrors" class="font-medium text-danger">
+            {{ authErrors }}</span
           >
-            <Icon icon="entypo:info-with-circle" :inline="true" />
-            <div>
-              <span class="font-medium pl-2"> {{ authErrors }}</span>
-            </div>
-          </div>
         </div>
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Password </label>
           <input
+            v-if="authErrors"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
+            type="password"
+            placeholder="Password"
+            v-model="register_form.password"
+          />
+          <input
+            v-else
             class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
             type="password"
             placeholder="Password"
