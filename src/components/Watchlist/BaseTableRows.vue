@@ -1,6 +1,6 @@
 <template>
-  <div class="contents-container rounded bg-gray-800 my-4">
-    <div class="grid grid-cols-4 justify-items-center py-4">
+  <div class="contents-container rounded bg-gray-800 m-4">
+    <div class="grid auto-rows-auto md:grid-rows-4 justify-items-center py-4">
       <!-- Stock Ticker -->
       <td>
         <div class="flex text-white uppercase">

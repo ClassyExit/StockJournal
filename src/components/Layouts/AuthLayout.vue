@@ -14,18 +14,10 @@
           class="flex flex-grow items-center justify-end space-x-4 mr-4 md:px-48"
         >
           <router-link to="/login">
-            <div
-              class="btn bg-background rounded-lg border border-violet-500 hover:bg-violet-900"
-            >
-              LOGIN
-            </div>
+            <Button>LOGIN</Button>
           </router-link>
           <router-link to="/register">
-            <div
-              class="btn bg-background rounded-lg border border-violet-500 hover:bg-violet-900"
-            >
-              REGISTER
-            </div>
+            <Button>REGISTER</Button>
           </router-link>
         </div>
       </div>
@@ -39,7 +31,13 @@
 </template>
 
 <script>
-export default {};
+import Button from "@/components/Button.vue";
+
+export default {
+  components: {
+    Button,
+  },
+};
 </script>
 
 <style></style>

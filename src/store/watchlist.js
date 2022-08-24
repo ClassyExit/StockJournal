@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { nanoid } from "nanoid";
 import { useUserStore as userStore } from "./user";
 import { useDatabaseStore as databaseStore } from "./database";
+import { useNotificationStore as notificationStore } from "./notifications";
 
 // https://www.stockdata.org/documentation
 const apiKey = "tCN0bkSfgweXGBuCaYu7yF1OYgYm4DpwbWsctC1V";
@@ -11,6 +12,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
     watchlistData: [],
     addWatchlistModal: false,
     falseData: null,
+    isLoading: false,
   }),
   getters: {},
   actions: {
@@ -31,23 +33,53 @@ export const useWatchlistStore = defineStore("Watchlist", {
       let tickerData = {};
 
       await fetch(url)
-        .then((response) => response.json())
-        .then(
-          (data) =>
-            (tickerData = {
-              ticker: ticker,
-              price: data.data[0].price,
-              name: data.data[0].name,
-            })
-        )
-        .catch(
-          (error) =>
-            (tickerData = {
+        .then((response) => {
+          if (!response.ok) {
+            tickerData = {
+              error: true,
+            };
+
+            if (response.status === 401) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Invalid Request"
+              );
+              throw new Error("Invalid Request");
+            } else if (response.status === 402) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Unfortunately, the daily request limit has been reached due to current API capabilities. Please try again tommorow! "
+              );
+              throw new Error("API Limit Reached");
+            } else {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Something went wrong. Please try again"
+              );
+              throw new Error("Something went wrong");
+            }
+          }
+          return response.json();
+        })
+        .then((data) => {
+          tickerData = {
+            ticker: ticker,
+            price: data.data[0].price,
+            name: data.data[0].name,
+          };
+        })
+        .catch((err) => {
+          console.log(err);
+
+          if (tickerData.error) {
+          } else {
+            tickerData = {
               ticker: ticker,
               price: null,
               name: null,
-            })
-        );
+            };
+          }
+        });
 
       return tickerData;
     },
@@ -61,13 +93,27 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
       if (!tickerData) {
         this.addWatchlistModal = false;
+        notificationStore().addGlobalNotification(
+          "danger",
+          "Unable to find requested stock. Please ensure the ticker is correct."
+        );
         return;
       } else {
-        if ((tickerData.name || tickerData.price) == null) {
+        if (tickerData.error) {
           this.addWatchlistModal = false;
           return;
+        } else if ((tickerData.name || tickerData.price) == null) {
+          this.addWatchlistModal = false;
+
+          notificationStore().addGlobalNotification(
+            "danger",
+            `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
+          );
+          return;
+        } else {
+          this.addWatchlistModal = false;
         }
-        // Push to current store
+
         this.watchlistData.push(tickerData);
 
         // Add to db
