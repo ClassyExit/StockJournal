@@ -5,27 +5,37 @@
         <!-- Table -->
         <table class="min-w-full">
           <!-- Table Header -->
-          <!-- <thead>
-              <div class="headers bg-gray-800 rounded mb-1">
-                <tr class="grid grid-cols-4 gap-1 justify-items-center py-4">
-                  <th class="text-left font-semibold text-gray-300">Ticker</th>
-                  <th class="text-left font-semibold text-gray-300">Name</th>
-                  <th class="text-left font-semibold text-gray-300">Price</th>
-                  <th class="text-left font-semibold text-gray-300"></th>
-                </tr>
-              </div>
-            </thead> -->
+          <thead>
+            <div class="headers bg-gray-800 rounded mb-1">
+              <tr class="grid grid-cols-7 gap-1 justify-items-center py-4">
+                <th class="text-left font-semibold text-gray-300">Symbol</th>
+                <th class="text-left font-semibold text-gray-300">Name</th>
+                <th class="text-left font-semibold text-gray-300">Price</th>
+                <th class="text-left font-semibold text-gray-300">
+                  Since Added
+                </th>
+                <th class="text-left font-semibold text-gray-300">
+                  52 Week Low
+                </th>
+                <th class="text-left font-semibold text-gray-300">
+                  52 Week High
+                </th>
+                <th class="text-left font-semibold text-gray-300"></th>
+              </tr>
+            </div>
+          </thead>
           <!-- Table Body -->
           <tbody>
-            <tr
-              class="grid auto-cols-auto md:grid-cols-3 lg:grid-cols-6 rounded p-2 my-2"
-            >
+            <tr class="flex flex-col rounded divide-y divide-paragraph/25">
               <BaseTableRows
                 v-for="(item, index) in watchlistData"
                 :key="item.id"
                 :ticker="item.ticker"
                 :name="item.name"
                 :price="item.price"
+                :since_add="item.since_add"
+                :fiftytwo_week_low="item.fiftytwo_week_low"
+                :fiftytwo_week_high="item.fiftytwo_week_high"
               >
                 <router-link
                   to=""

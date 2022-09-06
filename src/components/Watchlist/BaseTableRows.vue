@@ -1,6 +1,6 @@
 <template>
-  <div class="contents-container rounded bg-gray-800 m-4">
-    <div class="grid auto-rows-auto md:grid-rows-4 justify-items-center py-4">
+  <div class="contents-container bg-gray-800">
+    <div class="grid auto-rows-auto md:grid-cols-7 justify-items-center py-4">
       <!-- Stock Ticker -->
       <td>
         <div class="flex text-white uppercase">
@@ -19,6 +19,30 @@
       <td class="">
         <div class="flex text-white">
           <p :value="price">${{ price }}</p>
+        </div>
+      </td>
+      <!-- Since Added -->
+      <td>
+        <div class="flex">
+          <p :value="since_add" class="rounded px-2 py-0.2">
+            {{ since_add * 100 }} (% {{ since_add }})
+          </p>
+        </div>
+      </td>
+      <!-- 52 Week Low -->
+      <td>
+        <div class="flex">
+          <p :value="fiftytwo_week_low" class="rounded px-2 py-0.2">
+            ${{ fiftytwo_week_low }}
+          </p>
+        </div>
+      </td>
+      <!-- 52 Week High -->
+      <td>
+        <div class="flex">
+          <p :value="fiftytwo_week_high" class="rounded px-2 py-0.2">
+            ${{ fiftytwo_week_high }}
+          </p>
         </div>
       </td>
 
@@ -44,6 +68,18 @@ export default {
       default: null,
     },
     price: {
+      type: [Number],
+      default: null,
+    },
+    since_add: {
+      type: [Number],
+      default: null,
+    },
+    fiftytwo_week_low: {
+      type: [Number],
+      default: null,
+    },
+    fiftytwo_week_high: {
       type: [Number],
       default: null,
     },
