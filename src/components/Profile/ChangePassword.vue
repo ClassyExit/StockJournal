@@ -1,32 +1,6 @@
 <template>
   <div class="text-left text-4xl font-medium pb-4">Change Password</div>
-  <div class="alerts">
-    <div
-      v-if="passwordChangeErrors"
-      class="flex w-max p-4 mb-4 text-sm text-red-700 mt-2 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-      role="alert"
-    >
-      <Icon icon="entypo:info-with-circle" :inline="true" />
-      <div>
-        <span class="font-medium pl-2"> {{ passwordChangeErrors }}</span>
-      </div>
-    </div>
-    <div
-      v-if="passwordChangeSuccess"
-      class="flex p-4 w-max mb-4 text-sm text-green-700 mt-2 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-      role="alert"
-    >
-      <Icon
-        icon="entypo:info-with-circle"
-        :inline="true"
-        width="20"
-        height="20"
-      />
-      <div>
-        <span class="font-medium pl-2"> {{ passwordChangeSuccess }}</span>
-      </div>
-    </div>
-  </div>
+
   <form
     class="flex flex-col w-2/5 gap-4 place-items-left"
     @submit.prevent="changePasswordValid(passwordForm)"
@@ -35,13 +9,45 @@
       <div class="flex flex-col border-b2 text-lg p-2">
         <label class="pr-2"> Current Password</label>
         <input
+          v-if="passwordChangeErrors"
+          v-model="passwordForm.currentPassword"
+          class="rounded text-black bg-gray-500 border-2 border-danger"
+        />
+        <input
+          v-else-if="passwordChangeSuccess"
+          v-model="passwordForm.currentPassword"
+          class="rounded text-black bg-gray-500 border-2 border-success"
+        />
+        <input
+          v-else
           v-model="passwordForm.currentPassword"
           class="rounded text-black bg-gray-500"
         />
+        <span
+          v-if="passwordChangeSuccess"
+          class="font-medium text-sm text-success"
+          >{{ passwordChangeSuccess }}</span
+        >
+        <span
+          v-if="passwordChangeErrors"
+          class="font-medium text-sm text-danger"
+          >{{ passwordChangeErrors }}</span
+        >
       </div>
       <div class="flex flex-col border-b2 text-lg p-2">
         <label class="pr-2"> New Password (Min 6 chars.)</label>
         <input
+          v-if="passwordChangeErrors"
+          v-model="passwordForm.newPassword"
+          class="rounded text-black bg-gray-500 border-2 border-danger"
+        />
+        <input
+          v-else-if="passwordChangeSuccess"
+          v-model="passwordForm.newPassword"
+          class="rounded text-black bg-gray-500 border-2 border-success"
+        />
+        <input
+          v-else
           v-model="passwordForm.newPassword"
           class="rounded text-black bg-gray-500"
         />
@@ -49,6 +55,17 @@
       <div class="flex flex-col border-b2 text-lg p-2">
         <label class="pr-2"> Confirm Password</label>
         <input
+          v-if="passwordChangeErrors"
+          v-model="passwordForm.confirmPassword"
+          class="rounded text-black bg-gray-500 border-2 border-danger"
+        />
+        <input
+          v-else-if="passwordChangeSuccess"
+          v-model="passwordForm.confirmPassword"
+          class="rounded text-black bg-gray-500 border-2 border-success"
+        />
+        <input
+          v-else
           v-model="passwordForm.confirmPassword"
           class="rounded text-black bg-gray-500"
         />
@@ -63,12 +80,15 @@
 <script>
 import { ref } from "vue";
 import { useUserStore } from "@/store/user.js";
+import { useNotificationStore } from "@/store/notifications";
 import { storeToRefs } from "pinia";
 export default {
   setup() {
     const userStore = useUserStore();
     userStore.passwordChangeErrors = false;
     userStore.passwordChangeSuccess = false;
+
+    const notificationStore = useNotificationStore();
 
     const { changePassword } = userStore;
 
@@ -89,7 +109,7 @@ export default {
         userStore.passwordChangeErrors = "Passwords must match!";
       } else if (passwordForm.newPassword.length < 6) {
         userStore.passwordChangeErrors =
-          "Password must be atleast 6 characters";
+          "New password must be atleast 6 characters";
       } else {
         changePassword(passwordForm.currentPassword, passwordForm.newPassword);
       }

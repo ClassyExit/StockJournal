@@ -182,7 +182,7 @@ export const useUserStore = defineStore("User", {
             updatePassword(user, newPassword)
               .then(() => {
                 //Update success
-                this.passwordChangeSuccess = "Success - Password Changed!";
+                this.passwordChangeSuccess = "Password Changed Successfully!";
                 notificationStore().addNotification(
                   "success",
                   "Your password has been updated successfully!"

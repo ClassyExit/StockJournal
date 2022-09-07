@@ -1,6 +1,6 @@
 <template>
   <div class="contents-container bg-gray-800">
-    <div class="grid auto-rows-auto md:grid-cols-7 justify-items-center py-4">
+    <div class="grid grid-cols-7 justify-items-center items-center py-1">
       <!-- Stock Ticker -->
       <td>
         <div class="flex text-white uppercase">
@@ -9,29 +9,48 @@
       </td>
       <!-- Stock Name -->
       <td>
-        <div class="flex">
+        <div class="flex text-white">
           <p :value="name" class="rounded px-2 py-0.2">
             {{ name }}
           </p>
         </div>
       </td>
       <!-- Price -->
-      <td class="">
+      <td>
         <div class="flex text-white">
           <p :value="price">${{ price }}</p>
         </div>
       </td>
       <!-- Since Added -->
       <td>
-        <div class="flex">
-          <p :value="since_add" class="rounded px-2 py-0.2">
-            {{ since_add * 100 }} (% {{ since_add }})
+        <div class="flex flex-col">
+          <p
+            :value="since_add_percent"
+            class="rounded px-2 py-0.2"
+            :class="{
+              green: since_add_percent > 0,
+              red: since_add_percent < 0,
+              neutral: since_add_percent == 0,
+            }"
+          >
+            {{ since_add_percent }}%
+          </p>
+          <p
+            :value="since_add_base"
+            class="rounded px-2 py-0.2"
+            :class="{
+              green: since_add_base > 0,
+              red: since_add_base < 0,
+              neutral: since_add_base == 0,
+            }"
+          >
+            ${{ since_add_base }}
           </p>
         </div>
       </td>
       <!-- 52 Week Low -->
       <td>
-        <div class="flex">
+        <div class="flex text-white">
           <p :value="fiftytwo_week_low" class="rounded px-2 py-0.2">
             ${{ fiftytwo_week_low }}
           </p>
@@ -39,7 +58,7 @@
       </td>
       <!-- 52 Week High -->
       <td>
-        <div class="flex">
+        <div class="flex text-white">
           <p :value="fiftytwo_week_high" class="rounded px-2 py-0.2">
             ${{ fiftytwo_week_high }}
           </p>
@@ -71,7 +90,11 @@ export default {
       type: [Number],
       default: null,
     },
-    since_add: {
+    since_add_percent: {
+      type: [Number],
+      default: null,
+    },
+    since_add_base: {
       type: [Number],
       default: null,
     },
@@ -87,4 +110,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.green {
+  color: rgb(4, 167, 4);
+}
+.red {
+  color: rgb(243, 3, 3);
+}
+.neutral {
+  color: rgb(240, 235, 235, 0.8);
+}
+</style>

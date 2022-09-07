@@ -1,17 +1,23 @@
 <template>
   <div class="container mx-auto max-h-full">
-    <div class="px-4 overflow-x-auto overflow-y-auto">
+    <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
       <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
         <!-- Table -->
         <table class="min-w-full">
           <!-- Table Header -->
           <thead>
-            <div class="headers bg-gray-800 rounded mb-1">
+            <div
+              class="headers bg-gray-800 rounded-t border-b border-paragraph/25"
+            >
               <tr class="grid grid-cols-7 gap-1 justify-items-center py-4">
                 <th class="text-left font-semibold text-gray-300">Symbol</th>
                 <th class="text-left font-semibold text-gray-300">Name</th>
                 <th class="text-left font-semibold text-gray-300">Price</th>
-                <th class="text-left font-semibold text-gray-300">
+                <th
+                  data-bs-toggle="tooltip"
+                  title="The change in price since being added on the watchlist."
+                  class="flex text-left font-semibold text-gray-300"
+                >
                   Since Added
                 </th>
                 <th class="text-left font-semibold text-gray-300">
@@ -33,7 +39,8 @@
                 :ticker="item.ticker"
                 :name="item.name"
                 :price="item.price"
-                :since_add="item.since_add"
+                :since_add_percent="item.since_add_percent"
+                :since_add_base="item.since_add_base"
                 :fiftytwo_week_low="item.fiftytwo_week_low"
                 :fiftytwo_week_high="item.fiftytwo_week_high"
               >

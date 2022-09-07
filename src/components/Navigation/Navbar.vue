@@ -21,7 +21,7 @@
               <Icon
                 v-else
                 icon="clarity:notification-outline-badged"
-                color="white"
+                color="red"
                 width="20"
                 height="20"
               />

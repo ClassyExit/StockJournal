@@ -62,7 +62,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
           return response.json();
         })
         .then((data) => {
-          let since_add = (data.data[0].price - data.data[0].price) / 100;
           tickerData = {
             ticker: ticker,
             price: data.data[0].price,
@@ -70,7 +69,8 @@ export const useWatchlistStore = defineStore("Watchlist", {
             add_price: data.data[0].price,
             fiftytwo_week_low: data.data[0]["52_week_low"],
             fiftytwo_week_high: data.data[0]["52_week_high"],
-            since_add: since_add,
+            since_add_percent: 0,
+            since_add_base: 0,
           };
         })
         .catch((err) => {
@@ -85,7 +85,8 @@ export const useWatchlistStore = defineStore("Watchlist", {
               add_price: null,
               fiftytwo_high: null,
               fiftytwo_low: null,
-              since_add: null,
+              since_add_percent: null,
+              since_add_base: null,
             };
           }
         });
@@ -160,11 +161,14 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
           newData.id = this.watchlistData[i].id;
 
-          // Recalculate the change since add
-          let new_change =
-            (newData.price - this.watchlistData[i].add_price) / 100;
+          // Recalculate the change since adding
+          let new_change_base = newData.price - this.watchlistData[i].add_price;
 
-          this.watchlistData[i].since_add = new_change;
+          let new_change_percent =
+            (new_change_base / this.watchlistData[i].add_price) * 100;
+
+          this.watchlistData[i].since_add_base = new_change_base;
+          this.watchlistData[i].since_add_percent = new_change_percent;
           this.watchlistData[i].price = newData.price;
         }
       } catch (err) {

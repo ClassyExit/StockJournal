@@ -1,27 +1,5 @@
 <template>
   <div class="text-left text-4xl font-medium pb-4">Account Details</div>
-  <div
-    v-if="success"
-    class="alert bg-green-200 rounded-lg text-base text-green-700 inline-flex items-center w-auto alert-dismissible fade show"
-    role="alert"
-  >
-    <Icon
-      icon="entypo:info-with-circle"
-      :inline="true"
-      width="20"
-      height="20"
-    />
-    <span><strong class="mr-1">Success! </strong> Account name updated!</span>
-    <button
-      type="button"
-      class="btn-close box-content w-4 h-4 p-1 ml-auto border-none rounded-none"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-      @click="success = false"
-    >
-      X
-    </button>
-  </div>
 
   <form
     class="w-2/5 grid grid-rows-3 gap-4 place-items-left"
@@ -30,8 +8,29 @@
     <div class="w-4/5">
       <div class="flex flex-col border-b2 text-lg p-2">
         <label class="pr-2"> Name</label>
-        <input v-model="changes.name" class="rounded text-black bg-gray-500" />
+        <input
+          v-if="success"
+          v-model="changes.name"
+          class="rounded text-black bg-gray-500 border-2 border-success"
+        />
+        <input
+          v-else-if="error"
+          v-model="changes.name"
+          class="rounded text-black bg-gray-500 border-2 border-danger"
+        />
+        <input
+          v-else
+          v-model="changes.name"
+          class="rounded text-black bg-gray-500"
+        />
+        <span v-if="error" class="font-medium text-sm text-danger">
+          Something went wrong. Try again later.</span
+        >
+        <span v-if="success" class="font-medium text-sm text-success">
+          Name Updated!
+        </span>
       </div>
+
       <div class="flex flex-col border-b2 text-lg p-2">
         <label class="pr-2 text-"> Current Email: {{ user.email }}</label>
       </div>
@@ -55,6 +54,7 @@ export default {
     const changes = ref({ name: `${user.displayName}` });
 
     const success = ref(false);
+    const error = ref(false);
 
     const updateDisplayName = (changes) => {
       updateProfile(user, {
@@ -66,7 +66,7 @@ export default {
         })
         .catch((error) => {
           // An error occurred
-          // ...
+          error.value = true;
         });
     };
     return {
@@ -75,6 +75,7 @@ export default {
       updateDisplayName,
       changes,
       success,
+      error,
     };
   },
 };
