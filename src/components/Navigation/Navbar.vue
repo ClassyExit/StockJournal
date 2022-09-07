@@ -94,7 +94,7 @@
       class="modal-header flex p-2 justify-between border-b-2 border-gray-600"
     >
       <div class="align-middle">
-        <h1 class="text-lg text-white font-bold">SEND TICKET</h1>
+        <h1 class="text-lg text-white font-bold">SUPPORT</h1>
       </div>
       <div>
         <button class="btn btn-square btn-sm" @click="hideEmailModal">
@@ -215,7 +215,18 @@ export default {
     const submitTicket = (ticketForm) => {
       //TODO: Send email
       // https://nodemailer.com/about/
-
+      try {
+        notificationStore.addGlobalNotification(
+          "success",
+          "We recieved your message. We'll get back to you as soon as possible. Thank you!"
+        );
+      } catch (error) {
+        console.log(error);
+        notificationStore.addGlobalNotification(
+          "danger",
+          "Uh-oh. Unable to send in support tickets. Please try again later."
+        );
+      }
       ticketForm.message = null;
       emailModal.value = false;
     };

@@ -48,7 +48,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
             } else if (response.status === 402) {
               notificationStore().addGlobalNotification(
                 "danger",
-                "Unfortunately, the daily request limit has been reached due to current API capabilities. Please try again tommorow! "
+                "Unfortunately, the daily request limit has been reached due to current API limitations. Please try again tommorow! "
               );
               throw new Error("API Limit Reached");
             } else {
