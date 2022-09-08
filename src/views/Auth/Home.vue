@@ -47,7 +47,7 @@
 
         <div class="w-full md:w-1/2 px-4 md:order-1">
           <img
-            src="@/assets/images/exampleWatchlist.png"
+            src="@/assets/images/exampleWatchlist2.png"
             alt="exampleWatchlist"
           />
         </div>

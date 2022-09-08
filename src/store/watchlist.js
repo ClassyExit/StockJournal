@@ -48,13 +48,19 @@ export const useWatchlistStore = defineStore("Watchlist", {
             } else if (response.status === 402) {
               notificationStore().addGlobalNotification(
                 "danger",
-                "Unfortunately, the daily request limit has been reached due to current API limitations. Please try again tommorow! "
+                "Unfortunately, the daily request limit has been reached due to current API limitations and no more requests can be made. Please try again tommorow! "
               );
               throw new Error("API Limit Reached");
+            } else if (response.status === 429) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Too many requests in the past 60 seconds!"
+              );
+              throw new Error("Too Many Requests");
             } else {
               notificationStore().addGlobalNotification(
                 "danger",
-                "Something went wrong. Please try again"
+                "Oops! Something didn't work. Please try again."
               );
               throw new Error("Something went wrong");
             }
@@ -82,11 +88,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
               ticker: ticker,
               price: null,
               name: null,
-              add_price: null,
-              fiftytwo_high: null,
-              fiftytwo_low: null,
-              since_add_percent: null,
-              since_add_base: null,
             };
           }
         });
@@ -162,10 +163,14 @@ export const useWatchlistStore = defineStore("Watchlist", {
           newData.id = this.watchlistData[i].id;
 
           // Recalculate the change since adding
-          let new_change_base = newData.price - this.watchlistData[i].add_price;
+          let new_change_base = (
+            newData.price - this.watchlistData[i].add_price
+          ).toFixed(2);
 
-          let new_change_percent =
-            (new_change_base / this.watchlistData[i].add_price) * 100;
+          let new_change_percent = (
+            (new_change_base / this.watchlistData[i].add_price) *
+            100
+          ).toFixed(2);
 
           this.watchlistData[i].since_add_base = new_change_base;
           this.watchlistData[i].since_add_percent = new_change_percent;

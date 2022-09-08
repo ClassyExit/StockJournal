@@ -158,6 +158,8 @@
           <div class="flex justify-end">
             <div class="px-4 py-2">
               <button
+                :disabled="!ticketForm.message"
+                :class="{ 'disabled cursor-not-allowed': !ticketForm.message }"
                 class="shadow btn-success text-black font-bold py-2 px-4 rounded"
                 type="button"
                 @click="submitTicket(ticketForm)"

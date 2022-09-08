@@ -9,16 +9,23 @@
             <div
               class="headers bg-gray-800 rounded-t border-b border-paragraph/25"
             >
-              <tr class="grid grid-cols-7 gap-1 justify-items-center py-4">
+              <tr
+                class="grid grid-cols-7 gap-1 justify-items-center items-center py-4"
+              >
                 <th class="text-left font-semibold text-gray-300">Symbol</th>
                 <th class="text-left font-semibold text-gray-300">Name</th>
                 <th class="text-left font-semibold text-gray-300">Price</th>
                 <th
-                  data-bs-toggle="tooltip"
-                  title="The change in price since being added on the watchlist."
-                  class="flex text-left font-semibold text-gray-300"
+                  data-tip="Change in price since added onto watchlist. Please note prices are only updated during active market hours. "
+                  class="flex text-left font-semibold text-gray-300 tooltip tooltip-bottom items-center"
                 >
                   Since Added
+                  <Icon
+                    icon="akar-icons:info"
+                    width="18"
+                    height="18"
+                    class="ml-2"
+                  />
                 </th>
                 <th class="text-left font-semibold text-gray-300">
                   52 Week Low

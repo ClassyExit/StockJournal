@@ -87,23 +87,23 @@ export default {
       default: null,
     },
     price: {
-      type: [Number],
+      type: [Number, String],
       default: null,
     },
     since_add_percent: {
-      type: [Number],
+      type: [Number, String],
       default: null,
     },
     since_add_base: {
-      type: [Number],
+      type: [Number, String],
       default: null,
     },
     fiftytwo_week_low: {
-      type: [Number],
+      type: [Number, String],
       default: null,
     },
     fiftytwo_week_high: {
-      type: [Number],
+      type: [Number, String],
       default: null,
     },
   },
