@@ -131,9 +131,13 @@ export const useUserStore = defineStore("User", {
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
 
-          router.push({ name: "Dashboard" });
+          if (window.location.pathname === "/home" || "/register" || "/login") {
+            // TODO: Find a way to push back on current page when doing refresh
+            // router.push({ name: "Dashboard" });
+          }
         } else {
           this.$reset();
+          router.push({ name: "Home" });
         }
       });
     },
@@ -182,7 +186,7 @@ export const useUserStore = defineStore("User", {
             updatePassword(user, newPassword)
               .then(() => {
                 //Update success
-                this.passwordChangeSuccess = "Success - Password Changed!";
+                this.passwordChangeSuccess = "Password Changed Successfully!";
                 notificationStore().addNotification(
                   "success",
                   "Your password has been updated successfully!"

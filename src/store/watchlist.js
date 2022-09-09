@@ -48,13 +48,19 @@ export const useWatchlistStore = defineStore("Watchlist", {
             } else if (response.status === 402) {
               notificationStore().addGlobalNotification(
                 "danger",
-                "Unfortunately, the daily request limit has been reached due to current API capabilities. Please try again tommorow! "
+                "Unfortunately, the daily request limit has been reached due to current API limitations and no more requests can be made. Please try again tommorow! "
               );
               throw new Error("API Limit Reached");
+            } else if (response.status === 429) {
+              notificationStore().addGlobalNotification(
+                "danger",
+                "Too many requests in the past 60 seconds!"
+              );
+              throw new Error("Too Many Requests");
             } else {
               notificationStore().addGlobalNotification(
                 "danger",
-                "Something went wrong. Please try again"
+                "Oops! Something didn't work. Please try again."
               );
               throw new Error("Something went wrong");
             }
@@ -62,11 +68,18 @@ export const useWatchlistStore = defineStore("Watchlist", {
           return response.json();
         })
         .then((data) => {
-          tickerData = {
-            ticker: ticker,
-            price: data.data[0].price,
-            name: data.data[0].name,
-          };
+          if (!tickerData.error) {
+            tickerData = {
+              ticker: ticker,
+              price: data.data[0].price,
+              name: data.data[0].name,
+              add_price: data.data[0].price,
+              fiftytwo_week_low: data.data[0]["52_week_low"],
+              fiftytwo_week_high: data.data[0]["52_week_high"],
+              since_add_percent: 0,
+              since_add_base: 0,
+            };
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -151,6 +164,18 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
           newData.id = this.watchlistData[i].id;
 
+          // Recalculate the change since adding
+          let new_change_base = (
+            newData.price - this.watchlistData[i].add_price
+          ).toFixed(2);
+
+          let new_change_percent = (
+            (new_change_base / this.watchlistData[i].add_price) *
+            100
+          ).toFixed(2);
+
+          this.watchlistData[i].since_add_base = new_change_base;
+          this.watchlistData[i].since_add_percent = new_change_percent;
           this.watchlistData[i].price = newData.price;
         }
       } catch (err) {
