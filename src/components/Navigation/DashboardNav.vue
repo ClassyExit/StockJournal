@@ -1,10 +1,10 @@
 <template>
-  <div class="flex min-h-screen flex-col bg-gray-900">
+  <div class="flex min-h-screen flex-col bg-background">
     <!-- Header Nav -->
     <Navbar />
 
     <!-- Render content here -->
-    <div class="flex flex-row flex-grow w-full bg-gray-900">
+    <div class="flex flex-row flex-grow w-full">
       <!-- Sidebar Render -->
       <Sidebar />
 

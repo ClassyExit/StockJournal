@@ -11,20 +11,12 @@ export default {
   setup() {
     const userStore = useUserStore();
 
-    //Check to see if user exists and/or logged in.
     userStore.InitializeAuth();
   },
 };
 </script>
 
 <style>
-:root {
-  --background: "#2a2c3a",
-  --primary: "#42b883",
-  --info: "#1d8cf8",
-  --danger: "#fd5d93",
-  --teal: "#00d6b4",
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

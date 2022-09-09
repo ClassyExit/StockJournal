@@ -131,9 +131,13 @@ export const useUserStore = defineStore("User", {
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
 
-          router.push({ name: "Dashboard" });
+          if (window.location.pathname === "/home" || "/register" || "/login") {
+            // TODO: Find a way to push back on current page when doing refresh
+            // router.push({ name: "Dashboard" });
+          }
         } else {
           this.$reset();
+          router.push({ name: "Home" });
         }
       });
     },
