@@ -178,6 +178,8 @@
 import { useUserStore } from "@/store/user";
 import { useNotificationStore } from "@/store/notifications";
 
+import { Notifications as notificationsJS } from "../Notifications/notifications";
+
 import EmailModal from "./EmailModal.vue";
 import { ref } from "vue";
 
@@ -241,6 +243,7 @@ export default {
       emailModal,
       submitTicket,
       ticketForm,
+      notificationsJS,
     };
   },
 };

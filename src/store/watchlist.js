@@ -76,8 +76,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
               add_price: data.data[0].price,
               fiftytwo_week_low: data.data[0]["52_week_low"],
               fiftytwo_week_high: data.data[0]["52_week_high"],
-              since_add_percent: 0,
-              since_add_base: 0,
             };
           }
         })
@@ -162,7 +160,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
           if (newData.price == null) return;
 
-          newData.id = this.watchlistData[i].id;
+          // newData.id = this.watchlistData[i].id;
 
           // Recalculate the change since adding
           let new_change_base = (
@@ -179,7 +177,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
           this.watchlistData[i].price = newData.price;
         }
       } catch (err) {
-        console.error("Error getting price updates");
+        console.error(err);
       }
     },
   },

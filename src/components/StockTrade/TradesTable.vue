@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <!-- Notifications -->
-    <div class="notification align-center" role="alert"></div>
-    <div class="">
+    <div>
       <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
           class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
@@ -11,10 +9,13 @@
           <table class="min-w-full overflow-auto">
             <!-- Table Header -->
             <thead>
-              <div class="headers bg-bg_light rounded mb-1">
+              <div class="headers bg-bg_light rounded">
                 <tr
-                  class="flex flex-row justify-around md:grid md:grid-cols-10 gap-1 justify-items-center py-4"
+                  class="flex flex-row justify-around md:grid md:grid-cols-11 justify-items-center py-3"
                 >
+                  <th class="text-left font-semibold text-gray-300">
+                    Date Added
+                  </th>
                   <th class="text-left font-semibold text-gray-300">Symbol</th>
                   <th class="text-left font-semibold text-gray-300">Status</th>
                   <th class="text-left font-semibold text-gray-300">Qty</th>
@@ -58,6 +59,7 @@
                   class="hidden md:block"
                   v-for="(trade, index) in tradesData"
                   :key="trade.id"
+                  :date="trade.date"
                   :ticker="trade.ticker"
                   :status="trade.status"
                   :qty="trade.qty"

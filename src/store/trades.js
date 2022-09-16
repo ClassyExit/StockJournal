@@ -71,6 +71,10 @@ export const useTradesStore = defineStore("Trades", {
       this.tradesData[index].entry = newDetails.entry;
       this.tradesData[index].exit = newDetails.exit;
 
+      if (!this.tradesData[index].date) {
+        this.tradesData[index].date = new Date().toLocaleDateString();
+      }
+
       // Recalculate computed values
       this.tradesData[index].entryTotal = newDetails.entry * newDetails.qty;
 
@@ -109,6 +113,7 @@ export const useTradesStore = defineStore("Trades", {
       // create new object
       const newTrade = {
         tradeId: null,
+        date: new Date().toLocaleDateString(),
         ticker: null,
         status: null,
         qty: null,

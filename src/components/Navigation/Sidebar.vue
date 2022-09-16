@@ -1,7 +1,7 @@
 <template>
   <aside
     id="sidebar"
-    class="bg-gray-800 text-gray-100 relative w-24 space-y-6 pt-6 px-0 transition duration-200 ease-in-out flex flex-col justify-between overflow-y-auto md:w-64"
+    class="bg-gray-800 text-gray-100 relative min-w-[10%] space-y-6 pt-6 px-0 transition duration-200 flex flex-col justify-between overflow-y-auto md:w-[12%]"
   >
     <div class="flex flex-col space-y-6">
       <nav class="main-nav">
