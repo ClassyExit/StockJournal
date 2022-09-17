@@ -53,6 +53,34 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="min-w-screen flex flex-col items-center bg-bg_light">
+        <p class="text-4xl pt-4 pb-6">FAQ</p>
+        <div class="flex flex-row justify-center gap-32 pb-8">
+          <div class="w-1/4">
+            <h1 class="text-2xl text-headline pb-2">What is this?</h1>
+            <p class="text-paragraph">
+              This project was developed using the Vue.js framework. The stock
+              journal is a log that can be used to record your trades. By
+              recording your trades, you can reflect upon previous trades and
+              evaluate any future trades.
+            </p>
+          </div>
+          <div class="w-1/4">
+            <h1 class="text-2xl text-headline pb-2">Open Source</h1>
+            <p class="text-paragraph">
+              The project is publicly available to view and can be found
+              <a
+                class="text-info"
+                href="https://github.com/ClassyExit/StockJournal"
+                >HERE.</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
