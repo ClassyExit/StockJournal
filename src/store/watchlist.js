@@ -160,8 +160,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
           if (newData.price == null) return;
 
-          // newData.id = this.watchlistData[i].id;
-
           // Recalculate the change since adding
           let new_change_base = (
             newData.price - this.watchlistData[i].add_price

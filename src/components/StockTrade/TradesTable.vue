@@ -1,5 +1,48 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto w-full">
+    <div
+      class="stats-container flex flex-row space-x-6 justify-around mx-auto w-3/4"
+    >
+      <StatsContainer
+        ><template #title>WINS</template>
+        <template #stat
+          ><span class="text-green-700">{{ stats.wins }}</span></template
+        ></StatsContainer
+      >
+      <StatsContainer
+        ><template #title>LOSSES</template>
+        <template #stat
+          ><span class="text-red-700">{{ stats.losses }}</span></template
+        ></StatsContainer
+      >
+      <StatsContainer
+        ><template #title>AVG WIN</template>
+        <template #stat
+          ><span class="text-green-700">{{
+            stats.avgWin.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          }}</span></template
+        ></StatsContainer
+      >
+      <StatsContainer
+        ><template #title>AVG LOSS</template>
+        <template #stat
+          ><span class="text-red-700">{{
+            stats.avgLoss.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          }}</span></template
+        ></StatsContainer
+      >
+      <StatsContainer
+        ><template #title>PnL</template>
+        <template #stat
+          ><span v-if="stats.PnL >= 0" class="text-green-700">{{
+            stats.PnL.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          }}</span>
+          <span v-else class="text-red-700">{{
+            stats.PnL.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          }}</span></template
+        ></StatsContainer
+      >
+    </div>
     <div>
       <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
         <div
@@ -200,11 +243,12 @@
 
 <script>
 import BaseTableRows from "./BaseTableRows.vue";
+import StatsContainer from "./StatsContainer.vue";
 import BaseModal from "./BaseModal.vue";
 import { useTradesStore } from "@/store/trades.js";
 import { useDatabaseStore } from "@/store/database";
 import { useUserStore } from "@/store/user";
-import { onMounted } from "vue";
+import { onMounted, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 
 import DangerAlert from "@/components/Notifications/DangerAlert.vue";
@@ -220,14 +264,22 @@ export default {
     InfoAlert,
     SuccessAlert,
     WarningAlert,
+    StatsContainer,
   },
-
   setup() {
     const TradesStore = useTradesStore();
 
-    const { editModal, editTradeData, tradesData } = storeToRefs(TradesStore);
+    const { editModal, editTradeData, tradesData, stats } =
+      storeToRefs(TradesStore);
+
     const { editTrade, deleteTrade, hideModal, getTradeDetails } = TradesStore;
     const rows = tradesData;
+
+    // Watch for user adding trades then recalc stats
+    watchEffect((tradesData) => TradesStore.getStats());
+
+    //Calculate Stats on page load
+    TradesStore.getStats();
 
     onMounted(() => {
       const TradesStore = useTradesStore();
@@ -248,6 +300,7 @@ export default {
       getTradeDetails,
       editTrade,
       editTradeData,
+      stats,
     };
   },
 };

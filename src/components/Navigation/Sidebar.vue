@@ -1,7 +1,7 @@
 <template>
   <aside
     id="sidebar"
-    class="bg-gray-800 text-gray-100 relative min-w-[10%] space-y-6 pt-6 px-0 transition duration-200 flex flex-col justify-between overflow-y-auto md:w-[12%]"
+    class="bg-gray-800 text-gray-100 relative min-w-[12%] space-y-6 pt-6 px-0 transition duration-200 flex flex-col justify-between overflow-y-auto md:w-[12%]"
   >
     <div class="flex flex-col space-y-6">
       <nav class="main-nav">
@@ -46,13 +46,13 @@
       </nav>
 
       <div
-        class="flex h-auto justify-center md:w-full md:justify-start md:px-4"
+        class="flex h-auto justify-center items-centers md:w-full md:justify-start md:px-4"
       >
         <!-- Stock trade -->
         <router-link
           v-show="$route.name === 'Dashboard'"
           to=""
-          class="btn-success p-2 rounded md:flex md:font-semibold"
+          class="btn-success p-2 rounded w-5/6 md:flex md:font-semibold"
           data-toggle="modal"
           @click="showAddModal"
           ><Icon
@@ -67,7 +67,7 @@
         <router-link
           v-show="$route.name === 'Watchlist'"
           to=""
-          class="btn-success p-2 rounded items-center md:flex md:font-semibold"
+          class="btn-success p-2 rounded w-5/6 md:flex md:font-semibold"
           data-toggle="modal"
           @click="showAddWatchModal"
           ><Icon

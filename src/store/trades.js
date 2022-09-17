@@ -14,6 +14,7 @@ export const useTradesStore = defineStore("Trades", {
       entry: null,
       exit: null,
     },
+    stats: {},
     editModal: false,
     addModal: false,
     isLoading: false,
@@ -161,6 +162,55 @@ export const useTradesStore = defineStore("Trades", {
 
       // close modal
       this.addModal = false;
+    },
+
+    getStats() {
+      let wins = 0;
+      let losses = 0;
+      let totalLossAmount = 0;
+      let totalWinAmount = 0;
+      let avgLoss = 0;
+      let avgWin = 0;
+
+      if (this.tradesData.length == 0) {
+        this.stats = {
+          wins: 0,
+          losses: 0,
+          totalLossAmount: 0,
+          totalWinAmount: 0,
+          PnL: 0,
+          avgLoss: 0,
+          avgWin: 0,
+        };
+
+        return;
+      }
+
+      for (let i = 0; i < this.tradesData.length; i++) {
+        if (this.tradesData[i].status === "WIN") {
+          wins += 1;
+          totalWinAmount += this.tradesData[i].returnBase;
+        } else if (this.tradesData[i].status === "LOSS") {
+          losses += 1;
+          totalLossAmount += this.tradesData[i].returnBase;
+        }
+      }
+
+      avgLoss = totalLossAmount / losses;
+      avgWin = totalWinAmount / wins;
+
+      if (!avgLoss) avgLoss = 0;
+      if (!avgWin) avgWin = 0;
+
+      this.stats = {
+        wins: wins,
+        losses: losses,
+        totalLossAmount: totalLossAmount,
+        totalWinAmount: totalWinAmount,
+        PnL: totalWinAmount - totalLossAmount * -1,
+        avgLoss: avgLoss,
+        avgWin: avgWin,
+      };
     },
   },
 });
