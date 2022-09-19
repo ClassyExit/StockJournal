@@ -198,7 +198,7 @@
 <script>
 import BaseTableRows from "./BaseTableRows.vue";
 import StatsContainer from "./StatsContainer.vue";
-import BaseModal from "./BaseModal.vue";
+
 import { useTradesStore } from "@/store/trades.js";
 import { useDatabaseStore } from "@/store/database";
 import { useUserStore } from "@/store/user";
@@ -214,7 +214,6 @@ import WarningAlert from "@/components/Notifications/WarningAlert.vue";
 export default {
   components: {
     BaseTableRows,
-    BaseModal,
     DangerAlert,
     InfoAlert,
     SuccessAlert,

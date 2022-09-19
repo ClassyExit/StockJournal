@@ -18,49 +18,54 @@
       </div>
     </div>
 
-    <section
-      class="container mx-auto px-6 divide-y divide-solid divide-gray-700"
-    >
-      <div class="flex items-center flex-wrap mb-5">
-        <div class="w-full md:w-1/2 px-4 md:order-1">
-          <h4 class="text-3xl text-headline font-bold mb-3 text-center">
-            Track Your Trades
-          </h4>
-          <p class="text-headline mb-8 text-left">
-            A simple stock trading journal that can be used to record, analyze,
-            and reevaulate your trading performance.
-          </p>
+    <section class="container mx-auto px-6" aria-label="features">
+      <div class="divide-y divide-solid divide-gray-700">
+        <div class="flex items-center flex-wrap mb-5">
+          <div class="w-full md:w-1/2 px-4 md:order-1">
+            <h4 class="text-3xl text-headline font-bold mb-3 text-center">
+              Track Your Trades
+            </h4>
+            <p class="text-headline mb-8 text-left">
+              A simple stock trading journal that can be used to record,
+              analyze, and reevaulate your trading performance.
+            </p>
+          </div>
+          <div class="w-full md:w-1/2 px-4 md:order-2">
+            <img src="@/assets/images/exampleTrades.png" alt="exampleTrades" />
+          </div>
         </div>
-        <div class="w-full md:w-1/2 px-4 md:order-2">
-          <img src="@/assets/images/exampleTrades.png" alt="exampleTrades" />
-        </div>
-      </div>
-      <div class="flex items-center flex-wrap mb-5 py-5">
-        <div class="w-full md:w-1/2 px-4 md:order-2">
-          <h4 class="text-3xl text-headline font-bold mb-3 text-center">
-            Watchlist
-          </h4>
-          <p class="text-headline mb-8 text-center">
-            Interested in a stock? Add to your watchlist. View your interests
-            all in one place!
-          </p>
-        </div>
+        <div class="flex items-center flex-wrap mb-5 py-5">
+          <div class="w-full md:w-1/2 px-4 md:order-2">
+            <h4 class="text-3xl text-headline font-bold mb-3 text-center">
+              Watchlist
+            </h4>
+            <p class="text-headline mb-8 text-center">
+              Interested in a stock? Add to your watchlist. View your interests
+              all in one place!
+            </p>
+          </div>
 
-        <div class="w-full md:w-1/2 px-4 md:order-1">
-          <img
-            src="@/assets/images/exampleWatchlist2.png"
-            alt="exampleWatchlist"
-          />
+          <div class="w-full md:w-1/2 px-4 md:order-1">
+            <img
+              src="@/assets/images/exampleWatchlist2.png"
+              alt="exampleWatchlist"
+            />
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="container mx-auto mb-8 mt-8">
+    <section class="container mx-auto mb-8 mt-16" aria-label="steps">
+      <h1
+        class="text-center font-extrabold text-transparent text-4xl bg-clip-text mb-8 bg-gradient-to-r from-purple-900 to-blue-400"
+      >
+        Three Steps To Boost Performance
+      </h1>
       <div
         class="flex flex-col space-y-6 mx-6 md:grid md:grid-cols-3 md:space-y-0 md:items-center md:align-center"
       >
         <div
-          class="flex flex-col md:mx-8 p-10 bg-bg_gray md:h-96 bg-gradient-to-r from-indigo-900"
+          class="flex flex-col md:mx-8 p-10 md:h-96 bg-gradient-to-r from-indigo-900"
         >
           <div class="self-center">
             <Icon
@@ -104,17 +109,19 @@
           </div>
           <div class="text-paragraph">
             The sooner you're able to identify your trading mistakes, the
-            quicker you can improve your strategy and rake in more profit!
+            quicker you can improve your strategy and become more profitable!
           </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="min-w-screen flex flex-col items-center bg-bg_light">
+    <section class="bg-bg_light pb-2 mb-2" aria-label="FAQ">
+      <div class="min-w-screen flex flex-col items-center">
         <p class="text-4xl pt-4 pb-6">FAQ</p>
-        <div class="flex flex-row justify-center gap-32 pb-8">
-          <div class="w-1/4">
+        <div
+          class="flex flex-col md:flex-row justify-center gap-6 md:gap-32 pb-8"
+        >
+          <div class="w-full px-4 md:px-0 md:w-1/4">
             <h1 class="text-2xl text-headline pb-2">What's this?</h1>
             <p class="text-paragraph">
               This project was developed using the Vue.js framework. A stock
@@ -123,7 +130,7 @@
               evaluate any future trades.
             </p>
           </div>
-          <div class="w-1/4">
+          <div class="w-full px-4 md:px-0 md:w-1/4">
             <h1 class="text-2xl text-headline pb-2">Free to use</h1>
             <p class="text-paragraph">
               No costs involved. Try it out, tell us what you think and share
@@ -132,13 +139,41 @@
           </div>
         </div>
       </div>
+      <div class="flex flex-col items-center mb-4 gap-1">
+        <div class="">Have any Questions?</div>
+        <router-link
+          to=""
+          @click="openEmailModal"
+          class="bg-white rounded p-2 bg-gradient-to-r from-indigo-600 to-blue-900"
+        >
+          Contact Us
+        </router-link>
+      </div>
     </section>
+    <EmailModal />
   </div>
 </template>
 
 <script>
+import EmailModal from "@/components/Modals/EmailModal.vue";
+import { useUserStore } from "@/store/user";
+import { resetStore } from "@/store/reset-store";
+
 export default {
-  setup() {},
+  components: {
+    EmailModal,
+  },
+  setup() {
+    resetStore();
+    const userStore = useUserStore();
+    const openEmailModal = () => {
+      userStore.showEmailModal = true;
+    };
+
+    return {
+      openEmailModal,
+    };
+  },
 };
 </script>
 

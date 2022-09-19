@@ -3,15 +3,15 @@
     <header>
       <!-- Navbar -->
       <div class="flex w-full bg-background">
-        <div class="flex md:px-48 py-5">
-          <router-link to="/home" class="w-1/8">
+        <div class="flex md:px-48 py-5 hidden sm:block">
+          <router-link to="/home" class="">
             <img src="../../assets/images/logo.png" class="h-12" />
           </router-link>
         </div>
-        <!-- px-5 py-4 md:mx-10 -->
+
         <!-- Nav Links -->
         <div
-          class="flex flex-grow items-center justify-end space-x-4 mr-4 md:px-48"
+          class="flex flex-grow items-center justify-end space-x-4 mr-4 py-5 md:px-48"
         >
           <router-link to="/home">
             <Button>HOME</Button>

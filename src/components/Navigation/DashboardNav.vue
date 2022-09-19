@@ -1,10 +1,8 @@
 <template>
   <div class="flex min-h-screen max-h-max flex-row bg-background">
     <Sidebar />
-    <!-- Render content here -->
-    <div class="flex flex-col flex-grow w-full">
-      <!-- Sidebar Render -->
 
+    <div class="flex flex-col flex-grow w-full">
       <Navbar />
       <!-- Inject content -->
       <div id="content" class="flex flex-grow flex-col">
