@@ -4,12 +4,16 @@
 
 <script>
 import { useUserStore } from "@/store/user.js";
+import { useNotificationStore } from "./store/notifications";
 
 import "@/assets/tailwind.css";
 
 export default {
   setup() {
     const userStore = useUserStore();
+
+    // Delete global notifications on refresh | application load
+    useNotificationStore().deleteAllGlobalNotifications();
 
     userStore.InitializeAuth();
   },

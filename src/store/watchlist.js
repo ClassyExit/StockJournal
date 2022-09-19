@@ -10,17 +10,17 @@ const apiKey = "tCN0bkSfgweXGBuCaYu7yF1OYgYm4DpwbWsctC1V";
 export const useWatchlistStore = defineStore("Watchlist", {
   state: () => ({
     watchlistData: [],
-    addWatchlistModal: false,
-    falseData: null,
-    isLoading: false,
+    showAddWatchlistModal: false,
+    watchlistError: null,
   }),
   getters: {},
   actions: {
-    showAddWatchModal() {
-      this.addWatchlistModal = true;
+    showWatchlistModal() {
+      this.showAddWatchlistModal = true;
     },
     hideWatchModal() {
-      this.addWatchlistModal = false;
+      this.showAddWatchlistModal = false;
+      this.watchlistError = null;
     },
     async generateId() {
       return await nanoid(12);
@@ -80,8 +80,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
           }
         })
         .catch((err) => {
-          console.log(err);
-
           if (tickerData.error) {
           } else {
             tickerData = {
@@ -97,41 +95,60 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
     async addToWatchlist(ticker) {
       // ADDS A TICKER TO WATCHLIST
+
+      if (!ticker) {
+        this.watchlistError = "Please enter a ticker to search";
+        return;
+      }
+
       let tickerData = {};
 
       tickerData = await this.fetchPrice(ticker);
       tickerData.id = await this.generateId();
 
-      if (!tickerData) {
-        this.addWatchlistModal = false;
-        notificationStore().addGlobalNotification(
-          "danger",
-          "Unable to find requested stock. Please ensure the ticker is correct."
-        );
+      if (!tickerData.price || !tickerData.ticker) {
+        this.watchlistError =
+          "Unable to find requested stock. Please ensure the ticker is correct.";
         return;
       } else {
-        if (tickerData.error) {
-          this.addWatchlistModal = false;
-          return;
-        } else if ((tickerData.name || tickerData.price) == null) {
-          this.addWatchlistModal = false;
-
-          notificationStore().addGlobalNotification(
-            "danger",
-            `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
-          );
-          return;
-        } else {
-          this.addWatchlistModal = false;
-        }
-
         this.watchlistData.push(tickerData);
 
         // Add to db
         databaseStore().addWatch(userStore().userId, tickerData);
 
-        this.addWatchlistModal = false;
+        this.hideWatchModal();
       }
+
+      // if (!tickerData) {
+      //   this.addWatchlistModal = false;
+      //   notificationStore().addGlobalNotification(
+      //     "danger",
+      //     "Unable to find requested stock. Please ensure the ticker is correct."
+      //   );
+      //   return;
+      // } else {
+      //   if (tickerData.error) {
+      //     this.addWatchlistModal = false;
+      //     return;
+      //   } else if ((tickerData.name || tickerData.price) == null) {
+      //     this.addWatchlistModal = false;
+
+      //     notificationStore().addGlobalNotification(
+      //       "danger",
+      //       `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
+      //     );
+      //     return;
+      //   } else {
+      //     this.addWatchlistModal = false;
+      //   }
+
+      //   this.watchlistData.push(tickerData);
+
+      //   // Add to db
+      //   databaseStore().addWatch(userStore().userId, tickerData);
+
+      //   this.hideWatchModal();
+      // }
     },
 
     async deleteWatch(index) {

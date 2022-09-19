@@ -1,187 +1,94 @@
 <template>
-  <header>
-    <div class="navbar bg-bg_light">
-      <div class="flex-1">
-        <router-link to="/dashboard" class="w-1/8">
-          <img src="../../assets/images/logo.png" class="h-10" />
-        </router-link>
-      </div>
-      <div class="flex-none">
-        <ul class="menu menu-horizontal p-0">
-          <!-- Alerts -->
-          <div class="dropdown dropdown-content md:dropdown-end">
-            <label tabindex="0" class="btn btn-ghost rounded-btn">
-              <Icon
-                v-if="!notifications.length"
-                icon="clarity:notification-line"
-                color="white"
-                width="20"
-                height="20"
-              />
-              <Icon
-                v-else
-                icon="clarity:notification-outline-badged"
-                color="red"
-                width="20"
-                height="20"
-              />
-            </label>
-            <ul
-              tabindex="0"
-              class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4"
-            >
-              <div class="space-y-2 max-w-80 overflow-auto">
-                <li v-for="(alert, index) in notifications">
-                  <SuccessAlert
-                    :key="index"
-                    :id="alert.alertId"
-                    v-if="alert.alertType === 'success'"
-                    >{{ alert.alertMsg }}</SuccessAlert
-                  >
-                  <DangerAlert
-                    :key="index"
-                    :id="alert.alertId"
-                    v-if="alert.alertType === 'danger'"
-                    >{{ alert.alertMsg }}</DangerAlert
-                  >
-                  <InfoAlert
-                    :key="index"
-                    :id="alert.alertId"
-                    v-if="alert.alertType === 'info'"
-                    >{{ alert.alertMsg }}</InfoAlert
-                  >
-                  <WarningAlert
-                    :key="index"
-                    :id="alert.alertId"
-                    v-if="alert.alertType === 'warning'"
-                    >{{ alert.alertMsg }}</WarningAlert
-                  >
-                </li>
-              </div>
-            </ul>
-          </div>
-
-          <li>
-            <router-link to="" @click="showEmailModal">Contact</router-link>
-          </li>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost rounded-btn"
-              >Account</label
-            >
-            <ul
-              tabindex="0"
-              class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-52 mt-4"
-            >
-              <li>
-                <router-link class="flex-1" :to="{ name: 'Profile' }"
-                  >Profile</router-link
-                >
-              </li>
-              <li>
-                <router-link class="flex-1" to="#" @click="userStore.logout()"
-                  >Logout</router-link
-                >
-              </li>
-            </ul>
+  <header class="w-full bg-bg_light">
+    <ul class="flex flex-row p-2 justify-end space-x-4">
+      <!-- Notifications -->
+      <div class="dropdown dropdown-content dropdown-end">
+        <label tabindex="0" class="btn btn-ghost rounded-btn">
+          <Icon
+            v-if="!notifications.length"
+            icon="clarity:notification-line"
+            color="white"
+            width="20"
+            height="20"
+          />
+          <Icon
+            v-else
+            icon="clarity:notification-outline-badged"
+            color="red"
+            width="20"
+            height="20"
+          />
+        </label>
+        <ul
+          tabindex="0"
+          class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4"
+        >
+          <div class="space-y-2 max-w-80 overflow-auto">
+            <li v-for="(alert, index) in notifications">
+              <SuccessAlert
+                :key="index"
+                :id="alert.alertId"
+                v-if="alert.alertType === 'success'"
+                >{{ alert.alertMsg }}</SuccessAlert
+              >
+              <DangerAlert
+                :key="index"
+                :id="alert.alertId"
+                v-if="alert.alertType === 'danger'"
+                >{{ alert.alertMsg }}</DangerAlert
+              >
+              <InfoAlert
+                :key="index"
+                :id="alert.alertId"
+                v-if="alert.alertType === 'info'"
+                >{{ alert.alertMsg }}</InfoAlert
+              >
+              <WarningAlert
+                :key="index"
+                :id="alert.alertId"
+                v-if="alert.alertType === 'warning'"
+                >{{ alert.alertMsg }}</WarningAlert
+              >
+            </li>
           </div>
         </ul>
       </div>
-    </div>
+
+      <!-- Stock trade -->
+      <router-link
+        v-show="$route.name === 'Dashboard'"
+        to=""
+        class="flex btn-success items-center justify-center rounded w-32 min-w-32 max-w-xs font-semibold"
+        data-toggle="modal"
+        @click="showTradeModal()"
+        ><span class="pl-2 md:block">Add Trade</span></router-link
+      >
+
+      <!-- Watchlist -->
+      <router-link
+        v-show="$route.name === 'Watchlist'"
+        to=""
+        class="flex btn-success items-center justify-center rounded w-32 min-w-32 max-w-xs font-semibold"
+        data-toggle="modal"
+        @click="showWatchlistModal()"
+        ><span class="pl-2 md:block">Add Watchlist</span></router-link
+      >
+    </ul>
   </header>
 
-  <EmailModal :modalActive="emailModal"
-    ><div
-      class="modal-header flex p-2 justify-between border-b-2 border-gray-600"
-    >
-      <div class="align-middle">
-        <h1 class="text-lg text-white font-bold">SUPPORT</h1>
-      </div>
-      <div>
-        <button class="btn btn-square btn-sm" @click="hideEmailModal">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
-    <!-- Content -->
-    <div class="content">
-      <!-- Content -->
-      <section>
-        <form class="w-full min-w-lg">
-          <div class="flex mb-6 px-4">
-            <div class="w-full px-3">
-              <label
-                class="block uppercase text-white text-xs font-bold mb-2 mt-2"
-                for="grid-password"
-              >
-                E-mail
-              </label>
-              <input
-                class="block w-full text-black bg-gray-600 text-gray-700 rounded py-3 px-4 mb-3"
-                id="email"
-                type="email"
-                v-model="ticketForm.email"
-              />
-              <p class="text-white text-xs italic">
-                If you encounter any bugs, or would like a feature added, please
-                send a ticket in!
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-wrap px-3">
-            <div class="w-full px-3">
-              <label
-                class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                for="grid-password"
-              >
-                Message
-              </label>
-              <textarea
-                class="no-resize block w-full bg-gray-600 text-black rounded px-4 mb-3 h-48 resize-none"
-                id="message"
-                v-model="ticketForm.message"
-              ></textarea>
-            </div>
-          </div>
-          <div class="flex justify-end">
-            <div class="px-4 py-2">
-              <button
-                :disabled="!ticketForm.message"
-                :class="{ 'disabled cursor-not-allowed': !ticketForm.message }"
-                class="shadow btn-success text-black font-bold py-2 px-4 rounded"
-                type="button"
-                @click="submitTicket(ticketForm)"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </form>
-      </section>
-    </div>
-  </EmailModal>
+  <!-- Trade Add Modal -->
+  <TradeModal />
+  <!-- Add Watchlist Modal -->
+  <WatchlistModal />
 </template>
 
 <script>
-import { useUserStore } from "@/store/user";
 import { useNotificationStore } from "@/store/notifications";
+import { useTradesStore } from "@/store/trades";
+import { useWatchlistStore } from "@/store/watchlist";
 
-import { Notifications as notificationsJS } from "../Notifications/notifications";
-
-import EmailModal from "./EmailModal.vue";
-import { ref } from "vue";
+import TradeModal from "@/components/Modals/TradeModal.vue";
+import WatchlistModal from "@/components/Modals/WatchlistModal.vue";
 
 import DangerAlert from "@/components/Notifications/DangerAlert.vue";
 import InfoAlert from "@/components/Notifications/InfoAlert.vue";
@@ -191,59 +98,33 @@ import { storeToRefs } from "pinia";
 
 export default {
   components: {
-    EmailModal,
     DangerAlert,
     InfoAlert,
     SuccessAlert,
     WarningAlert,
-    SuccessAlert,
+    TradeModal,
+    WatchlistModal,
   },
   setup() {
-    const userStore = useUserStore();
     const notificationStore = useNotificationStore();
+    const tradeStore = useTradesStore();
+    const watchlistStore = useWatchlistStore();
 
+    const showTradeModal = () => {
+      tradeStore.showAddTradeModal = true;
+    };
+
+    const showWatchlistModal = () => {
+      watchlistStore.showAddWatchlistModal = true;
+    };
+
+    // Reactively watch notifications
     const { notifications } = storeToRefs(notificationStore);
 
-    const emailModal = ref(false);
-
-    const ticketForm = ref({ email: userStore.user.email, message: null });
-
-    const hideEmailModal = () => {
-      emailModal.value = false;
-    };
-
-    const showEmailModal = () => {
-      emailModal.value = true;
-    };
-
-    const submitTicket = (ticketForm) => {
-      //TODO: Send email
-      // https://nodemailer.com/about/
-      try {
-        notificationStore.addGlobalNotification(
-          "success",
-          "We recieved your message. We'll get back to you as soon as possible. Thank you!"
-        );
-      } catch (error) {
-        console.log(error);
-        notificationStore.addGlobalNotification(
-          "danger",
-          "Uh-oh. Unable to send in support tickets. Please try again later."
-        );
-      }
-      ticketForm.message = null;
-      emailModal.value = false;
-    };
-
     return {
+      showTradeModal,
+      showWatchlistModal,
       notifications,
-      userStore,
-      showEmailModal,
-      hideEmailModal,
-      emailModal,
-      submitTicket,
-      ticketForm,
-      notificationsJS,
     };
   },
 };

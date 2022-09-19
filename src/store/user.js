@@ -26,7 +26,7 @@ export const useUserStore = defineStore("User", {
     passwordChangeErrors: false,
     passwordChangeSuccess: false,
     deleteErrors: false,
-    lastURL: null,
+    showEmailModal: false,
   }),
   getters: {},
   persist: true,

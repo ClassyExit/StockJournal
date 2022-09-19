@@ -2,7 +2,7 @@
   <teleport to="body">
     <div
       ref="modal-backdrop"
-      class="fixed z-10 inset-0 overflow-y-auto"
+      class="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm"
       v-show="modalActive"
     >
       <div class="flex items-center justify-center min-h-screen text-center">

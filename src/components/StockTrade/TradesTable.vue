@@ -6,41 +6,53 @@
       <StatsContainer
         ><template #title>WINS</template>
         <template #stat
-          ><span class="text-green-700">{{ stats.wins }}</span></template
+          ><span class="text-win">{{ stats.wins }}</span></template
         ></StatsContainer
       >
       <StatsContainer
         ><template #title>LOSSES</template>
         <template #stat
-          ><span class="text-red-700">{{ stats.losses }}</span></template
+          ><span class="text-loss">{{ stats.losses }}</span></template
         ></StatsContainer
       >
       <StatsContainer
         ><template #title>AVG WIN</template>
-        <template #stat
-          ><span class="text-green-700">{{
-            stats.avgWin.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        <template #stat>
+          <span class="text-win">{{
+            Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(stats.avgWin)
           }}</span></template
         ></StatsContainer
       >
       <StatsContainer
         ><template #title>AVG LOSS</template>
         <template #stat
-          ><span class="text-red-700">{{
-            stats.avgLoss.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          ><span class="text-loss">{{
+            Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(stats.avgLoss)
           }}</span></template
         ></StatsContainer
       >
       <StatsContainer
         ><template #title>PnL</template>
         <template #stat
-          ><span v-if="stats.PnL >= 0" class="text-green-700">{{
-            stats.PnL.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          ><span :class="stats.PnL >= 0 ? 'text-win' : 'text-loss'">{{
+            Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(stats.PnL)
           }}</span>
-          <span v-else class="text-red-700">{{
-            stats.PnL.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-          }}</span></template
-        ></StatsContainer
+        </template></StatsContainer
       >
     </div>
     <div>
@@ -96,8 +108,8 @@
               </div>
             </thead>
             <!-- Table Body -->
-            <tbody class="over-y-scroll h-2/3">
-              <tr class="my-2 rounded p-2">
+            <tbody class="over-y-scroll h-2/3s">
+              <tr>
                 <BaseTableRows
                   class="hidden md:block"
                   v-for="(trade, index) in tradesData"
@@ -179,66 +191,8 @@
     </div>
   </div>
 
-  <!-- Bring in values from store into script and add them into the form -->
-  <!-- {stockName = ..., qty= ...} -->
-  <BaseModal :modalActive="editModal" title="Edit Trade">
-    <template #content>
-      <div class="container mx-auto">
-        <div class="p-2">
-          <form class="w-5/6 md:w-full">
-            <div class="flex flex-col md:grid md:grid-cols-4 gap-4">
-              <div class="flex flex-col">
-                <label class="uppercase">Ticker</label>
-                <input
-                  id="ticker"
-                  type="text"
-                  v-model="editTradeData.ticker"
-                  class="text-black rounded bg-gray-500"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Qty</label>
-                <input
-                  id="qty"
-                  type="number"
-                  v-model="editTradeData.qty"
-                  class="text-black rounded bg-gray-500"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Entry Price</label>
-                <input
-                  id="entryPrice"
-                  type="number"
-                  v-model="editTradeData.entry"
-                  class="text-black rounded bg-gray-500"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Exit Price</label>
-                <input
-                  id="exitPrice"
-                  type="number"
-                  v-model="editTradeData.exit"
-                  class="text-black rounded bg-gray-500"
-                />
-              </div>
-            </div>
-            <footer class="flex md:justify-end align-center pt-6">
-              <div
-                type="submit"
-                class="btn btn-success mx-1"
-                @click="editTrade()"
-              >
-                Confirm
-              </div>
-              <div class="btn btn-error mx-1" @click="hideModal">Cancel</div>
-            </footer>
-          </form>
-        </div>
-      </div>
-    </template>
-  </BaseModal>
+  <!-- Edit Trade -->
+  <EditTradeModal />
 </template>
 
 <script>
@@ -250,6 +204,7 @@ import { useDatabaseStore } from "@/store/database";
 import { useUserStore } from "@/store/user";
 import { onMounted, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
+import EditTradeModal from "../Modals/EditTradeModal.vue";
 
 import DangerAlert from "@/components/Notifications/DangerAlert.vue";
 import InfoAlert from "@/components/Notifications/InfoAlert.vue";
@@ -265,12 +220,12 @@ export default {
     SuccessAlert,
     WarningAlert,
     StatsContainer,
+    EditTradeModal,
   },
   setup() {
     const TradesStore = useTradesStore();
 
-    const { editModal, editTradeData, tradesData, stats } =
-      storeToRefs(TradesStore);
+    const { editModal, tradesData, stats } = storeToRefs(TradesStore);
 
     const { editTrade, deleteTrade, hideModal, getTradeDetails } = TradesStore;
     const rows = tradesData;
@@ -299,7 +254,6 @@ export default {
       editModal,
       getTradeDetails,
       editTrade,
-      editTradeData,
       stats,
     };
   },

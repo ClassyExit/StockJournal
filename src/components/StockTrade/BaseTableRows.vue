@@ -1,5 +1,5 @@
 <template>
-  <div class="contents-container rounded bg-bg_light my-2">
+  <div class="contents-container rounded bg-bg_light my-1">
     <div
       class="flex flex-row justify-evenly grid grid-cols-11 justify-items-center py-3"
     >
@@ -36,7 +36,12 @@
       <td>
         <div class="text-white">
           <p v-if="qty" :value="qty">
-            {{ qty.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") }}
+            {{
+              Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(qty)
+            }}
           </p>
           <p v-else :value="qty">-</p>
         </div>
@@ -45,7 +50,14 @@
       <td>
         <div class="text-white hidden md:block">
           <p v-if="entry" :value="entry">
-            ${{ entry.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") }}
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(entry)
+            }}
           </p>
           <p v-else :value="entry">-</p>
         </div>
@@ -54,8 +66,13 @@
       <td>
         <div class="text-white hidden md:block">
           <p v-if="entryTotal" :value="entryTotal">
-            ${{
-              entryTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(entryTotal)
             }}
           </p>
           <p v-else :value="entryTotal">-</p>
@@ -65,7 +82,14 @@
       <td>
         <div class="text-white hidden md:block">
           <p v-if="exit" :value="exit">
-            ${{ exit.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") }}
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(exit)
+            }}
           </p>
           <p v-else :value="exit">-</p>
         </div>
@@ -75,8 +99,13 @@
       <td>
         <div class="text-white hidden md:block">
           <p v-if="exitTotal" :value="exitTotal">
-            ${{
-              exitTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(exitTotal)
             }}
           </p>
           <p v-else :value="exitTotal">-</p>
@@ -86,26 +115,21 @@
       <td>
         <div class="text-white hidden md:block">
           <p
-            v-if="returnBase > 0"
+            v-if="returnBase || returnBase == 0"
             :value="returnBase"
-            :class="{ lossText: returnBase < 0, winText: returnBase > 0 }"
+            :class="{
+              'text-loss': returnBase < 0,
+              'text-win': returnBase > 0,
+              'text-neutral': returnBase == 0,
+            }"
           >
             {{
-              returnBase.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-            }}
-          </p>
-          <p
-            v-else-if="returnBase < 0"
-            :value="returnBase"
-            :class="{ lossText: returnBase < 0, winText: returnBase > 0 }"
-          >
-            {{
-              returnBase.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-            }}
-          </p>
-          <p v-else-if="returnBase == 0" :value="returnBase">
-            {{
-              returnBase.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(returnBase)
             }}
           </p>
           <p v-else :value="returnBase">-</p>
@@ -115,15 +139,21 @@
       <td>
         <div class="text-white">
           <p
-            v-if="returnPercent != null"
+            v-if="returnPercent || returnPercent == 0"
             :value="returnPercent"
-            :class="{ lossText: returnPercent < 0, winText: returnPercent > 0 }"
+            :class="{
+              'text-loss': returnPercent < 0,
+              'text-win': returnPercent > 0,
+              'text-neutral': returnPercent == 0,
+            }"
           >
             {{
-              returnPercent
-                .toFixed(2)
-                .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-            }}%
+              Intl.NumberFormat("en-US", {
+                style: "percent",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(returnPercent / 100)
+            }}
           </p>
           <p v-else :value="returnPercent">-</p>
         </div>

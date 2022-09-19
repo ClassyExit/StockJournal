@@ -1,298 +1,89 @@
 <template>
-  <aside
-    id="sidebar"
-    class="bg-gray-800 text-gray-100 relative min-w-[12%] space-y-6 pt-6 px-0 transition duration-200 flex flex-col justify-between overflow-y-auto md:w-[12%]"
-  >
-    <div class="flex flex-col space-y-6">
-      <nav class="main-nav">
-        <!-- Route Links -->
-        <router-link
-          :to="{ name: 'Dashboard' }"
-          class="flex w-full items-center justify-center md:justify-start md:space-x-2 py-2 md:px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
-        >
-          <Icon
-            icon="ic:outline-dashboard"
-            width="20"
-            height="20"
-            class="hidden md:block"
-          />
-          <Icon
-            icon="ic:outline-dashboard"
-            width="25"
-            height="25"
-            class="md:hidden"
-          />
-          <span class="hidden md:block">Dashboard</span></router-link
-        >
+  <aside id="sidebar" class="bg-bg_light h-screen relative w-16">
+    <div class="h-screen flex flex-col">
+      <div class="pb-4 pt-2 align-center justify-center">
+        <router-link to="/dashboard" class="">
+          <img src="../../assets/images/logo.png" class="h-10 w-32" />
+        </router-link>
+      </div>
+      <!-- Main Nav -->
+      <nav class="main-nav space-y-1">
+        <div aria-label="dashboard" class="hover:bg-gray-700">
+          <router-link
+            :to="{ name: 'Dashboard' }"
+            class="flex place-content-center p-1"
+          >
+            <Icon icon="ic:outline-dashboard" width="35" height="35" />
+          </router-link>
+        </div>
 
-        <router-link
-          :to="{ name: 'Watchlist' }"
-          class="flex items-center justify-center md:justify-start md:space-x-2 py-2 md:px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
-        >
-          <Icon
-            icon="ooui:watchlist-rtl"
-            width="20"
-            height="20"
-            class="hidden md:block"
-          />
-          <Icon
-            icon="ooui:watchlist-rtl"
-            width="25"
-            height="25"
-            class="md:hidden"
-          />
-          <span class="hidden md:block">Watchlist</span></router-link
-        >
+        <div aria-label="watchlist" class="hover:bg-gray-700">
+          <router-link
+            :to="{ name: 'Watchlist' }"
+            class="flex place-content-center p-1"
+          >
+            <Icon icon="ooui:watchlist-rtl" width="35" height="35" />
+          </router-link>
+        </div>
       </nav>
-
-      <div
-        class="flex h-auto justify-center items-centers md:w-full md:justify-start md:px-4"
-      >
-        <!-- Stock trade -->
-        <router-link
-          v-show="$route.name === 'Dashboard'"
-          to=""
-          class="btn-success p-2 rounded w-5/6 md:flex md:font-semibold"
-          data-toggle="modal"
-          @click="showAddModal"
-          ><Icon
-            icon="carbon:add-alt"
-            :inline="true"
-            width="25"
-            height="25"
-          /><span class="hidden pl-2 md:block">Add Trade</span></router-link
-        >
-
-        <!-- Watchlist -->
-        <router-link
-          v-show="$route.name === 'Watchlist'"
-          to=""
-          class="btn-success p-2 rounded w-5/6 md:flex md:font-semibold"
-          data-toggle="modal"
-          @click="showAddWatchModal"
-          ><Icon
-            icon="carbon:add-alt"
-            :inline="true"
-            width="25"
-            height="25"
-          /><span class="hidden pl-2 md:block">Add Watchlist</span></router-link
-        >
-      </div>
+      <div id="filler" class="flex-1"></div>
+      <!-- Footer Nav -->
+      <nav class="footer-nav content-end pb-4 space-y-2">
+        <div aria-label="contact" class="hover:bg-gray-700">
+          <router-link
+            to=""
+            @click="showEmailModal"
+            class="flex place-content-center p-1"
+          >
+            <Icon icon="charm:mail" width="35" height="35" />
+          </router-link>
+        </div>
+        <div aria-label="settings" class="hover:bg-gray-700">
+          <router-link
+            :to="{ name: 'Profile' }"
+            class="flex place-content-center p-1"
+          >
+            <Icon icon="carbon:settings" width="35" height="35" />
+          </router-link>
+        </div>
+        <div aria-label="logout" class="hover:bg-gray-700">
+          <router-link
+            to="#"
+            @click="userStore.logout()"
+            class="flex place-content-center p-1"
+          >
+            <Icon icon="ic:baseline-log-out" width="35" height="35" />
+          </router-link>
+        </div>
+      </nav>
     </div>
-
-    <nav class="footer">
-      <div class="w-full">
-        <a
-          href="#"
-          class="w-full flex items-center justify-center py-2 hover:bg-gray-700 hover:text-white md:px-4 md:justify-start md:space-x-2"
-        >
-          <Icon
-            icon="ant-design:github-filled"
-            width="25"
-            height="25"
-            class="md:hidden content-center"
-          />
-          <Icon
-            icon="ant-design:github-filled"
-            width="20"
-            height="20"
-            class="hidden md:block"
-          />
-          <span class="hidden md:block md:uppercase">Github</span></a
-        >
-      </div>
-    </nav>
   </aside>
 
-  <!-- Trade Add Modal -->
-  <BaseModal :modalActive="addModal" title="Add Trade">
-    <template #content>
-      <div class="container mx-auto">
-        <div class="p-2">
-          <form class="w-full" novalidate @submit.prevent="onSubmit(formData)">
-            <div class="md:grid md:grid-cols-4 gap-4">
-              <div class="flex flex-col">
-                <label class="uppercase">Ticker</label>
-                <input
-                  id="ticker"
-                  placeholder="e.g. AAPL"
-                  v-model="formData.ticker"
-                  type="text"
-                  class="text-black rounded font-medium bg-gray-500 placeholder-gray-700"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Qty</label>
-                <input
-                  placeholder="10"
-                  id="qty"
-                  v-model="formData.qty"
-                  type="number"
-                  class="text-black rounded font-medium bg-gray-500 placeholder-gray-700"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Entry Price</label>
-                <input
-                  id="entryPrice"
-                  placeholder="10.00"
-                  v-model="formData.entryPrice"
-                  type="number"
-                  class="text-black rounded font-medium bg-gray-500 placeholder-gray-700"
-                />
-              </div>
-              <div class="flex flex-col">
-                <label class="uppercase">Exit Price</label>
-                <input
-                  id="exitPrice"
-                  placeholder="25.23"
-                  v-model="formData.exitPrice"
-                  type="number"
-                  class="text-black rounded font-medium bg-gray-500 placeholder-gray-700"
-                />
-              </div>
-            </div>
-            <footer class="flex justify-end align-center pt-6">
-              <button
-                type="submit"
-                class="btn btn-success mx-1"
-                @click="addTrade(formData)"
-              >
-                Add Trade
-              </button>
-              <div class="btn btn-error mx-1" @click="hideModal">Cancel</div>
-            </footer>
-          </form>
-        </div>
-      </div>
-    </template>
-  </BaseModal>
-
-  <!-- Add Watchlist Modal -->
-  <BaseModal :modalActive="addWatchlistModal" title="Add Watchlist">
-    <template #content>
-      <div class="container mx-auto">
-        <div class="p-2">
-          <form
-            class="w-full"
-            novalidate
-            @submit.prevent="onSubmitWatch(watchTicker)"
-          >
-            <div class="grid grid-cols-1 gap-4">
-              <div class="flex flex-col">
-                <label class="uppercase">Ticker</label>
-                <input
-                  required
-                  id="ticker"
-                  placeholder="e.g. AAPL"
-                  v-model="watchTicker"
-                  type="text"
-                  class="text-black rounded font-medium bg-gray-500 placeholder-gray-700"
-                />
-              </div>
-            </div>
-            <footer class="flex justify-end align-center pt-6">
-              <button
-                type="submit"
-                class="btn btn-success mx-1"
-                @click="addToWatchlist(watchTicker)"
-              >
-                Add Watchlist
-              </button>
-              <div class="btn btn-error mx-1" @click="hideWatchModal">
-                Cancel
-              </div>
-            </footer>
-          </form>
-        </div>
-      </div>
-    </template>
-  </BaseModal>
+  <EmailModal />
 </template>
 
 <script>
-import { useTradesStore } from "@/store/trades";
-import { useWatchlistStore } from "@/store/watchlist";
-import BaseModal from "../StockTrade/BaseModal.vue";
-import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import EmailModal from "@/components/Modals/EmailModal.vue";
+import { useUserStore } from "@/store/user";
 
 export default {
   components: {
-    BaseModal,
+    EmailModal,
   },
   setup() {
-    const TradesStore = useTradesStore();
-    const WatchlistStore = useWatchlistStore();
-    const { addTrade, showAddModal, hideModal } = TradesStore;
-    const { showAddWatchModal, hideWatchModal, addToWatchlist } =
-      WatchlistStore;
+    const userStore = useUserStore();
 
-    const { addModal } = storeToRefs(TradesStore);
-    const { addWatchlistModal } = storeToRefs(WatchlistStore);
-
-    const formData = ref({
-      ticker: null,
-      qty: null,
-      entryPrice: null,
-      exitPrice: null,
-    });
-
-    let watchTicker = null;
-
-    const onSubmit = (values) => {
-      values.ticker = null;
-      values.qty = null;
-      values.exitPrice = null;
-      values.entryPrice = null;
-    };
-
-    const onSubmitWatch = (value) => {
-      watchTicker = null;
+    // Open/close email modal
+    const showEmailModal = () => {
+      userStore.showEmailModal = true;
     };
 
     return {
-      onSubmit,
-      addTrade,
-      addModal,
-      showAddModal,
-      hideModal,
-      formData,
-      showAddWatchModal,
-      addWatchlistModal,
-      hideWatchModal,
-      watchTicker,
-      onSubmitWatch,
-      addToWatchlist,
+      userStore,
+      showEmailModal,
     };
   },
 };
 </script>
 
-<style scoped>
-#sidebar {
-  --tw-translate-x: -100%;
-}
-#menu-close-icon {
-  display: none;
-}
-
-#menu-open:checked ~ #sidebar {
-  --tw-translate-x: 0;
-}
-#menu-open:checked ~ * #mobile-menu-button {
-  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
-}
-#menu-open:checked ~ * #menu-open-icon {
-  display: none;
-}
-#menu-open:checked ~ * #menu-close-icon {
-  display: block;
-}
-
-@media (min-width: 768px) {
-  #sidebar {
-    --tw-translate-x: 0;
-  }
-}
-</style>
+<style lang="css"></style>

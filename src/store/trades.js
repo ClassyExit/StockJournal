@@ -16,8 +16,7 @@ export const useTradesStore = defineStore("Trades", {
     },
     stats: {},
     editModal: false,
-    addModal: false,
-    isLoading: false,
+    showAddTradeModal: false,
   }),
   getters: {
     showAddModalState: (state) => {
@@ -34,11 +33,11 @@ export const useTradesStore = defineStore("Trades", {
       this.editModal = true;
     },
     showAddModal() {
-      this.addModal = true;
+      this.showAddTradeModal = true;
     },
     hideModal() {
       this.editModal = false;
-      this.addModal = false;
+      this.showAddTradeModal = false;
     },
     generateId() {
       // Generate a unique ID by using Date.now()
@@ -161,7 +160,7 @@ export const useTradesStore = defineStore("Trades", {
       databaseStore().addTrade(userStore().userId, newTrade);
 
       // close modal
-      this.addModal = false;
+      this.showAddTradeModal = false;
     },
 
     getStats() {

@@ -18,7 +18,16 @@
       <!-- Price -->
       <td>
         <div class="flex text-white">
-          <p :value="price">${{ price }}</p>
+          <p :value="price">
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(price)
+            }}
+          </p>
         </div>
       </td>
       <!-- Since Added -->
@@ -28,23 +37,36 @@
             :value="since_add_percent"
             class="rounded px-2 py-0.2"
             :class="{
-              green: since_add_percent > 0,
-              red: since_add_percent < 0,
-              neutral: since_add_percent == 0,
+              'text-win': since_add_percent > 0,
+              'text-loss': since_add_percent < 0,
+              'text-neutral': since_add_percent == 0,
             }"
           >
-            {{ since_add_percent }}%
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "percent",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(since_add_percent / 100)
+            }}
           </p>
           <p
             :value="since_add_base"
             class="rounded px-2 py-0.2"
             :class="{
-              green: since_add_base > 0,
-              red: since_add_base < 0,
-              neutral: since_add_base == 0,
+              'text-win': since_add_base > 0,
+              'text-loss': since_add_base < 0,
+              'text-neutral': since_add_base == 0,
             }"
           >
-            ${{ since_add_base }}
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(since_add_base)
+            }}
           </p>
         </div>
       </td>
@@ -52,7 +74,14 @@
       <td>
         <div class="flex text-white">
           <p :value="fiftytwo_week_low" class="rounded px-2 py-0.2">
-            ${{ fiftytwo_week_low }}
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(fiftytwo_week_low)
+            }}
           </p>
         </div>
       </td>
@@ -60,7 +89,14 @@
       <td>
         <div class="flex text-white">
           <p :value="fiftytwo_week_high" class="rounded px-2 py-0.2">
-            ${{ fiftytwo_week_high }}
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(fiftytwo_week_high)
+            }}
           </p>
         </div>
       </td>
@@ -110,14 +146,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.green {
-  color: rgb(4, 167, 4);
-}
-.red {
-  color: rgb(243, 3, 3);
-}
-.neutral {
-  color: rgb(240, 235, 235, 0.8);
-}
-</style>
+<style scoped></style>

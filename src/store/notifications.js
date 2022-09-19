@@ -75,5 +75,9 @@ export const useNotificationStore = defineStore("Notification", {
         }
       }
     },
+
+    deleteAllGlobalNotifications() {
+      this.globalNotifications = [];
+    },
   },
 });

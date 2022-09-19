@@ -1,13 +1,11 @@
 <template>
-  <div class="flex min-h-screen flex-col bg-background">
-    <!-- Header Nav -->
-    <Navbar />
-
+  <div class="flex min-h-screen max-h-max flex-row bg-background">
+    <Sidebar />
     <!-- Render content here -->
-    <div class="flex flex-row flex-grow w-full">
+    <div class="flex flex-col flex-grow w-full">
       <!-- Sidebar Render -->
-      <Sidebar />
 
+      <Navbar />
       <!-- Inject content -->
       <div id="content" class="flex flex-grow flex-col">
         <!-- Global Notifications -->
@@ -39,7 +37,7 @@
             >
           </div>
         </div>
-        
+
         <router-view :key="$route.path"></router-view>
       </div>
     </div>
