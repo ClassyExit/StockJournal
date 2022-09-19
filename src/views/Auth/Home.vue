@@ -26,9 +26,9 @@
           <h4 class="text-3xl text-headline font-bold mb-3 text-center">
             Track Your Trades
           </h4>
-          <p class="text-headline mb-8 text-center">
-            Add, edit, and delete trades! A simple UI to show your progress on
-            your trades.
+          <p class="text-headline mb-8 text-left">
+            A simple stock trading journal that can be used to record, analyze,
+            and reevaulate your trading performance.
           </p>
         </div>
         <div class="w-full md:w-1/2 px-4 md:order-2">
@@ -41,7 +41,8 @@
             Watchlist
           </h4>
           <p class="text-headline mb-8 text-center">
-            Interested in a stock? Add to your watchlist!
+            Interested in a stock? Add to your watchlist. View your interests
+            all in one place!
           </p>
         </div>
 
@@ -54,28 +55,79 @@
       </div>
     </section>
 
+    <section class="container mx-auto mb-8 mt-8">
+      <div
+        class="flex flex-col space-y-6 mx-6 md:grid md:grid-cols-3 md:space-y-0 md:items-center md:align-center"
+      >
+        <div
+          class="flex flex-col md:mx-8 p-10 bg-bg_gray md:h-96 bg-gradient-to-r from-indigo-900"
+        >
+          <div class="self-center">
+            <Icon
+              icon="mdi:application-brackets-outline"
+              width="50"
+              height="50"
+            />
+          </div>
+          <div class="text-3xl pt-4 pb-4 text-headline">
+            Journal Your Trades
+          </div>
+          <div class="text-paragraph">
+            Our simple and elegant trade journal offers quick and easy entries.
+            Not only that, but is constantly being improved on to improve
+            usability and functionality.
+          </div>
+        </div>
+        <div class="flex flex-col md:mx-8 p-10 bg-bg_gray md:h-96">
+          <div class="self-center">
+            <Icon
+              icon="akar-icons:settings-horizontal"
+              width="50"
+              height="50"
+            />
+          </div>
+          <div class="text-3xl pt-4 pb-4 text-headline">Find Patterns</div>
+          <div class="text-paragraph">
+            Analyze your trades, locate where you're going right but also where
+            things are taking a dive for. You can use these patterns to
+            determine feasible ideas.
+          </div>
+        </div>
+        <div
+          class="flex flex-col md:mx-8 p-10 bg-bg_gray md:h-96 bg-gradient-to-l from-indigo-900"
+        >
+          <div class="self-center">
+            <Icon icon="eos-icons:performance" width="50" height="50" />
+          </div>
+          <div class="text-3xl pt-4 pb-4 text-headline">
+            Improve Your Performance
+          </div>
+          <div class="text-paragraph">
+            The sooner you're able to identify your trading mistakes, the
+            quicker you can improve your strategy and rake in more profit!
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="min-w-screen flex flex-col items-center bg-bg_light">
         <p class="text-4xl pt-4 pb-6">FAQ</p>
         <div class="flex flex-row justify-center gap-32 pb-8">
           <div class="w-1/4">
-            <h1 class="text-2xl text-headline pb-2">What is this?</h1>
+            <h1 class="text-2xl text-headline pb-2">What's this?</h1>
             <p class="text-paragraph">
-              This project was developed using the Vue.js framework. The stock
+              This project was developed using the Vue.js framework. A stock
               journal is a log that can be used to record your trades. By
               recording your trades, you can reflect upon previous trades and
               evaluate any future trades.
             </p>
           </div>
           <div class="w-1/4">
-            <h1 class="text-2xl text-headline pb-2">Open Source</h1>
+            <h1 class="text-2xl text-headline pb-2">Free to use</h1>
             <p class="text-paragraph">
-              The project is publicly available to view and can be found
-              <a
-                class="text-info"
-                href="https://github.com/ClassyExit/StockJournal"
-                >HERE.</a
-              >
+              No costs involved. Try it out, tell us what you think and share
+              any features or suggestions you may have!
             </p>
           </div>
         </div>

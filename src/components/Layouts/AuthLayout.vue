@@ -13,6 +13,9 @@
         <div
           class="flex flex-grow items-center justify-end space-x-4 mr-4 md:px-48"
         >
+          <router-link to="/home">
+            <Button>HOME</Button>
+          </router-link>
           <router-link to="/login">
             <Button>LOGIN</Button>
           </router-link>
