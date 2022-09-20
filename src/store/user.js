@@ -15,6 +15,7 @@ import {
 
 import { resetStore } from "./reset-store";
 import { useNotificationStore as notificationStore } from "./notifications";
+import emailjs from "@emailjs/browser";
 
 export const useUserStore = defineStore("User", {
   state: () => ({
@@ -27,6 +28,8 @@ export const useUserStore = defineStore("User", {
     passwordChangeSuccess: false,
     deleteErrors: false,
     showEmailModal: false,
+    emailStatus: null,
+    emailStatusMsg: null,
   }),
   getters: {},
   persist: true,
@@ -266,9 +269,42 @@ export const useUserStore = defineStore("User", {
         this.deleteErrors = "Something went wrong";
       }
     },
+    isValidEmail(email) {
+      var regex =
+        /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    },
 
-    async sendMail() {
-      let transporter = nodemailer.createTransport(transport)
-    }
+    async sendEmailSupport(ticketForm) {
+      const publicKey = "Yj_tvHNw9M8KafTN_";
+      const serviceID = "service_4pt8037";
+      const templateID = "template_7k7a6tp";
+
+      let emailParams = {
+        email: ticketForm.email,
+        message: ticketForm.message,
+        subject: ticketForm.subject,
+      };
+
+      //check if valid email
+
+      if (!this.isValidEmail(emailParams.email)) {
+        this.emailStatus = 400;
+        this.emailStatusMsg = "Please enter a valid email";
+        return;
+      }
+      await emailjs
+        .send(serviceID, templateID, emailParams, publicKey)
+        .then((result) => {
+          this.emailStatus = result.status;
+          this.emailStatusMsg =
+            "We've recieved your ticket. We'll get back to you shortly.";
+        })
+        .catch((err) => {
+          this.emailStatus = 400;
+          this.emailStatusMsg =
+            "Uh-oh, we're having issues processing tickets right now. Please try again later.";
+        });
+    },
   },
 });

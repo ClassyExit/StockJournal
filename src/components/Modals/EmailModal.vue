@@ -54,6 +54,10 @@
                       id="email"
                       type="email"
                       v-model="ticketForm.email"
+                      :class="{
+                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-success': emailStatus == 200,
+                      }"
                     />
                   </div>
 
@@ -66,6 +70,10 @@
                       class="block w-full text-black text-lg font-semibold bg-gray-600 text-gray-700 rounded py-3 px-4 mb-3"
                       id="subject"
                       v-model="ticketForm.subject"
+                      :class="{
+                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-success': emailStatus == 200,
+                      }"
                     >
                       <option class="text-white text-xl" value="bug">
                         Bug
@@ -98,13 +106,22 @@
                       class="no-resize block w-full bg-gray-600 text-black font-medium rounded px-4 mb-3 h-48 resize-none"
                       id="message"
                       v-model="ticketForm.message"
+                      :class="{
+                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-success': emailStatus == 200,
+                      }"
                     ></textarea>
                   </div>
                 </div>
 
-                <div v-if="ticketError.error !== null" class="error">
-                  <span class="text-danger px-6 text-xl">{{
-                    ticketError.message
+                <div v-if="emailStatus" class="px-5">
+                  <span
+                    v-if="emailStatus == 200"
+                    class="text-success text-xl"
+                    >{{ emailStatusMsg }}</span
+                  >
+                  <span v-else class="text-danger text-xl">{{
+                    emailStatusMsg
                   }}</span>
                 </div>
 
@@ -146,20 +163,15 @@ export default {
     const userStore = useUserStore();
 
     // Email
-    const { showEmailModal } = storeToRefs(userStore);
+    const { showEmailModal, emailStatus, emailStatusMsg } =
+      storeToRefs(userStore);
 
     let ticketForm = ref({ email: null, message: null, subject: null });
-    let ticketError = ref({ message: null, error: null });
 
     const hideEmailModal = () => {
       userStore.showEmailModal = false;
-
-      // Reset Ticker Error
-      ticketError = {
-        message: null,
-        error: null,
-      };
-
+      userStore.emailStatus = null;
+      userStore.emailStatusMsg = null;
       // Reset Form Data
       ticketForm = {
         email: null,
@@ -168,28 +180,13 @@ export default {
       };
     };
 
-    const submitTicket = (ticketForm) => {
-      //TODO: Send email
-      // https://nodemailer.com/about/
+    const submitTicket = async (ticketForm) => {
+      if (!ticketForm.email || !ticketForm.subject || !ticketForm.message) {
+        userStore.emailStatus = 400;
+        userStore.emailStatus = "Please fill out all fields.";
+      }
 
-      if (userStore.userId) {
-        // User is logged in - can send notification to them
-      } else {
-        // if using the contact from home page
-      }
-      try {
-        notificationStore.addGlobalNotification(
-          "success",
-          "We recieved your message. We'll get back to you as soon as possible. Thank you!"
-        );
-      } catch (error) {
-        console.log(error);
-        notificationStore.addGlobalNotification(
-          "danger",
-          "Uh-oh. Unable to send in support tickets. Please try again later."
-        );
-      }
-      hideEmailModal();
+      await userStore.sendEmailSupport(ticketForm);
     };
 
     return {
@@ -197,7 +194,8 @@ export default {
       submitTicket,
       showEmailModal,
       hideEmailModal,
-      ticketError,
+      emailStatus,
+      emailStatusMsg,
     };
   },
 };
