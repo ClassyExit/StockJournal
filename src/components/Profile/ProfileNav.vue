@@ -21,8 +21,9 @@
         <div
           class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
+          <Icon icon="jam:triangle-danger" color="red" width="30" height="30" />
           <button
-            class="w-full text-left text-red-700"
+            class="w-full text-left font-semibold text-danger"
             @click="activeRoute = 'delete'"
           >
             Delete

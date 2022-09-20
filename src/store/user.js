@@ -104,7 +104,7 @@ export const useUserStore = defineStore("User", {
 
       notificationStore().addNotification(
         "success",
-        "Hi there! If you run into any problems or have questions, please send in a ticket using the CONTACT button located on top. "
+        "Hi there! If you run into any issues, please send a ticket in by clicking the mail icon on the left and we'll be happy to help you out. "
       );
       // Set user state
       this.$patch({
@@ -220,7 +220,7 @@ export const useUserStore = defineStore("User", {
     },
 
     async deleteUserAccount() {
-      const deleteMsg = "Input current passsword to confirm account deletion";
+      const deleteMsg = "Enter current password to confirm account deletion";
       let currentPassword = prompt(deleteMsg);
 
       if (!currentPassword) return;
@@ -241,7 +241,7 @@ export const useUserStore = defineStore("User", {
                 //User Deleted
                 // Reset store
                 this.$reset();
-                alert("Account Deletion Successful");
+                alert("Account Deleted Successfully");
                 // Push to homepage
                 router.push("/home");
               })
@@ -287,18 +287,19 @@ export const useUserStore = defineStore("User", {
       };
 
       //check if valid email
-
       if (!this.isValidEmail(emailParams.email)) {
         this.emailStatus = 400;
         this.emailStatusMsg = "Please enter a valid email";
         return;
       }
+
+      // send email
       await emailjs
         .send(serviceID, templateID, emailParams, publicKey)
         .then((result) => {
           this.emailStatus = result.status;
           this.emailStatusMsg =
-            "We've recieved your ticket. We'll get back to you shortly.";
+            "We've recieved your inquiry. We'll get back to you as soon as possible.";
         })
         .catch((err) => {
           this.emailStatus = 400;

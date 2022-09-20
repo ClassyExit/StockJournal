@@ -12,30 +12,19 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
-            v-if="resetErrors"
-            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
+            class="block w-full px-2 py-2 text-xl font-normal text-black bg-gray-500 rounded"
             type="email"
             placeholder="example@email.com"
             v-model="email"
+            :class="{
+              'border-2 border-danger': resetErrors,
+              'border-2 border-success': resetSuccess,
+            }"
           />
-          <input
-            v-else-if="resetSuccess"
-            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded border-2 border-success"
-            type="email"
-            placeholder="example@email.com"
-            v-model="email"
-          />
-          <input
-            v-else
-            class="block w-full px-2 py-2 text-xl font-normal text-black bg-white rounded"
-            type="email"
-            placeholder="example@email.com"
-            v-model="email"
-          />
-          <span v-if="resetErrors" class="font-medium text-sm text-danger">
+          <span v-if="resetErrors" class="font-medium text-lg text-danger">
             {{ resetErrors }}</span
           >
-          <span v-if="resetSuccess" class="font-medium text-sm text-success">
+          <span v-if="resetSuccess" class="font-medium text-lg text-success">
             Success - Email sent!</span
           >
         </div>
@@ -76,4 +65,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: black;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: black;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: black;
+}
+</style>

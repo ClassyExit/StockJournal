@@ -181,7 +181,6 @@ export const useTradesStore = defineStore("Trades", {
           avgLoss: 0,
           avgWin: 0,
         };
-
         return;
       }
 

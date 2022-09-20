@@ -57,7 +57,7 @@
 
     <section class="container mx-auto mb-8 mt-16" aria-label="steps">
       <h1
-        class="text-center font-extrabold text-transparent text-4xl bg-clip-text mb-8 bg-gradient-to-r from-purple-900 to-blue-400"
+        class="text-center font-extrabold text-transparent text-4xl bg-clip-text mb-8 bg-gradient-to-r from-green-400 via-blue-500 to-indigo-700"
       >
         Three Steps To Boost Performance
       </h1>
@@ -79,8 +79,8 @@
           </div>
           <div class="text-paragraph">
             Our simple and elegant trade journal offers quick and easy entries.
-            Not only that, but is constantly being improved on to improve
-            usability and functionality.
+            Not only that, but is constantly being improved on the usability and
+            functionality.
           </div>
         </div>
         <div class="flex flex-col md:mx-8 p-10 bg-bg_gray md:h-96">
@@ -95,7 +95,7 @@
           <div class="text-paragraph">
             Analyze your trades, locate where you're going right but also where
             things are taking a dive for. You can use these patterns to
-            determine feasible ideas.
+            determine feasible ideas and strategies.
           </div>
         </div>
         <div
@@ -140,11 +140,11 @@
         </div>
       </div>
       <div class="flex flex-col items-center mb-4 gap-1">
-        <div class="">Have any Questions?</div>
+        <div class="text-headline text-lg">Have any Questions?</div>
         <router-link
           to=""
           @click="openEmailModal"
-          class="bg-white rounded p-2 bg-gradient-to-r from-indigo-600 to-blue-900"
+          class="bg-white rounded text-lg p-3 bg-gradient-to-r from-indigo-600 to-blue-900"
         >
           Contact Us
         </router-link>

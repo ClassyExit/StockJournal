@@ -97,7 +97,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
       // ADDS A TICKER TO WATCHLIST
 
       if (!ticker) {
-        this.watchlistError = "Please enter a ticker to search";
+        this.watchlistError = "Please enter a stock to search.";
         return;
       }
 
@@ -106,11 +106,12 @@ export const useWatchlistStore = defineStore("Watchlist", {
       tickerData = await this.fetchPrice(ticker);
       tickerData.id = await this.generateId();
 
-      if (!tickerData.price || !tickerData.ticker) {
+      if (!tickerData.price || !tickerData.ticker || tickerData.error) {
         this.watchlistError =
           "Unable to find requested stock. Please ensure the ticker is correct.";
         return;
       } else {
+        // Proceed to add to watchlist
         this.watchlistData.push(tickerData);
 
         // Add to db
@@ -118,37 +119,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
         this.hideWatchModal();
       }
-
-      // if (!tickerData) {
-      //   this.addWatchlistModal = false;
-      //   notificationStore().addGlobalNotification(
-      //     "danger",
-      //     "Unable to find requested stock. Please ensure the ticker is correct."
-      //   );
-      //   return;
-      // } else {
-      //   if (tickerData.error) {
-      //     this.addWatchlistModal = false;
-      //     return;
-      //   } else if ((tickerData.name || tickerData.price) == null) {
-      //     this.addWatchlistModal = false;
-
-      //     notificationStore().addGlobalNotification(
-      //       "danger",
-      //       `Unable to gather information about [${tickerData.ticker.toUpperCase()}]. Please ensure the ticker is correct.`
-      //     );
-      //     return;
-      //   } else {
-      //     this.addWatchlistModal = false;
-      //   }
-
-      //   this.watchlistData.push(tickerData);
-
-      //   // Add to db
-      //   databaseStore().addWatch(userStore().userId, tickerData);
-
-      //   this.hideWatchModal();
-      // }
     },
 
     async deleteWatch(index) {

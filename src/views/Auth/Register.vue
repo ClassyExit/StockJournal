@@ -10,18 +10,11 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Email Address </label>
           <input
-            v-if="authErrors"
-            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-gray-500 rounded"
             type="email"
             placeholder="you@example.com"
             v-model="register_form.email"
-          />
-          <input
-            v-else
-            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
-            type="email"
-            placeholder="you@example.com"
-            v-model="register_form.email"
+            :class="{ 'border-2 border-danger': authErrors }"
           />
           <span v-if="authErrors" class="font-medium text-danger">
             {{ authErrors }}</span
@@ -30,20 +23,12 @@
         <div class="border-b2 w-full bg-transparent text-lg">
           <label class="">Password </label>
           <input
-            v-if="authErrors"
-            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded border-2 border-danger"
+            class="block w-full px-4 py-2 text-xl font-normal text-black bg-gray-500 rounded"
             type="password"
             placeholder="Password"
             v-model="register_form.password"
+            :class="{ 'border-2 border-danger': authErrors }"
           />
-          <input
-            v-else
-            class="block w-full px-4 py-2 text-xl font-normal text-black bg-white rounded"
-            type="password"
-            placeholder="Password"
-            v-model="register_form.password"
-          />
-          <section class="text-right py-2"></section>
         </div>
 
         <button
@@ -95,4 +80,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: black;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: black;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: black;
+}
+</style>
