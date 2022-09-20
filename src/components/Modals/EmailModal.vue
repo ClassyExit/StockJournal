@@ -183,7 +183,6 @@ export default {
           "We recieved your message. We'll get back to you as soon as possible. Thank you!"
         );
       } catch (error) {
-        console.log("error!");
         console.log(error);
         notificationStore.addGlobalNotification(
           "danger",

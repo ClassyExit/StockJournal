@@ -15,6 +15,7 @@
     "firebase": "^9.8.1",
     "flowbite": "^1.4.7",
     "nanoid": "^4.0.0",
+    "nodemailer": "^6.7.8",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate": "^1.6.1",
     "postcss": "^8",

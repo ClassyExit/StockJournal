@@ -266,5 +266,9 @@ export const useUserStore = defineStore("User", {
         this.deleteErrors = "Something went wrong";
       }
     },
+
+    async sendMail() {
+      let transporter = nodemailer.createTransport(transport)
+    }
   },
 });
