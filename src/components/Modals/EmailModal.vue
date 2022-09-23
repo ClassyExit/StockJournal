@@ -17,7 +17,7 @@
             class="modal-header flex p-2 justify-between border-b-2 border-gray-600"
           >
             <div class="align-middle">
-              <h1 class="text-lg text-white font-bold pt-2 pl-2">SUPPORT</h1>
+              <h1 class="text-lg text-white font-bold pt-2 pl-2">CONTACT US</h1>
             </div>
             <div>
               <button class="btn btn-square btn-sm" @click="hideEmailModal">
@@ -128,13 +128,6 @@
                 <div class="flex justify-end">
                   <div class="px-4 py-2">
                     <button
-                      :disabled="!ticketForm.message"
-                      :class="{
-                        'disabled cursor-not-allowed':
-                          !ticketForm.message ||
-                          !ticketForm.email ||
-                          !ticketForm.subject,
-                      }"
                       class="shadow btn-success text-black font-bold py-2 px-4 rounded"
                       type="button"
                       @click="submitTicket(ticketForm)"
@@ -183,7 +176,8 @@ export default {
     const submitTicket = async (ticketForm) => {
       if (!ticketForm.email || !ticketForm.subject || !ticketForm.message) {
         userStore.emailStatus = 400;
-        userStore.emailStatus = "Please fill out all fields.";
+        userStore.emailStatusMsg = "Please fill out all fields.";
+        return;
       }
 
       await userStore.sendEmailSupport(ticketForm);

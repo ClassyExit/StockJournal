@@ -8,7 +8,7 @@
           class="flex items-center space-x-2 py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white"
         >
           <button class="w-full text-left" @click="activeRoute = 'details'">
-            Account Details
+            Account Profile
           </button>
         </div>
         <div
@@ -26,7 +26,7 @@
             class="w-full text-left font-semibold text-danger"
             @click="activeRoute = 'delete'"
           >
-            Delete
+            Delete Account
           </button>
         </div>
       </div>

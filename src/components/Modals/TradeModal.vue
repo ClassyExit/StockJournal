@@ -92,12 +92,15 @@
                   <footer class="flex justify-end align-center pt-6">
                     <button
                       type="submit"
-                      class="btn btn-success mx-1"
+                      class="btn btn-success mx-1 font-bold"
                       @click="addTrade(tradeData)"
                     >
                       Add Trade
                     </button>
-                    <div class="btn btn-error mx-1" @click="hideModal()">
+                    <div
+                      class="btn btn-error mx-1 font-bold"
+                      @click="hideModal()"
+                    >
                       Cancel
                     </div>
                   </footer>

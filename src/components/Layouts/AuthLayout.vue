@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col min-h-screen bg-background">
-    <header>
+    <header class="mx-10 sticky top-0 z-50">
       <!-- Navbar -->
       <div class="flex w-full bg-background">
-        <div class="flex md:px-48 py-5 hidden sm:block">
+        <div class="flex py-5 hidden sm:block">
           <router-link to="/home" class="">
             <img src="../../assets/images/logo.png" class="h-12" />
           </router-link>
@@ -11,7 +11,7 @@
 
         <!-- Nav Links -->
         <div
-          class="flex flex-grow items-center justify-end space-x-4 mr-4 py-5 md:px-48"
+          class="flex flex-grow items-center justify-end space-x-4 mr-4 py-5"
         >
           <router-link to="/home">
             <Button>HOME</Button>

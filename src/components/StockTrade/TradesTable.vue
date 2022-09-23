@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto w-full">
+  <div class="container flex flex-col mx-auto w-full">
     <div
       class="stats-container flex flex-row space-x-6 justify-around mx-auto w-3/4"
     >
@@ -56,7 +56,7 @@
       >
     </div>
     <div>
-      <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
+      <div class="px-4 py-4 overflow-x-auto overflow-y-auto order-0">
         <div
           class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
         >
@@ -112,6 +112,7 @@
               <tr>
                 <BaseTableRows
                   class="hidden md:block"
+                  @click="getTradeDetails(index, trade.id)"
                   v-for="(trade, index) in tradesData"
                   :key="trade.id"
                   :date="trade.date"
@@ -142,6 +143,7 @@
                     to=""
                     class="text-red-600 px-1"
                     @click="deleteTrade(index, trade.id)"
+                    @click.stop
                     ><Icon
                       icon="ant-design:delete-outlined"
                       width="20"

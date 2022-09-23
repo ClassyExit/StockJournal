@@ -7,7 +7,7 @@
     >
       <div class="flex items-center justify-center min-h-screen text-center">
         <div
-          class="bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl w-1/6"
+          class="bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl min-w-fit"
           role="dialog"
           ref="modal"
           aria-modal="true"
@@ -69,12 +69,15 @@
                   <footer class="flex justify-end align-center pt-6">
                     <button
                       type="submit"
-                      class="btn btn-success mx-1"
+                      class="btn btn-success mx-1 font-bold"
                       @click="addToWatchlist(watchTicker)"
                     >
                       Add Watchlist
                     </button>
-                    <div class="btn btn-error mx-1" @click="hideWatchModal()">
+                    <div
+                      class="btn btn-error mx-1 font-bold"
+                      @click="hideWatchModal()"
+                    >
                       Cancel
                     </div>
                   </footer>
