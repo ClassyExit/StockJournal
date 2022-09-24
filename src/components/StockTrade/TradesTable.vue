@@ -65,7 +65,7 @@
     <!-- Trades -->
 
     <div
-      class="text-sm md:text-lg px-4 py-4 overflow-x-auto overflow-y-auto w-full md:w-3/4 h-screen"
+      class="text-sm md:text-lg px-4 py-4 overflow-x-auto overflow-y-auto w-full md:w-3/4 max-h-screen"
     >
       <div
         class="inline-block min-w-full border-2 border-bg_light rounded-lg overflow-hidden"
