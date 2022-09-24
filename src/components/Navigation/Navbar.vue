@@ -3,20 +3,25 @@
     <ul class="flex flex-row p-2 justify-end space-x-4">
       <!-- Notifications -->
       <div class="dropdown dropdown-content dropdown-end">
-        <label tabindex="0" class="btn btn-ghost rounded-btn">
+        <label
+          tabindex="0"
+          class="btn btn-ghost rounded-btn"
+          :class="notifications.length ? 'animate-pulse' : ''"
+        >
           <Icon
             v-if="!notifications.length"
             icon="clarity:notification-line"
-            color="white"
-            width="20"
-            height="20"
+            color="white "
+            width="30"
+            height="30"
           />
+
           <Icon
             v-else
             icon="clarity:notification-outline-badged"
             color="red"
-            width="20"
-            height="20"
+            width="30"
+            height="30"
           />
         </label>
         <ul
@@ -55,11 +60,6 @@
       </div>
     </ul>
   </header>
-
-  <!-- Trade Add Modal -->
-  <TradeModal />
-  <!-- Add Watchlist Modal -->
-  <WatchlistModal />
 </template>
 
 <script>

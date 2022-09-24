@@ -12,6 +12,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
     watchlistData: [],
     showAddWatchlistModal: false,
     watchlistError: null,
+    newData: null,
   }),
   getters: {},
   actions: {
@@ -76,6 +77,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
               add_price: data.data[0].price,
               fiftytwo_week_low: data.data[0]["52_week_low"],
               fiftytwo_week_high: data.data[0]["52_week_high"],
+              dailyChange: data.data[0]["day_change"],
             };
           }
         })
@@ -86,6 +88,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
               ticker: ticker,
               price: null,
               name: null,
+              dailyChange: null,
             };
           }
         });
@@ -139,7 +142,9 @@ export const useWatchlistStore = defineStore("Watchlist", {
       // If market is closed, don't update prices
       // Market hours UTC: [10,20]
       const timeUTC = new Date().getUTCHours();
-      if (timeUTC >= 20 || timeUTC <= 10) return;
+      if (timeUTC >= 20 || timeUTC <= 10) {
+        return;
+      }
 
       try {
         for (let i = 0; i < this.watchlistData.length; i++) {
@@ -147,7 +152,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
           if (newData.price == null) return;
 
-          // Recalculate the change since adding
           let new_change_base = (
             newData.price - this.watchlistData[i].add_price
           ).toFixed(2);
@@ -160,6 +164,12 @@ export const useWatchlistStore = defineStore("Watchlist", {
           this.watchlistData[i].since_add_base = new_change_base;
           this.watchlistData[i].since_add_percent = new_change_percent;
           this.watchlistData[i].price = newData.price;
+          this.watchlistData[i].dailyChange = newData.dailyChange;
+
+          databaseStore().updateWatch(
+            userStore().userId,
+            this.watchlistData[i]
+          );
         }
       } catch (err) {
         console.error(err);

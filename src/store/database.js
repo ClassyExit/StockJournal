@@ -41,7 +41,7 @@ export const useDatabaseStore = defineStore("db", {
       }
 
       try {
-        if (data.length > 0) {
+        if (Array.isArray(data)) {
           for (let i = 0; i < data.length; i++) {
             if (!data[i].tradeId) {
               return console.error("Error: No tradeId");
@@ -79,7 +79,7 @@ export const useDatabaseStore = defineStore("db", {
 
           // Check if doc exists already
           if (tradeSnap.exists()) {
-            console.log("Doc exists - pass");
+            console.log("Trade Exists");
           } else {
             await setDoc(tradeRef, data);
             // console.log(`Document written with ID:${tradeRef.id}`);
@@ -114,7 +114,7 @@ export const useDatabaseStore = defineStore("db", {
       if (!newData) return;
 
       try {
-        if (newData.length > 0) {
+        if (Array.isArray(newData)) {
           for (let i = 0; i < newData.length; i++) {
             const tradeRef = doc(
               db,
@@ -230,7 +230,6 @@ export const useDatabaseStore = defineStore("db", {
         console.error("CAN'T FIND ITEM");
       }
     },
-
     async fetchWatchlist(userId) {
       // RETRIEVE WATCHLIST DATA
 
@@ -249,24 +248,39 @@ export const useDatabaseStore = defineStore("db", {
         this.watchlist.push(doc.data());
       });
     },
-  },
+    async updateWatch(userId, newData) {
+      if (!newData) return;
 
-  async updateWatch(userId, newData) {
-    if (!newData) return;
+      try {
+        if (Array.isArray(newData)) {
+          console.log("Array");
+          for (let i = 0; i < newData.length; i++) {
+            const watchlistRef = doc(
+              db,
+              `${userId}`,
+              "Watchlist",
+              "Items",
+              `${newData[i].id}`
+            );
 
-    try {
-      const watchlistRef = doc(
-        db,
-        `${userId}`,
-        "Watchlist",
-        "Items",
-        `${newData.id}`
-      );
+            await setDoc(watchlistRef, newData[i]);
+          }
+        } else {
+          console.log("Single");
+          const watchlistRef = doc(
+            db,
+            `${userId}`,
+            "Watchlist",
+            "Items",
+            `${newData.id}`
+          );
 
-      // Update doc values
-      await updateDoc(watchlistRef, { price: newData.price });
-    } catch (error) {
-      console.error("Failed updated watchlist");
-    }
+          await setDoc(watchlistRef, newData);
+        }
+      } catch (error) {
+        console.log(error);
+        console.error("Failed updated watchlist");
+      }
+    },
   },
 });
