@@ -110,7 +110,7 @@ export const useTradesStore = defineStore("Trades", {
     addTrade(details) {
       this.addModal = true;
 
-      // create new object
+      // create new trade
       const newTrade = {
         tradeId: null,
         date: new Date().toLocaleDateString(),
@@ -124,14 +124,14 @@ export const useTradesStore = defineStore("Trades", {
         returnBase: null,
         returnPercent: null,
       };
-      // UPDATE VARIABLES
 
+      // UPDATE VARIABLES
       newTrade.ticker = details.ticker;
       newTrade.qty = details.qty;
       newTrade.entry = details.entryPrice;
       newTrade.exit = details.exitPrice;
 
-      // Logic processing
+      // Process calculations
       newTrade.tradeId = this.generateId();
       newTrade.entryTotal = newTrade.qty * newTrade.entry;
 
@@ -153,7 +153,7 @@ export const useTradesStore = defineStore("Trades", {
         newTrade.status = "OPEN";
       }
 
-      // push to array
+      // push to trades array
       this.tradesData.push(newTrade);
 
       //Add to database
@@ -166,6 +166,7 @@ export const useTradesStore = defineStore("Trades", {
     getStats() {
       let wins = 0;
       let losses = 0;
+      let open = 0;
       let totalLossAmount = 0;
       let totalWinAmount = 0;
       let avgLoss = 0;
@@ -180,6 +181,7 @@ export const useTradesStore = defineStore("Trades", {
           PnL: 0,
           avgLoss: 0,
           avgWin: 0,
+          open: 0,
         };
         return;
       }
@@ -191,6 +193,8 @@ export const useTradesStore = defineStore("Trades", {
         } else if (this.tradesData[i].status === "LOSS") {
           losses += 1;
           totalLossAmount += this.tradesData[i].returnBase;
+        } else if (this.tradesData[i].status === "OPEN") {
+          open += 1;
         }
       }
 
@@ -208,6 +212,7 @@ export const useTradesStore = defineStore("Trades", {
         PnL: totalWinAmount - totalLossAmount * -1,
         avgLoss: avgLoss,
         avgWin: avgWin,
+        open: open,
       };
     },
   },

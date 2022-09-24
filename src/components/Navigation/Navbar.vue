@@ -53,26 +53,6 @@
           </div>
         </ul>
       </div>
-
-      <!-- Stock trade -->
-      <router-link
-        v-show="$route.name === 'Dashboard'"
-        to=""
-        class="flex btn-success items-center justify-center rounded w-32 min-w-32 max-w-xs font-semibold"
-        data-toggle="modal"
-        @click="showTradeModal()"
-        ><span class="pl-2 md:block">Add Trade</span></router-link
-      >
-
-      <!-- Watchlist -->
-      <router-link
-        v-show="$route.name === 'Watchlist'"
-        to=""
-        class="flex btn-success items-center justify-center rounded w-32 min-w-32 max-w-xs font-semibold"
-        data-toggle="modal"
-        @click="showWatchlistModal()"
-        ><span class="pl-2 md:block">Add Watchlist</span></router-link
-      >
     </ul>
   </header>
 
@@ -84,11 +64,6 @@
 
 <script>
 import { useNotificationStore } from "@/store/notifications";
-import { useTradesStore } from "@/store/trades";
-import { useWatchlistStore } from "@/store/watchlist";
-
-import TradeModal from "@/components/Modals/TradeModal.vue";
-import WatchlistModal from "@/components/Modals/WatchlistModal.vue";
 
 import DangerAlert from "@/components/Notifications/DangerAlert.vue";
 import InfoAlert from "@/components/Notifications/InfoAlert.vue";
@@ -102,28 +77,14 @@ export default {
     InfoAlert,
     SuccessAlert,
     WarningAlert,
-    TradeModal,
-    WatchlistModal,
   },
   setup() {
     const notificationStore = useNotificationStore();
-    const tradeStore = useTradesStore();
-    const watchlistStore = useWatchlistStore();
-
-    const showTradeModal = () => {
-      tradeStore.showAddTradeModal = true;
-    };
-
-    const showWatchlistModal = () => {
-      watchlistStore.showAddWatchlistModal = true;
-    };
 
     // Reactively watch notifications
     const { notifications } = storeToRefs(notificationStore);
 
     return {
-      showTradeModal,
-      showWatchlistModal,
       notifications,
     };
   },

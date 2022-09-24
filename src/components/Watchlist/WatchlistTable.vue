@@ -33,7 +33,14 @@
                 <th class="text-left font-semibold text-gray-300">
                   52 Week High
                 </th>
-                <th class="text-left font-semibold text-gray-300"></th>
+                <th class="text-left font-semibold k">
+                  <button
+                    @click="showWatchlistModal()"
+                    class="flex bg-success text-black py-1 px-2 rounded animate-bounce"
+                  >
+                    ADD WATCHLIST
+                  </button>
+                </th>
               </tr>
             </div>
           </thead>
@@ -68,6 +75,7 @@
       </div>
     </div>
   </div>
+  <WatchlistModal />
 </template>
 
 <script>
@@ -77,6 +85,7 @@ import { useDatabaseStore } from "@/store/database";
 import { storeToRefs } from "pinia";
 import BaseTableRows from "./BaseTableRows.vue";
 import { onBeforeMount } from "@vue/runtime-core";
+import WatchlistModal from "../Modals/WatchlistModal.vue";
 
 import DangerAlert from "@/components/Notifications/DangerAlert.vue";
 import InfoAlert from "@/components/Notifications/InfoAlert.vue";
@@ -84,34 +93,40 @@ import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
 import WarningAlert from "@/components/Notifications/WarningAlert.vue";
 
 export default {
-  setup() {
-    const WatchlistStore = useWatchlistStore();
-
-    const { updatePrice, deleteWatch } = WatchlistStore;
-    const { watchlistData } = storeToRefs(WatchlistStore);
-
-    onBeforeMount(() => {
-      const WatchStore = useWatchlistStore();
-      const DatabaseStore = useDatabaseStore();
-      const UserStore = useUserStore();
-
-      DatabaseStore.fetchWatchlist(UserStore.userId);
-
-      WatchStore.watchlistData = DatabaseStore.watchlist;
-      updatePrice();
-    });
-
-    return {
-      deleteWatch,
-      watchlistData,
-    };
-  },
   components: {
     BaseTableRows,
     DangerAlert,
     InfoAlert,
     SuccessAlert,
     WarningAlert,
+    WatchlistModal,
+  },
+  setup() {
+    const watchlistStore = useWatchlistStore();
+
+    const { updatePrice, deleteWatch } = watchlistStore;
+    const { watchlistData } = storeToRefs(watchlistStore);
+
+    const showWatchlistModal = () => {
+      watchlistStore.showAddWatchlistModal = true;
+    };
+
+    onBeforeMount(() => {
+      const watchlistStore = useWatchlistStore();
+      const databaseStore = useDatabaseStore();
+      const userStore = useUserStore();
+
+      databaseStore.fetchWatchlist(userStore.userId);
+
+      watchlistStore.watchlistData = databaseStore.watchlist;
+      updatePrice();
+    });
+
+    return {
+      deleteWatch,
+      watchlistData,
+      showWatchlistModal,
+    };
   },
 };
 </script>

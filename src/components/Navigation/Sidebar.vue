@@ -1,5 +1,8 @@
 <template>
-  <aside id="sidebar" class="bg-bg_light h-screen relative w-16">
+  <aside
+    id="sidebar"
+    class="bg-bg_light h-screen relative w-16 sticky top-0 z-50"
+  >
     <div class="h-screen flex flex-col">
       <div class="pb-4 pt-2 align-center justify-center">
         <router-link to="/dashboard" class="">

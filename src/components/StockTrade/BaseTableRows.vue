@@ -1,8 +1,6 @@
 <template>
   <div class="contents-container rounded bg-bg_light my-1">
-    <div
-      class="flex flex-row justify-evenly grid grid-cols-11 justify-items-center py-3"
-    >
+    <div class="grid grid-cols-9 justify-items-center py-3">
       <td>
         <div class="text-white">
           <label :value="date">{{ date }}</label>
@@ -62,22 +60,7 @@
           <p v-else :value="entry">-</p>
         </div>
       </td>
-      <!-- ENTRY TOTAL -->
-      <td>
-        <div class="text-white hidden md:block">
-          <p v-if="entryTotal" :value="entryTotal">
-            {{
-              Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(entryTotal)
-            }}
-          </p>
-          <p v-else :value="entryTotal">-</p>
-        </div>
-      </td>
+
       <!-- EXIT -->
       <td>
         <div class="text-white hidden md:block">
@@ -95,22 +78,6 @@
         </div>
       </td>
 
-      <!-- EXIT TOTAL -->
-      <td>
-        <div class="text-white hidden md:block">
-          <p v-if="exitTotal" :value="exitTotal">
-            {{
-              Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(exitTotal)
-            }}
-          </p>
-          <p v-else :value="exitTotal">-</p>
-        </div>
-      </td>
       <!-- RETURN -->
       <td>
         <div class="text-white hidden md:block">
@@ -193,14 +160,6 @@ export default {
       default: null,
     },
     exit: {
-      type: [String, Number],
-      default: null,
-    },
-    entryTotal: {
-      type: [String, Number],
-      default: null,
-    },
-    exitTotal: {
       type: [String, Number],
       default: null,
     },
