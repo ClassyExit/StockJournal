@@ -204,10 +204,10 @@
         class="flex p-4 hover:bg-slate-700"
       >
         <Icon
-          icon="dashicons:performance"
+          icon="mingcute:performance-fill"
+          color="white"
           width="30"
           height="30"
-          color="white"
         />
       </button>
     </div>
