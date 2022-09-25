@@ -2,7 +2,7 @@
   <div class="flex flex-row w-full h-full">
     <!-- Watchlist  -->
     <div
-      class="w-1/4 min-w-fit bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
+      class="w-1/6 min-w-fit bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
       :class="{ hidden: toggleWatchlist }"
     >
       <!-- Watchlist options -->
@@ -55,6 +55,7 @@
           <tr class="divide-y divide-paragraph/25">
             <WatchlistContainer
               v-for="(item, index) in watchlistData"
+              @click="getSelectedStockInfo(item)"
               :key="item.id"
               :ticker="item.ticker"
               :name="item.name"
@@ -77,85 +78,104 @@
       </table>
     </div>
 
-    <!-- Old Watchlist -->
-    <div class="container mx-auto max-h-full">
-      <div class="px-4 py-4 overflow-x-auto overflow-y-auto">
+    <!-- Stock Data -->
+    <div
+      class="container mx-auto min-h-fit mb-2 bg-bg_light text-black"
+      :class="{ hidden: toggleStatTable }"
+    >
+      <div
+        v-if="
+          watchlistData.length && Object.keys(selectedCompanyInfo).length > 0
+        "
+      >
         <div
-          class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+          aria-label="intraday"
+          class="flex flex-col md:grid md:grid-cols-4 px-6 text-headline p-2 text-center"
         >
-          <!-- Table -->
-          <table class="min-w-full">
-            <!-- Table Header -->
-            <thead>
-              <div
-                class="headers bg-gray-800 rounded-t border-b border-paragraph/25"
-              >
-                <tr
-                  class="grid grid-cols-7 gap-1 justify-items-center items-center py-4"
-                >
-                  <th class="text-left font-semibold text-gray-300">Symbol</th>
-                  <th class="text-left font-semibold text-gray-300">Name</th>
-                  <th class="text-left font-semibold text-gray-300">Price</th>
-                  <th
-                    data-tip="Change in price since added onto watchlist. Please note prices are only updated during active market hours. "
-                    class="flex text-left font-semibold text-gray-300 tooltip tooltip-bottom items-center"
-                  >
-                    Since Added
-                    <Icon
-                      icon="akar-icons:info"
-                      width="18"
-                      height="18"
-                      class="ml-2"
-                    />
-                  </th>
-                  <th class="text-left font-semibold text-gray-300">
-                    52 Week Low
-                  </th>
-                  <th class="text-left font-semibold text-gray-300">
-                    52 Week High
-                  </th>
-                  <th class="text-left font-semibold k">
-                    <button
-                      @click="showWatchlistModal()"
-                      class="flex bg-success text-black py-1 px-2 rounded"
-                      :class="!watchlistData.length ? 'animate-bounce' : ''"
-                    >
-                      ADD WATCHLIST
-                    </button>
-                  </th>
-                </tr>
-              </div>
-            </thead>
-            <!-- Table Body -->
-            <tbody>
-              <tr class="flex flex-col rounded divide-y divide-paragraph/25">
-                <BaseTableRows
-                  v-for="(item, index) in watchlistData"
-                  :key="item.id"
-                  :ticker="item.ticker"
-                  :name="item.name"
-                  :price="item.price"
-                  :since_add_percent="item.since_add_percent"
-                  :since_add_base="item.since_add_base"
-                  :fiftytwo_week_low="item.fiftytwo_week_low"
-                  :fiftytwo_week_high="item.fiftytwo_week_high"
-                >
-                  <router-link
-                    to=""
-                    class="text-red-600 px-1"
-                    @click="deleteWatch(index, item.id)"
-                    ><Icon
-                      icon="ant-design:delete-outlined"
-                      width="20"
-                      height="20"
-                      :inline="true"
-                  /></router-link>
-                </BaseTableRows>
-              </tr>
-            </tbody>
-          </table>
+          <label>{{ selectedStock.ticker }} ({{ selectedStock.name }})</label>
+          <label>
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(selectedStock.price)
+            }}</label
+          >
+          <label
+            :class="{
+              'text-win': selectedStock.dailyChange > 0,
+              'text-loss': selectedStock.dailyChange < 0,
+            }"
+            >{{
+              Intl.NumberFormat("en-US", {
+                style: "percent",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(selectedStock.dailyChange / 100)
+            }}</label
+          >
         </div>
+        <div aria-label="info" class="text-slate-300 text-sm p-1 border-b">
+          {{ selectedCompanyInfo.description }}
+        </div>
+        <div
+          aria-label="company"
+          class="flex flex-col p-1 text-slate-300 border-b"
+        >
+          <label>Exchange: {{ selectedCompanyInfo.exchangeShortName }}</label>
+          <label>Industry: {{ selectedCompanyInfo.industry }}</label>
+          <label>Beta Value: {{ selectedCompanyInfo.beta }}</label>
+          <label
+            >Average Volume:
+            {{
+              Intl.NumberFormat("en-US", {
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(selectedCompanyInfo.volAvg)
+            }}</label
+          >
+          <label
+            >Market Cap:
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(selectedCompanyInfo.mktCap)
+            }}</label
+          >
+        </div>
+        <div aria-label="chart" class=""></div>
       </div>
+      <div
+        v-if="
+          !watchlistData.length | (Object.keys(selectedCompanyInfo).length == 0)
+        "
+        aria-label="news"
+        class="mt-10 p-2 bg-red-200 text-center"
+      >
+        Add a stock to your watchlist or select one of your current ones to
+        display data about the stock!
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col h-fit px-2"
+      :class="{ hidden: togglePerformance }"
+    >
+      <label class="bg-bg_light text-headline p-2 text-sm"
+        >Sector Performance</label
+      >
+      <SectorPerTemplate
+        v-for="(item, index) in sectorPerformance"
+        :key="item.sector"
+        :sector="item.sector"
+        :change="item.change_percentage"
+      />
     </div>
 
     <!-- Sidebar for Watchlist -->
@@ -172,11 +192,23 @@
         <Icon icon="bi:card-list" color="white" width="30" height="30" />
       </button>
       <button
-        title="Hide Watchlist"
-        @click=""
-        class="px-2 py-4 hover:bg-slate-700"
+        title="Toggle Stock Info"
+        @click="toggleStatTable = !toggleStatTable"
+        class="flex p-4 hover:bg-slate-700"
       >
-        Icon 2
+        <Icon icon="gridicons:stats-alt" width="30" height="30" color="white" />
+      </button>
+      <button
+        title="Toggle Sector Performance Info"
+        @click="togglePerformance = !togglePerformance"
+        class="flex p-4 hover:bg-slate-700"
+      >
+        <Icon
+          icon="dashicons:performance"
+          width="30"
+          height="30"
+          color="white"
+        />
       </button>
     </div>
   </div>
@@ -201,6 +233,8 @@ import InfoAlert from "@/components/Notifications/InfoAlert.vue";
 import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
 import WarningAlert from "@/components/Notifications/WarningAlert.vue";
 
+import SectorPerTemplate from "@/components/Watchlist/SectorPerTemplate.vue";
+
 export default {
   components: {
     BaseTableRows,
@@ -210,18 +244,27 @@ export default {
     WarningAlert,
     WatchlistModal,
     WatchlistContainer,
+    SectorPerTemplate,
   },
   setup() {
     const watchlistStore = useWatchlistStore();
 
-    const { updatePrice, deleteWatch } = watchlistStore;
-    const { watchlistData } = storeToRefs(watchlistStore);
+    const { updatePrice, deleteWatch, getSelectedStockInfo } = watchlistStore;
+    const {
+      watchlistData,
+      selectedStock,
+      selectedCompanyInfo,
+      sectorPerformance,
+    } = storeToRefs(watchlistStore);
 
     const showWatchlistModal = () => {
       watchlistStore.showAddWatchlistModal = true;
     };
 
     const toggleWatchlist = ref(false);
+    const toggleStatTable = ref(false);
+    const togglePerformance = ref(false);
+    const isTableEmpty = ref(); // checks to see if user selected a item to display
 
     onBeforeMount(() => {
       const watchlistStore = useWatchlistStore();
@@ -239,6 +282,13 @@ export default {
       watchlistData,
       showWatchlistModal,
       toggleWatchlist,
+      toggleStatTable,
+      selectedStock,
+      selectedCompanyInfo,
+      getSelectedStockInfo,
+      isTableEmpty,
+      sectorPerformance,
+      togglePerformance,
     };
   },
 };

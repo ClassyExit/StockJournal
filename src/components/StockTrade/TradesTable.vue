@@ -65,10 +65,10 @@
     <!-- Trades -->
 
     <div
-      class="text-sm md:text-lg px-4 py-4 overflow-x-auto overflow-y-auto w-full md:w-3/4 max-h-screen"
+      class="flex flex-row text-sm md:text-lg px-4 py-4 overflow-x-auto overflow-y-auto w-full max-h-screen"
     >
       <div
-        class="inline-block min-w-full border-2 border-bg_light rounded-lg overflow-hidden"
+        class="inline-block w-3/4 border-2 border-bg_light rounded-lg overflow-hidden"
       >
         <!-- Table -->
         <table class="w-full overflow-auto">
