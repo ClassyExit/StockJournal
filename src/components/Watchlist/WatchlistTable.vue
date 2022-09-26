@@ -80,7 +80,7 @@
 
     <!-- Stock Data -->
     <div
-      class="container mx-auto min-h-fit mb-2 bg-bg_light text-black"
+      class="container mx-auto mx-2 min-h-fit mb-2 bg-bg_light text-black"
       :class="{ hidden: toggleStatTable }"
     >
       <div

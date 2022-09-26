@@ -165,6 +165,8 @@ export default {
       userStore.showEmailModal = false;
       userStore.emailStatus = null;
       userStore.emailStatusMsg = null;
+
+      console.log("Hello");
       // Reset Form Data
       ticketForm = {
         email: null,
@@ -181,6 +183,14 @@ export default {
       }
 
       await userStore.sendEmailSupport(ticketForm);
+
+      console.log(ticketForm);
+      ticketForm = {
+        email: null,
+        message: null,
+        subject: null,
+      };
+      console.log(ticketForm);
     };
 
     return {
