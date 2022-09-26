@@ -31,7 +31,7 @@
             </p>
           </div>
           <div class="w-full md:w-1/2 px-4 md:order-2">
-            <img src="@/assets/images/exampleTrades.png" alt="exampleTrades" />
+            <img src="@/assets/images/exampleTrades.png" alt="Example Trade" />
           </div>
         </div>
         <div class="flex items-center flex-wrap mb-5 py-5">
@@ -45,10 +45,11 @@
             </p>
           </div>
 
-          <div class="w-full md:w-1/2 px-4 md:order-1">
+          <div class="flex w-full md:w-1/2 px-4 md:order-1 justify-center">
             <img
-              src="@/assets/images/exampleWatchlist2.png"
-              alt="exampleWatchlist"
+              class=""
+              src="@/assets/images/exampleWatchlist.png"
+              alt="Example Watchlist"
             />
           </div>
         </div>

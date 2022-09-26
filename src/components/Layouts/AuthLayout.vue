@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col min-h-screen bg-background">
-    <header class="mx-10 sticky top-0 z-50">
+    <header class="px-24 sticky top-0 z-50">
       <!-- Navbar -->
       <div class="flex w-full bg-background">
         <div class="flex py-5 hidden sm:block">
           <router-link to="/home" class="">
-            <img src="../../assets/images/logo.png" class="h-12" />
+            <img src="../../assets/images/logo.png" class="h-16" />
           </router-link>
         </div>
 

@@ -2,7 +2,7 @@
   <div class="flex flex-row w-full h-full">
     <!-- Watchlist  -->
     <div
-      class="w-1/6 min-w-fit bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
+      class="w-1/3 bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
       :class="{ hidden: toggleWatchlist }"
     >
       <!-- Watchlist options -->

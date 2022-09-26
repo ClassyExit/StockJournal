@@ -4,9 +4,9 @@
     class="bg-bg_light h-screen relative w-16 sticky top-0 z-50"
   >
     <div class="h-screen flex flex-col">
-      <div class="pb-4 pt-2 align-center justify-center">
+      <div class="px-2 pb-4 pt-2 align-center justify-center">
         <router-link to="/dashboard" class="">
-          <img src="../../assets/images/logo.png" class="h-10 w-32" />
+          <img alt="logo" src="../../assets/images/logo.png" class="" />
         </router-link>
       </div>
       <!-- Main Nav -->
