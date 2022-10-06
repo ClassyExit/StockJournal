@@ -42,8 +42,8 @@
           <div class="modal-body">
             <section>
               <form class="w-full min-w-lg">
-                <div class="flex flex-row justify-around w-full">
-                  <div class="w-2/5">
+                <div class="flex flex-col md:flex-row md:justify-around w-full">
+                  <div class="w-full px-3 md:px-0 md:w-2/5">
                     <label
                       for="email"
                       class="block uppercase text-white text-xs font-bold mb-2 mt-2"
@@ -61,7 +61,7 @@
                     />
                   </div>
 
-                  <div class="w-2/5">
+                  <div class="w-full px-3 md:px-0 md:w-2/5">
                     <label
                       class="block uppercase text-white text-xs font-bold mb-2 mt-2"
                       >Subject</label
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="flex flex-wrap px-3">
-                  <div class="w-full px-3">
+                  <div class="w-full md:px-3">
                     <label
                       class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                       for="message"
@@ -166,7 +166,6 @@ export default {
       userStore.emailStatus = null;
       userStore.emailStatusMsg = null;
 
-      console.log("Hello");
       // Reset Form Data
       ticketForm = {
         email: null,
@@ -184,13 +183,11 @@ export default {
 
       await userStore.sendEmailSupport(ticketForm);
 
-      console.log(ticketForm);
       ticketForm = {
         email: null,
         message: null,
         subject: null,
       };
-      console.log(ticketForm);
     };
 
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen bg-background">
-    <header class="px-24 sticky top-0 z-50">
+    <header class="px-24 md:sticky top-0 z-10">
       <!-- Navbar -->
       <div class="flex w-full bg-background">
         <div class="flex py-5 hidden sm:block">
