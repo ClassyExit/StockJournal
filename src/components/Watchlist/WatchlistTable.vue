@@ -1,8 +1,10 @@
 <template>
-  <div class="flex flex-row w-full h-full">
+  <div
+    class="flex flex-col items-center md:items-stretch md:flex-row w-full h-full"
+  >
     <!-- Watchlist  -->
     <div
-      class="w-1/3 bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
+      class="w-5/6 md:w-2/5 bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
       :class="{ hidden: toggleWatchlist }"
     >
       <!-- Watchlist options -->
@@ -80,7 +82,7 @@
 
     <!-- Stock Data -->
     <div
-      class="container mx-auto mx-2 min-h-fit mb-2 bg-bg_light text-black"
+      class="container mx-2 w-5/6 md:w-full min-h-fit mb-2 bg-bg_light text-black"
       :class="{ hidden: toggleStatTable }"
     >
       <div
@@ -182,7 +184,7 @@
     <div dev-note="use to hold sidebar watchlist" class="flex-1"></div>
     <div
       aria-label="watchlistSidebar"
-      class="relative inset-y-0 right-0 flex flex-col h-full bg-bg_light w-1/16 py-2 items-center"
+      class="sticky md:relative inset-y-0 right-0 flex flex-row md:flex-col md:h-full bg-bg_light md:w-1/16 py-2 items-center"
     >
       <button
         title="Toggle Watchlist"
