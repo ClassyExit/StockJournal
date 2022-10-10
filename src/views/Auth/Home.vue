@@ -1,6 +1,6 @@
 <template>
   <div class="text-headline bg-background">
-    <div class="py-20 hero">
+    <div class="py-20">
       <div class="container mx-auto px-6">
         <div class="text-4xl font-bold mb-2 text-headline">
           Tracking Your Trades Made Easy.
@@ -10,7 +10,7 @@
         </div>
         <router-link to="/login">
           <button
-            class="transform hover:scale-110 transition duration-300 ease-in-out bg-btn_bg font-bold rounded-full py-6 px-8 shadow-lg uppercase tracking-wider"
+            class="hover:scale-110 transition duration-300 ease-in-out bg-btn_bg font-bold rounded-full py-6 px-8 shadow-lg uppercase tracking-wider"
           >
             Get Started
           </button>

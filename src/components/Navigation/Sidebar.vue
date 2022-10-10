@@ -1,6 +1,7 @@
 <template>
   <aside
     id="sidebar"
+    aria-label="Sidebar"
     class="bg-bg_light h-screen relative w-16 sticky top-0 z-50"
   >
     <div class="h-screen flex flex-col">

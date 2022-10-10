@@ -1,5 +1,5 @@
 <template>
-  <header class="flex-row w-full bg-bg_light">
+  <header aria-label="Navbar" class="flex-row w-full bg-bg_light">
     <ul class="flex flex-row p-2 justify-end space-x-4">
       <!-- Notifications -->
       <div class="dropdown dropdown-content dropdown-end">
