@@ -64,10 +64,11 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  useUserStore().lastURL = router.currentRoute.value.fullPath;
-
-  if (to.path === "/auth" && auth.currentUser) {
+router.beforeEach(async (to, from, next) => {
+  if (
+    to.path === ("/login" || "/home" || "/register") &&
+    useUserStore().userId
+  ) {
     next({ name: "Dashboard" });
   }
   // Check for auth for pages that require auth to access

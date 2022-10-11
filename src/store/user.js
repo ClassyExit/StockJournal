@@ -11,6 +11,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { resetStore } from "./reset-store";
@@ -123,7 +124,6 @@ export const useUserStore = defineStore("User", {
       await signOut(auth);
 
       // Reset store
-      this.$reset();
       resetStore();
 
       router.push("/home");
@@ -131,18 +131,15 @@ export const useUserStore = defineStore("User", {
 
     async InitializeAuth() {
       // CHECK TO SEE AUTHENTICATION STATE
-
-      auth.onAuthStateChanged(async (user) => {
+      onAuthStateChanged(auth, (user) => {
         if (user) {
+          // User signed in
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
-
-          if (window.location.pathname === "/home" || "/register" || "/login") {
-            // TODO: Find a way to push back on current page when doing refresh
-            // router.push({ name: "Dashboard" });
-          }
         } else {
-          this.$reset();
+          // User is signed out
+          resetStore();
+
           router.push({ name: "Home" });
         }
       });

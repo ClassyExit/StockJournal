@@ -225,7 +225,6 @@ import { useWatchlistStore } from "@/store/watchlist";
 import { useUserStore } from "@/store/user";
 import { useDatabaseStore } from "@/store/database";
 import { storeToRefs } from "pinia";
-import BaseTableRows from "./BaseTableRows.vue";
 import WatchlistContainer from "./WatchlistContainer.vue";
 import { onBeforeMount } from "@vue/runtime-core";
 import WatchlistModal from "../Modals/WatchlistModal.vue";
@@ -239,7 +238,6 @@ import SectorPerTemplate from "@/components/Watchlist/SectorPerTemplate.vue";
 
 export default {
   components: {
-    BaseTableRows,
     DangerAlert,
     InfoAlert,
     SuccessAlert,
@@ -275,6 +273,7 @@ export default {
 
       databaseStore.fetchWatchlist(userStore.userId);
 
+      useWatchlistStore().getSectorPerformance();
       watchlistStore.watchlistData = databaseStore.watchlist;
       updatePrice();
     });

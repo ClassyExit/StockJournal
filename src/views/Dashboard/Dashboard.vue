@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import StockDashboard from "../../components/StockTrade/TradesTable.vue";
+import StockDashboard from "../../components/StockTrade/Trades.vue";
 
 export default {
   setup() {},

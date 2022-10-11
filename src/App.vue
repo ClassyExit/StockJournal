@@ -5,7 +5,6 @@
 <script>
 import { useUserStore } from "@/store/user.js";
 import { useNotificationStore } from "./store/notifications";
-import { useWatchlistStore } from "./store/watchlist";
 
 import "@/assets/tailwind.css";
 
@@ -15,9 +14,6 @@ export default {
 
     // Delete global notifications on refresh | application load
     useNotificationStore().deleteAllGlobalNotifications();
-
-    //Start Request for sector performance
-    useWatchlistStore().getSectorPerformance();
 
     userStore.InitializeAuth();
   },
