@@ -30,6 +30,9 @@ export const useUserStore = defineStore("User", {
     showEmailModal: false,
     emailStatus: null,
     emailStatusMsg: null,
+    preferences: {
+      sidebar: true,
+    },
   }),
   getters: {},
   persist: true,

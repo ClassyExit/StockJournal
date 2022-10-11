@@ -1,8 +1,10 @@
 <template>
   <header aria-label="Navbar" class="flex-row w-full bg-bg_light">
-    <ul class="flex flex-row p-2 justify-end space-x-4">
-      <!-- Notifications -->
-      <div class="dropdown dropdown-content dropdown-end">
+    <div class="flex flex-row items-center justify-end mx-4 py-2">
+      <div
+        aria-label="notifications"
+        class="dropdown dropdown-content dropdown-end"
+      >
         <label
           tabindex="0"
           class="btn btn-ghost rounded-btn"
@@ -12,16 +14,16 @@
             v-if="!notifications.length"
             icon="clarity:notification-line"
             color="white "
-            width="30"
-            height="30"
+            width="25"
+            height="25"
           />
 
           <Icon
             v-else
             icon="clarity:notification-outline-badged"
             color="red"
-            width="30"
-            height="30"
+            width="25"
+            height="25"
           />
         </label>
         <ul
@@ -58,7 +60,7 @@
           </div>
         </ul>
       </div>
-    </ul>
+    </div>
   </header>
 </template>
 

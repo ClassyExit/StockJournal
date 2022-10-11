@@ -20,6 +20,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
     selectedCompanyInfo: {},
     sectorPerformance: [],
   }),
+  persist: true,
   getters: {},
   actions: {
     showWatchlistModal() {
@@ -229,6 +230,13 @@ export const useWatchlistStore = defineStore("Watchlist", {
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    getMinutesFromCurrentDate(testDate) {
+      console.log(testDate.getTime());
+      const diff = Date().toLocaleString().replace(",", "") - testDate;
+      console.log(diff);
+      return diff;
     },
   },
 });
