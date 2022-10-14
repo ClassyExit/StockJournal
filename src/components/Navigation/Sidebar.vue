@@ -2,7 +2,7 @@
   <aside
     id="sidebar"
     aria-label="Sidebar"
-    class="bg-bg_light h-screen relative w-16 sticky top-0 z-50"
+    class="bg-bg_light h-screen relative w-16 sticky top-0 z-30"
     :class="preferences.sidebar ? 'w-48' : 'w-16'"
   >
     <div class="h-screen flex flex-col items-center">

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row flex-grow bg-danger items-center px-4 py-3 rounded"
+    class="absolute flex flex-row flex-grow bg-danger items-center px-4 py-3 rounded"
     role="alert"
   >
     <!-- Info svg -->

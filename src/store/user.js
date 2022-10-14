@@ -196,7 +196,6 @@ export const useUserStore = defineStore("User", {
                 );
               })
               .catch((error) => {
-                console.log(`Failed - code: ${error.code}`);
                 this.passwordChangeErrors = "Something went wrong";
               });
           })

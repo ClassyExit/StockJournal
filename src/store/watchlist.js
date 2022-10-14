@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import { nanoid } from "nanoid";
 import { useUserStore as userStore } from "./user";
 import { useDatabaseStore as databaseStore } from "./database";
-import { useNotificationStore as notificationStore } from "./notifications";
+
+import { sendNotification } from "@/components/Notifications/notifications";
 
 // https://www.stockdata.org/documentation
 const apiKey = "tCN0bkSfgweXGBuCaYu7yF1OYgYm4DpwbWsctC1V";
@@ -45,33 +46,47 @@ export const useWatchlistStore = defineStore("Watchlist", {
           if (!response.ok) {
             tickerData = {
               error: true,
+              code: response.status,
             };
 
             if (response.status === 401) {
-              notificationStore().addGlobalNotification(
-                "danger",
-                "Invalid Request"
-              );
+              sendNotification({
+                type: "error",
+                heading: "Invalid Request",
+                message: "Unable to process request",
+              });
+
               throw new Error("Invalid Request");
             } else if (response.status === 402) {
-              notificationStore().addGlobalNotification(
-                "danger",
-                "Unfortunately, the daily request limit has been reached due to current API limitations and no more requests can be made. Please try again tommorow! "
-              );
+              this.hideWatchModal();
+
+              sendNotification({
+                type: "danger",
+                heading: "API Limit Reached",
+                message:
+                  "Unfortunately, the daily request limit has been reached due to current API limitations and no more requests can be made. Please try again tommorow!",
+              });
+
               throw new Error("API Limit Reached");
             } else if (response.status === 429) {
-              notificationStore().addGlobalNotification(
-                "danger",
-                "Too many requests in the past 60 seconds!"
-              );
+              sendNotification({
+                type: "danger",
+                heading: "Whoa There!",
+                message: "Too many requests in the past 60 seconds!",
+              });
+
               throw new Error("Too Many Requests");
             } else {
-              notificationStore().addGlobalNotification(
-                "danger",
-                "Oops! Something didn't work. Please try again."
-              );
+              sendNotification({
+                type: "danger",
+                heading: "Somethings not right",
+                message:
+                  "Uh-oh, something didn't work. Please try again and if the problem persists, please contact us.",
+              });
+
               throw new Error("Something went wrong");
             }
+            return tickerData;
           }
           return response.json();
         })
@@ -85,6 +100,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
               fiftytwo_week_low: data.data[0]["52_week_low"],
               fiftytwo_week_high: data.data[0]["52_week_high"],
               dailyChange: data.data[0]["day_change"],
+              market_cap: data.data[0]["market_cap"],
             };
           }
         })
@@ -96,6 +112,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
               price: null,
               name: null,
               dailyChange: null,
+              market_cap: null,
             };
           }
         });
@@ -115,6 +132,8 @@ export const useWatchlistStore = defineStore("Watchlist", {
 
       tickerData = await this.fetchPrice(ticker);
       tickerData.id = await this.generateId();
+
+      if (tickerData.code === 402) return; // API limit reached
 
       if (!tickerData.price || !tickerData.ticker || tickerData.error) {
         this.watchlistError =
@@ -172,6 +191,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
           this.watchlistData[i].since_add_percent = new_change_percent;
           this.watchlistData[i].price = newData.price;
           this.watchlistData[i].dailyChange = newData.dailyChange;
+          this.watchlistData[i].market_cap = newData.market_cap;
 
           databaseStore().updateWatch(
             userStore().userId,
@@ -230,13 +250,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
         .catch((err) => {
           console.log(err);
         });
-    },
-
-    getMinutesFromCurrentDate(testDate) {
-      console.log(testDate.getTime());
-      const diff = Date().toLocaleString().replace(",", "") - testDate;
-      console.log(diff);
-      return diff;
     },
   },
 });

@@ -12,9 +12,6 @@ export default {
   setup() {
     const userStore = useUserStore();
 
-    // Delete global notifications on refresh | application load
-    useNotificationStore().deleteAllGlobalNotifications();
-
     userStore.InitializeAuth();
   },
 };

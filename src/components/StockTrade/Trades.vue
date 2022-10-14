@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full pt-4">
     <!-- Stats -->
     <div
       class="flex flex-col items-center md:flex-row gap-2 md:gap-4 md:w-full px-4"
@@ -169,18 +169,9 @@ import { storeToRefs } from "pinia";
 import EditTradeModal from "../Modals/EditTradeModal.vue";
 import TradeModal from "@/components/Modals/TradeModal.vue";
 
-import DangerAlert from "@/components/Notifications/DangerAlert.vue";
-import InfoAlert from "@/components/Notifications/InfoAlert.vue";
-import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
-import WarningAlert from "@/components/Notifications/WarningAlert.vue";
-
 export default {
   components: {
     BaseTableRows,
-    DangerAlert,
-    InfoAlert,
-    SuccessAlert,
-    WarningAlert,
     StatsContainer,
     EditTradeModal,
     TradeModal,

@@ -1,209 +1,116 @@
 <template>
-  <div
-    class="flex flex-col items-center md:items-stretch md:flex-row w-full h-full"
-  >
-    <!-- Watchlist  -->
-    <div
-      class="w-5/6 md:w-2/5 bg-bg_light mx-2 mb-2 rounded pt-1 px-1"
-      :class="{ hidden: toggleWatchlist }"
-    >
-      <!-- Watchlist options -->
-      <div class="flex flex-row-reverse">
-        <div
-          title="Add Symbol"
-          aria-label="addWatchlist"
-          class="hover:bg-background rounded"
-          @click="showWatchlistModal()"
-        >
-          <Icon
-            icon="ant-design:plus-outlined"
-            color="gray"
-            width="30"
-            height="30"
-          />
-        </div>
+  <div class="flex flex-row flex-1 max-h-5/6">
+    <div class="flex flex-col flex-1">
+      <div
+        class="flex flex-wrap items-center justify-center p-4"
+        :class="togglePerformance ? 'hidden' : ''"
+      >
+        <SectorPerTemplate
+          v-for="(item, index) in sectorPerformance"
+          :key="item.sector"
+          :sector="item.sector"
+          :change="item.change_percentage"
+        />
       </div>
-      <!-- Watchlist table -->
-      <table class="w-full">
-        <thead class="">
-          <tr
-            class="grid grid-cols-4 p-2 text-center border-b border-paragraph/25"
-          >
-            <th class="">Symbol</th>
-            <th class="">Price</th>
-            <th class="">% Change</th>
-            <th class=""></th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr
-            v-if="!watchlistData.length"
-            class="flex items-center justify-center"
-          >
-            <p class="flex flex-row py-32">
-              Click the
-              <Icon
-                class="mx-1"
-                icon="ant-design:plus-outlined"
-                color="gray"
-                width="20"
-                height="20"
-                :inline="true"
-              />
-              to add a symbol
-            </p>
-          </tr>
-          <tr class="divide-y divide-paragraph/25">
-            <WatchlistContainer
-              v-for="(item, index) in watchlistData"
-              @click="getSelectedStockInfo(item)"
-              :key="item.id"
-              :ticker="item.ticker"
-              :name="item.name"
-              :price="item.price"
-              :dailyChange="item.dailyChange"
+      <div
+        class="flex flex-col items-center w-full h-full p-4"
+        :class="toggleWatchlist ? 'hidden' : ''"
+      >
+        <div class="w-full bg-bg_light mx-2 mb-2 pt-1">
+          <!-- Watchlist options -->
+          <div class="flex flex-row-reverse pr-2">
+            <div
+              title="Add Symbol"
+              aria-label="addWatchlist"
+              class="hover:bg-background rounded border border-gray-600"
+              @click="showWatchlistModal()"
             >
-              <router-link
-                to=""
-                class="text-red-600 px-1"
-                @click="deleteWatch(index, item.id)"
-                ><Icon
-                  icon="ant-design:delete-outlined"
-                  width="20"
-                  height="20"
-                  :inline="true"
-              /></router-link>
-            </WatchlistContainer>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              <Icon
+                icon="ant-design:plus-outlined"
+                color="white"
+                width="30"
+                height="30"
+              />
+            </div>
+          </div>
+          <!-- Watchlist table -->
+          <table class="w-full">
+            <thead class="">
+              <tr class="grid grid-cols-7 py-2 text-center">
+                <th class="">Symbol</th>
+                <th class="">Price</th>
+                <th class="">% Change</th>
+                <th class="">52 Week Low</th>
+                <th class="">52 Week High</th>
+                <th class="">Market Cap</th>
+                <th class="">Actions</th>
+              </tr>
+            </thead>
 
-    <!-- Stock Data -->
-    <div
-      class="container mx-2 w-5/6 md:w-full min-h-fit mb-2 bg-bg_light text-black"
-      :class="{ hidden: toggleStatTable }"
-    >
-      <div
-        v-if="
-          watchlistData.length && Object.keys(selectedCompanyInfo).length > 0
-        "
-      >
-        <div
-          aria-label="intraday"
-          class="flex flex-col md:grid md:grid-cols-4 px-6 text-headline p-2 text-center"
-        >
-          <label>{{ selectedStock.ticker }} ({{ selectedStock.name }})</label>
-          <label>
-            {{
-              Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(selectedStock.price)
-            }}</label
-          >
-          <label
-            :class="{
-              'text-win': selectedStock.dailyChange > 0,
-              'text-loss': selectedStock.dailyChange < 0,
-            }"
-            >{{
-              Intl.NumberFormat("en-US", {
-                style: "percent",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(selectedStock.dailyChange / 100)
-            }}</label
-          >
+            <tbody class="border-y-2 border-paragraph/25">
+              <tr
+                v-if="!watchlistData.length"
+                class="flex items-center justify-center"
+              >
+                <p class="flex flex-row py-32">
+                  Click the
+                  <Icon
+                    class="mx-1"
+                    icon="ant-design:plus-outlined"
+                    color="gray"
+                    width="20"
+                    height="20"
+                    :inline="true"
+                  />
+                  to add a symbol
+                </p>
+              </tr>
+              <tr class="divide-y divide-paragraph/25">
+                <WatchlistContainer
+                  v-for="(item, index) in watchlistData"
+                  :key="item.id"
+                  :ticker="item.ticker"
+                  :name="item.name"
+                  :price="item.price"
+                  :dailyChange="item.dailyChange"
+                  :fiftytwo_week_high="item.fiftytwo_week_high"
+                  :fiftytwo_week_low="item.fiftytwo_week_low"
+                  :market_cap="item.market_cap"
+                >
+                  <router-link
+                    to=""
+                    class="text-red-600 px-1"
+                    @click="deleteWatch(index, item.id)"
+                    ><Icon
+                      icon="ant-design:delete-outlined"
+                      width="20"
+                      height="20"
+                      :inline="true"
+                  /></router-link>
+                </WatchlistContainer>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div aria-label="info" class="text-slate-300 text-sm p-1 border-b">
-          {{ selectedCompanyInfo.description }}
-        </div>
-        <div
-          aria-label="company"
-          class="flex flex-col p-1 text-slate-300 border-b"
-        >
-          <label>Exchange: {{ selectedCompanyInfo.exchangeShortName }}</label>
-          <label>Industry: {{ selectedCompanyInfo.industry }}</label>
-          <label>Beta Value: {{ selectedCompanyInfo.beta }}</label>
-          <label
-            >Average Volume:
-            {{
-              Intl.NumberFormat("en-US", {
-                currency: "USD",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(selectedCompanyInfo.volAvg)
-            }}</label
-          >
-          <label
-            >Market Cap:
-            {{
-              Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(selectedCompanyInfo.mktCap)
-            }}</label
-          >
-        </div>
-        <div aria-label="chart" class=""></div>
-      </div>
-      <div
-        v-if="
-          !watchlistData.length | (Object.keys(selectedCompanyInfo).length == 0)
-        "
-        aria-label="news"
-        class="mt-10 p-2 bg-red-200 text-center"
-      >
-        Add a stock to your watchlist or select one of your current ones to
-        display data about the stock!
       </div>
     </div>
 
-    <div
-      class="flex flex-col h-fit px-2"
-      :class="{ hidden: togglePerformance }"
-    >
-      <label class="bg-bg_light text-headline p-2 text-sm"
-        >Sector Performance</label
-      >
-      <SectorPerTemplate
-        v-for="(item, index) in sectorPerformance"
-        :key="item.sector"
-        :sector="item.sector"
-        :change="item.change_percentage"
-      />
-    </div>
-
-    <!-- Sidebar for Watchlist -->
-    <div dev-note="use to hold sidebar watchlist" class="flex-1"></div>
     <div
       aria-label="watchlistSidebar"
-      class="sticky md:relative inset-y-0 right-0 flex flex-row md:flex-col md:h-full bg-bg_light md:w-1/16 py-2 items-center"
+      class="sticky relative flex flex-col bg-bg_light justify-start w-16"
     >
       <button
-        title="Toggle Watchlist"
+        title="Watchlist"
         @click="toggleWatchlist = !toggleWatchlist"
-        class="flex p-4 hover:bg-slate-700"
+        class="flex w-full justify-center py-2 hover:bg-slate-700"
       >
         <Icon icon="bi:card-list" color="white" width="30" height="30" />
       </button>
       <button
-        title="Toggle Stock Info"
-        @click="toggleStatTable = !toggleStatTable"
-        class="flex p-4 hover:bg-slate-700"
-      >
-        <Icon icon="gridicons:stats-alt" width="30" height="30" color="white" />
-      </button>
-      <button
-        title="Toggle Sector Performance Info"
+        title="Sector Performance "
         @click="togglePerformance = !togglePerformance"
-        class="flex p-4 hover:bg-slate-700"
+        class="flex w-full justify-center py-2 hover:bg-slate-700"
       >
         <Icon
           icon="mingcute:performance-fill"
@@ -229,19 +136,10 @@ import WatchlistContainer from "./WatchlistContainer.vue";
 import { onBeforeMount } from "@vue/runtime-core";
 import WatchlistModal from "../Modals/WatchlistModal.vue";
 
-import DangerAlert from "@/components/Notifications/DangerAlert.vue";
-import InfoAlert from "@/components/Notifications/InfoAlert.vue";
-import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
-import WarningAlert from "@/components/Notifications/WarningAlert.vue";
-
-import SectorPerTemplate from "@/components/Watchlist/SectorPerTemplate.vue";
+import SectorPerTemplate from "@/components/Watchlist/SectorPerformanceTemplate.vue";
 
 export default {
   components: {
-    DangerAlert,
-    InfoAlert,
-    SuccessAlert,
-    WarningAlert,
     WatchlistModal,
     WatchlistContainer,
     SectorPerTemplate,
@@ -249,21 +147,15 @@ export default {
   setup() {
     const watchlistStore = useWatchlistStore();
 
-    const { updatePrice, deleteWatch, getSelectedStockInfo } = watchlistStore;
-    const {
-      watchlistData,
-      selectedStock,
-      selectedCompanyInfo,
-      sectorPerformance,
-    } = storeToRefs(watchlistStore);
+    const { updatePrice, deleteWatch } = watchlistStore;
+    const { watchlistData, sectorPerformance } = storeToRefs(watchlistStore);
 
     const showWatchlistModal = () => {
       watchlistStore.showAddWatchlistModal = true;
     };
 
     const toggleWatchlist = ref(false);
-    const toggleStatTable = ref(false);
-    const togglePerformance = ref(false);
+    const togglePerformance = ref(true);
     const isTableEmpty = ref(); // checks to see if user selected a item to display
 
     onBeforeMount(() => {
@@ -283,10 +175,6 @@ export default {
       watchlistData,
       showWatchlistModal,
       toggleWatchlist,
-      toggleStatTable,
-      selectedStock,
-      selectedCompanyInfo,
-      getSelectedStockInfo,
       isTableEmpty,
       sectorPerformance,
       togglePerformance,

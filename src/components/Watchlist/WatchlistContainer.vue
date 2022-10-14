@@ -1,6 +1,6 @@
 <template>
-  <div class="contents-container bg-gray-800">
-    <div class="grid grid-cols-4 justify-items-center items-center py-1">
+  <div class="contents-container bg-background">
+    <div class="grid grid-cols-7 justify-items-center items-center py-1">
       <!-- Stock Ticker -->
       <td>
         <div class="flex flex-col text-white text-center uppercase">
@@ -45,6 +45,51 @@
           >
         </div>
       </td>
+
+      <td>
+        <div class="flex">
+          <label class="text-paragraph" :value="fiftytwo_week_low">
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(fiftytwo_week_low)
+            }}
+          </label>
+        </div>
+      </td>
+
+      <td>
+        <div class="flex">
+          <label class="text-paragraph" :value="fiftytwo_week_high">
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(fiftytwo_week_high)
+            }}
+          </label>
+        </div>
+      </td>
+
+      <td>
+        <div class="flex text-white">
+          <label class="text-paragraph" :value="market_cap">
+            {{
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(market_cap)
+            }}
+          </label>
+        </div>
+      </td>
       <!-- Actions -->
       <td>
         <div class="flex">
@@ -87,6 +132,10 @@ export default {
       default: null,
     },
     fiftytwo_week_high: {
+      type: [Number, String],
+      default: null,
+    },
+    market_cap: {
       type: [Number, String],
       default: null,
     },

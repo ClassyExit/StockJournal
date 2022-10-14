@@ -1,4 +1,11 @@
 <template>
+  <div
+    aria-label="notification-container"
+    class="notification-box flex flex-col items-center justify-center fixed w-full z-50 p-3"
+  >
+    <!-- Notification container -->
+  </div>
+
   <div class="flex min-h-screen max-h-max flex-row bg-background">
     <Sidebar />
 
@@ -7,34 +14,6 @@
       <!-- Inject content -->
       <div id="content" class="flex flex-grow flex-col">
         <!-- Global Notifications -->
-        <div class="notifications mx-auto w-full p-4 pb-0">
-          <div class="pb-2" v-for="(alert, index) in globalNotifications">
-            <SuccessAlert
-              :key="index"
-              :id="alert.alertId"
-              v-if="alert.alertType === 'success'"
-              >{{ alert.alertMsg }}</SuccessAlert
-            >
-            <DangerAlert
-              :key="index"
-              :id="alert.alertId"
-              v-if="alert.alertType === 'danger'"
-              >{{ alert.alertMsg }}</DangerAlert
-            >
-            <InfoAlert
-              :key="index"
-              :id="alert.alertId"
-              v-if="alert.alertType === 'info'"
-              >{{ alert.alertMsg }}</InfoAlert
-            >
-            <WarningAlert
-              :key="index"
-              :id="alert.alertId"
-              v-if="alert.alertType === 'warning'"
-              >{{ alert.alertMsg }}</WarningAlert
-            >
-          </div>
-        </div>
 
         <router-view :key="$route.path"></router-view>
       </div>
@@ -46,29 +25,11 @@
 import Navbar from "@/components/Navigation/Navbar.vue";
 import Sidebar from "@/components/Navigation/Sidebar.vue";
 
-import DangerAlert from "@/components/Notifications/DangerAlert.vue";
-import InfoAlert from "@/components/Notifications/InfoAlert.vue";
-import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
-import WarningAlert from "@/components/Notifications/WarningAlert.vue";
-
-import { useNotificationStore } from "@/store/notifications";
-import { storeToRefs } from "pinia";
-
 export default {
-  setup() {
-    const notificationStore = useNotificationStore();
-
-    const { globalNotifications } = storeToRefs(notificationStore);
-
-    return { globalNotifications };
-  },
+  setup() {},
   components: {
     Navbar,
     Sidebar,
-    DangerAlert,
-    InfoAlert,
-    SuccessAlert,
-    WarningAlert,
   },
 };
 </script>

@@ -1,6 +1,9 @@
 <template>
-  <header aria-label="Navbar" class="flex-row w-full bg-bg_light">
-    <div class="flex flex-row items-center justify-end mx-4 py-2">
+  <header
+    aria-label="Navbar"
+    class="flex flex-row justify-end w-full bg-bg_light"
+  >
+    <div class="flex flex-row items-center justify-end mr-2 py-2">
       <div
         aria-label="notifications"
         class="dropdown dropdown-content dropdown-end"

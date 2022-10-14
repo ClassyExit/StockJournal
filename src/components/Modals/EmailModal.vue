@@ -146,13 +146,11 @@
 </template>
 
 <script>
-import { useNotificationStore } from "@/store/notifications";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 export default {
   setup() {
-    const notificationStore = useNotificationStore();
     const userStore = useUserStore();
 
     // Email
