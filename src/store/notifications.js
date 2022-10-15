@@ -1,30 +1,32 @@
 import { defineStore } from "pinia";
+import { nanoid } from "nanoid";
 
 export const useNotificationStore = defineStore("Notification", {
   state: () => ({
     notifications: [],
-
     alertTypes: ["error", "info", "success", "warning"],
   }),
   getters: {},
   persist: true,
   actions: {
-    addNotification(alertType, alertMsg) {
+    addNotification({ type, message, title }) {
       let newNotification = {};
 
       // Check if valid alert type
-      if (this.alertTypes.includes(alertType.toLowerCase())) {
+      if (this.alertTypes.includes(type.toLowerCase())) {
         newNotification = {
-          alertType: alertType,
-          alertMsg: alertMsg,
+          alertType: type,
+          alertMessage: message,
           alertId: this.generateId(),
+          alertTitle: title,
         };
       } else {
         // Default the alertType to info alert
         newNotification = {
           alertType: "info",
-          alertMsg: alertMsg,
+          alertMessage: message,
           alertId: this.generateId(),
+          alertTitle: title,
         };
       }
 
@@ -32,8 +34,8 @@ export const useNotificationStore = defineStore("Notification", {
     },
 
     generateId() {
-      // Generate a unique ID by using Date.now()
-      return Date.now();
+      // Generate a unique ID
+      return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
     },
 
     deleteNotification(removeId) {

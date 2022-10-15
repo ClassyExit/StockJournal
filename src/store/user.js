@@ -106,10 +106,13 @@ export const useUserStore = defineStore("User", {
         return;
       }
 
-      notificationStore().addNotification(
-        "success",
-        "Hi there! If you run into any issues, please send a ticket in by clicking the mail icon on the left and we'll be happy to help you out. "
-      );
+      notificationStore().addNotification({
+        type: "success",
+        message:
+          "Hi there! If you run into any issues, please send a ticket in by clicking the mail icon on the left and we'll be happy to help you out.",
+        title: "Welcome!",
+      });
+
       // Set user state
       this.$patch({
         user: auth.currentUser,
@@ -190,10 +193,12 @@ export const useUserStore = defineStore("User", {
               .then(() => {
                 //Update success
                 this.passwordChangeSuccess = "Password Changed Successfully!";
-                notificationStore().addNotification(
-                  "success",
-                  "Your password has been updated successfully!"
-                );
+
+                notificationStore().addNotification({
+                  type: "success",
+                  message: "Your password has been updated successfully!",
+                  title: "Password Updated",
+                });
               })
               .catch((error) => {
                 this.passwordChangeErrors = "Something went wrong";

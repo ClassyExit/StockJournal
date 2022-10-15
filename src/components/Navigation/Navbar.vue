@@ -4,61 +4,43 @@
     class="flex flex-row justify-end w-full bg-bg_light"
   >
     <div class="flex flex-row items-center justify-end mr-2 py-2">
-      <div
-        aria-label="notifications"
-        class="dropdown dropdown-content dropdown-end"
-      >
-        <label
-          tabindex="0"
-          class="btn btn-ghost rounded-btn"
-          :class="notifications.length ? 'animate-pulse' : ''"
-        >
-          <Icon
-            v-if="!notifications.length"
-            icon="clarity:notification-line"
-            color="white "
-            width="25"
-            height="25"
-          />
+      <div aria-label="notifications" class="dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-ghost rounded-btn focus:bg-gray-600">
+          <div v-if="!notifications.length">
+            <Icon
+              icon="clarity:notification-line"
+              color="white "
+              width="25"
+              height="25"
+            />
+          </div>
 
-          <Icon
-            v-else
-            icon="clarity:notification-outline-badged"
-            color="red"
-            width="25"
-            height="25"
-          />
+          <div v-else class="flex">
+            <Icon
+              icon="carbon:notification-filled"
+              color="white"
+              width="25"
+              height="25"
+            />
+            <span
+              class="absolute text-white bg-red-600 top-0 right-2 bg-white rounded-full p-1"
+              >{{ notifications.length }}</span
+            >
+          </div>
         </label>
         <ul
           tabindex="0"
-          class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4"
+          class="menu dropdown-content flex flex-col p-2 shadow bg-base-100 rounded-box w-fit max-h-96 md:w-96 mt-4 h-fit"
         >
-          <div class="space-y-2 max-w-80 overflow-auto">
+          <div class="space-y-2 max-w-80 overflow-auto scrollbar-hide">
             <li v-for="(alert, index) in notifications">
-              <SuccessAlert
+              <Alert
                 :key="index"
                 :id="alert.alertId"
-                v-if="alert.alertType === 'success'"
-                >{{ alert.alertMsg }}</SuccessAlert
-              >
-              <DangerAlert
-                :key="index"
-                :id="alert.alertId"
-                v-if="alert.alertType === 'danger'"
-                >{{ alert.alertMsg }}</DangerAlert
-              >
-              <InfoAlert
-                :key="index"
-                :id="alert.alertId"
-                v-if="alert.alertType === 'info'"
-                >{{ alert.alertMsg }}</InfoAlert
-              >
-              <WarningAlert
-                :key="index"
-                :id="alert.alertId"
-                v-if="alert.alertType === 'warning'"
-                >{{ alert.alertMsg }}</WarningAlert
-              >
+                :type="alert.alertType"
+                :message="alert.alertMessage"
+                :title="alert.alertTitle"
+              />
             </li>
           </div>
         </ul>
@@ -70,18 +52,13 @@
 <script>
 import { useNotificationStore } from "@/store/notifications";
 
-import DangerAlert from "@/components/Notifications/DangerAlert.vue";
-import InfoAlert from "@/components/Notifications/InfoAlert.vue";
-import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
-import WarningAlert from "@/components/Notifications/WarningAlert.vue";
 import { storeToRefs } from "pinia";
+
+import Alert from "@/components/Notifications/Alert.vue";
 
 export default {
   components: {
-    DangerAlert,
-    InfoAlert,
-    SuccessAlert,
-    WarningAlert,
+    Alert,
   },
   setup() {
     const notificationStore = useNotificationStore();
@@ -96,4 +73,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
