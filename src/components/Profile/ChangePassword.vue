@@ -80,15 +80,13 @@
 <script>
 import { ref } from "vue";
 import { useUserStore } from "@/store/user.js";
-import { useNotificationStore } from "@/store/notifications";
 import { storeToRefs } from "pinia";
+
 export default {
   setup() {
     const userStore = useUserStore();
     userStore.passwordChangeErrors = false;
     userStore.passwordChangeSuccess = false;
-
-    const notificationStore = useNotificationStore();
 
     const { changePassword } = userStore;
 

@@ -41,9 +41,9 @@
           <!-- body -->
           <div class="modal-body">
             <section>
-              <form class="w-full min-w-lg">
-                <div class="flex flex-row justify-around w-full">
-                  <div class="w-2/5">
+              <form class="w-full min-w-lg" @submit="prevent.default">
+                <div class="flex flex-col md:flex-row md:justify-around w-full">
+                  <div class="w-full px-3 md:px-0 md:w-2/5">
                     <label
                       for="email"
                       class="block uppercase text-white text-xs font-bold mb-2 mt-2"
@@ -55,13 +55,13 @@
                       type="email"
                       v-model="ticketForm.email"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     />
                   </div>
 
-                  <div class="w-2/5">
+                  <div class="w-full px-3 md:px-0 md:w-2/5">
                     <label
                       class="block uppercase text-white text-xs font-bold mb-2 mt-2"
                       >Subject</label
@@ -71,7 +71,7 @@
                       id="subject"
                       v-model="ticketForm.subject"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     >
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="flex flex-wrap px-3">
-                  <div class="w-full px-3">
+                  <div class="w-full md:px-3">
                     <label
                       class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                       for="message"
@@ -107,7 +107,7 @@
                       id="message"
                       v-model="ticketForm.message"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     ></textarea>
@@ -146,13 +146,11 @@
 </template>
 
 <script>
-import { useNotificationStore } from "@/store/notifications";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 export default {
   setup() {
-    const notificationStore = useNotificationStore();
     const userStore = useUserStore();
 
     // Email
@@ -166,7 +164,6 @@ export default {
       userStore.emailStatus = null;
       userStore.emailStatusMsg = null;
 
-      console.log("Hello");
       // Reset Form Data
       ticketForm = {
         email: null,
@@ -184,13 +181,11 @@ export default {
 
       await userStore.sendEmailSupport(ticketForm);
 
-      console.log(ticketForm);
       ticketForm = {
         email: null,
         message: null,
         subject: null,
       };
-      console.log(ticketForm);
     };
 
     return {

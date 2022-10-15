@@ -41,7 +41,7 @@ export const useTradesStore = defineStore("Trades", {
     },
     generateId() {
       // Generate a unique ID by using Date.now()
-      return Date.now();
+      return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
     },
     deleteTrade(index) {
       // Delete from db

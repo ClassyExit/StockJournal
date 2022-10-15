@@ -22,6 +22,7 @@ module.exports = {
         win: "#22C55E",
         loss: "#EF4444",
         neutral: "#D4D4D8",
+        notification_bg: "#010103",
       },
     },
   },

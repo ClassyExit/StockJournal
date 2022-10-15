@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import WatchlistTable from "../../components/Watchlist/WatchlistTable.vue";
+import WatchlistTable from "../../components/Watchlist/Watchlist.vue";
 
 export default {
   setup() {},

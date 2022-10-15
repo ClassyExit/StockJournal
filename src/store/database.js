@@ -60,7 +60,6 @@ export const useDatabaseStore = defineStore("db", {
             if (tradeSnap.exists()) {
             } else {
               await setDoc(tradeRef, data[i]);
-              // console.log(`Document written with ID:${tradeRef.id}`);
             }
           }
         } else {
@@ -82,7 +81,6 @@ export const useDatabaseStore = defineStore("db", {
             console.log("Trade Exists");
           } else {
             await setDoc(tradeRef, data);
-            // console.log(`Document written with ID:${tradeRef.id}`);
           }
         }
       } catch (e) {
@@ -253,7 +251,6 @@ export const useDatabaseStore = defineStore("db", {
 
       try {
         if (Array.isArray(newData)) {
-          console.log("Array");
           for (let i = 0; i < newData.length; i++) {
             const watchlistRef = doc(
               db,
@@ -266,7 +263,6 @@ export const useDatabaseStore = defineStore("db", {
             await setDoc(watchlistRef, newData[i]);
           }
         } else {
-          console.log("Single");
           const watchlistRef = doc(
             db,
             `${userId}`,
@@ -278,7 +274,6 @@ export const useDatabaseStore = defineStore("db", {
           await setDoc(watchlistRef, newData);
         }
       } catch (error) {
-        console.log(error);
         console.error("Failed updated watchlist");
       }
     },

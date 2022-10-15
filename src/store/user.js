@@ -11,6 +11,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { resetStore } from "./reset-store";
@@ -30,6 +31,9 @@ export const useUserStore = defineStore("User", {
     showEmailModal: false,
     emailStatus: null,
     emailStatusMsg: null,
+    preferences: {
+      sidebar: true,
+    },
   }),
   getters: {},
   persist: true,
@@ -102,10 +106,13 @@ export const useUserStore = defineStore("User", {
         return;
       }
 
-      notificationStore().addNotification(
-        "success",
-        "Hi there! If you run into any issues, please send a ticket in by clicking the mail icon on the left and we'll be happy to help you out. "
-      );
+      notificationStore().addNotification({
+        type: "success",
+        message:
+          "Hi there! If you run into any issues, please send a ticket in by clicking the mail icon on the left and we'll be happy to help you out.",
+        title: "Welcome!",
+      });
+
       // Set user state
       this.$patch({
         user: auth.currentUser,
@@ -120,7 +127,6 @@ export const useUserStore = defineStore("User", {
       await signOut(auth);
 
       // Reset store
-      this.$reset();
       resetStore();
 
       router.push("/home");
@@ -128,19 +134,22 @@ export const useUserStore = defineStore("User", {
 
     async InitializeAuth() {
       // CHECK TO SEE AUTHENTICATION STATE
-
-      auth.onAuthStateChanged(async (user) => {
+      onAuthStateChanged(auth, (user) => {
         if (user) {
+          // User signed in
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
 
-          if (window.location.pathname === "/home" || "/register" || "/login") {
-            // TODO: Find a way to push back on current page when doing refresh
-            // router.push({ name: "Dashboard" });
+          if (
+            router.currentRoute.value.fullPath ===
+            ("/home" || "/login" || "/register")
+          ) {
+            router.push({ name: "Dashboard" });
           }
         } else {
-          this.$reset();
-          router.push({ name: "Home" });
+          // User is signed out
+          // Reset all stores/ local store data
+          resetStore();
         }
       });
     },
@@ -167,7 +176,6 @@ export const useUserStore = defineStore("User", {
               this.resetErrors = `Something went wrong - Try again`;
               break;
           }
-          console.log(`Error code: ${error.code}`);
         });
     },
 
@@ -190,13 +198,14 @@ export const useUserStore = defineStore("User", {
               .then(() => {
                 //Update success
                 this.passwordChangeSuccess = "Password Changed Successfully!";
-                notificationStore().addNotification(
-                  "success",
-                  "Your password has been updated successfully!"
-                );
+
+                notificationStore().addNotification({
+                  type: "success",
+                  message: "Your password has been updated successfully!",
+                  title: "Password Updated",
+                });
               })
               .catch((error) => {
-                console.log(`Failed - code: ${error.code}`);
                 this.passwordChangeErrors = "Something went wrong";
               });
           })
@@ -279,11 +288,13 @@ export const useUserStore = defineStore("User", {
       const publicKey = "Yj_tvHNw9M8KafTN_";
       const serviceID = "service_4pt8037";
       const templateID = "template_7k7a6tp";
+      const emailID = Math.floor(100000 + Math.random() * 900000);
 
       let emailParams = {
         email: ticketForm.email,
         message: ticketForm.message,
         subject: ticketForm.subject,
+        id: emailID,
       };
 
       //check if valid email
@@ -292,20 +303,25 @@ export const useUserStore = defineStore("User", {
         this.emailStatusMsg = "Please enter a valid email";
         return;
       }
-
       // send email
-      await emailjs
-        .send(serviceID, templateID, emailParams, publicKey)
-        .then((result) => {
+      await emailjs.send(serviceID, templateID, emailParams, publicKey).then(
+        (result) => {
           this.emailStatus = result.status;
-          this.emailStatusMsg =
-            "We've recieved your inquiry. We'll get back to you as soon as possible.";
-        })
-        .catch((err) => {
+          this.emailStatusMsg = `We've recieved your inquiry. We'll get back to you as soon as possible. Thank you.`;
+
+          notificationStore().addNotification({
+            type: "success",
+            message: `We appreicate your wait as we process your ticket. If you need to follow up regarding the ticket, please include your ticket ID: ${emailParams.id}.`,
+            title: "Support Ticket",
+          });
+
+          return;
+        },
+        (error) => {
           this.emailStatus = 400;
-          this.emailStatusMsg =
-            "Uh-oh, we're having issues processing tickets right now. Please try again later.";
-        });
+          this.emailStatusMsg = error.text;
+        }
+      );
     },
   },
 });

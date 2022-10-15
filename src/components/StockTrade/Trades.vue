@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full pt-4">
     <!-- Stats -->
     <div
       class="flex flex-col items-center md:flex-row gap-2 md:gap-4 md:w-full px-4"
@@ -94,7 +94,6 @@
                   <button
                     @click="showTradeModal()"
                     class="flex bg-success text-black py-1 px-1 rounded"
-                    :class="!tradesData.length ? 'animate-bounce' : ''"
                   >
                     ADD TRADE
                   </button>
@@ -104,7 +103,17 @@
           </thead>
           <!-- Table Body -->
           <tbody class="over-y-scroll h-2/3">
-            <tr>
+            <tr v-if="!tradesData.length">
+              <div class="flex justify-center items-center h-48">
+                <p>
+                  You can enter a trade by clicking the
+                  <span class="text-black bg-success p-2 rounded"
+                    >ADD TRADE</span
+                  >
+                </p>
+              </div>
+            </tr>
+            <tr v-else>
               <BaseTableRows
                 class="md:block odd:bg-background"
                 @click="getTradeDetails(index, trade.id)"
@@ -169,21 +178,15 @@ import { storeToRefs } from "pinia";
 import EditTradeModal from "../Modals/EditTradeModal.vue";
 import TradeModal from "@/components/Modals/TradeModal.vue";
 
-import DangerAlert from "@/components/Notifications/DangerAlert.vue";
-import InfoAlert from "@/components/Notifications/InfoAlert.vue";
-import SuccessAlert from "@/components/Notifications/SuccessAlert.vue";
-import WarningAlert from "@/components/Notifications/WarningAlert.vue";
+import Alert from "@/components/Notifications/Alert.vue";
 
 export default {
   components: {
     BaseTableRows,
-    DangerAlert,
-    InfoAlert,
-    SuccessAlert,
-    WarningAlert,
     StatsContainer,
     EditTradeModal,
     TradeModal,
+    Alert,
   },
   setup() {
     const TradesStore = useTradesStore();
