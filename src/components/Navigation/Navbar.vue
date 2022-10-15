@@ -23,7 +23,7 @@
               height="25"
             />
             <span
-              class="absolute text-white bg-loss top-0 right-3 bg-white rounded-full p-1"
+              class="absolute text-white bg-red-600 top-0 right-3 rounded-full p-1"
               >{{ notifications.length }}</span
             >
           </div>
