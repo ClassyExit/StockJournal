@@ -4,7 +4,6 @@
       ref="modal-backdrop"
       class="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm"
       v-show="showAddTradeModal"
-      @click="hideModal()"
     >
       <div class="flex items-center justify-center min-h-screen text-center">
         <div
@@ -13,7 +12,6 @@
           ref="modal"
           aria-modal="true"
           aria-labelledby="modal-headline"
-          @click.stop
         >
           <div
             class="modal-header flex p-2 justify-between border-b-2 border-gray-600"

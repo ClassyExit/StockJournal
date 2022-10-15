@@ -8,9 +8,6 @@ import { sendNotification } from "@/components/Notifications/notifications";
 // https://www.stockdata.org/documentation
 const apiKey = "tCN0bkSfgweXGBuCaYu7yF1OYgYm4DpwbWsctC1V";
 
-// https://site.financialmodelingprep.com
-const apiKeyFMP = "09e6d46fe76fa8fd70dad7d6387af593";
-
 export const useWatchlistStore = defineStore("Watchlist", {
   state: () => ({
     watchlistData: [],
@@ -202,29 +199,6 @@ export const useWatchlistStore = defineStore("Watchlist", {
         console.error(err);
       }
     },
-    async getSelectedStockInfo(ticker) {
-      this.selectedStock = ticker;
-
-      this.getCompanyDetails(ticker.ticker);
-    },
-    async getCompanyDetails(ticker) {
-      const url = `https://financialmodelingprep.com/api/v3/profile/${ticker}?apikey=${apiKeyFMP}`;
-
-      await fetch(url)
-        .then((res) => {
-          if (!res.ok) {
-            // error
-          }
-
-          return res.json();
-        })
-        .then((data) => {
-          this.selectedCompanyInfo = data[0];
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
 
     async getSectorPerformance() {
       const apiKeyFinage = "API_KEYb1WHDPIT7YKOE2MPKOXNEGYIIPHQ8CHY";
@@ -239,7 +213,7 @@ export const useWatchlistStore = defineStore("Watchlist", {
           return res.json();
         })
         .then((data) => {
-          // convert the string into floats
+          // convert the string into float
           for (let i = 0; i < data.length; i++) {
             let stringToNumber = parseFloat(data[i].change_percentage);
             data[i].change_percentage = stringToNumber;

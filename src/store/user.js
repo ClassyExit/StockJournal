@@ -139,11 +139,17 @@ export const useUserStore = defineStore("User", {
           // User signed in
           this.user = auth.currentUser;
           this.userId = auth.currentUser.uid;
+
+          if (
+            router.currentRoute.value.fullPath ===
+            ("/home" || "/login" || "/register")
+          ) {
+            router.push({ name: "Dashboard" });
+          }
         } else {
           // User is signed out
+          // Reset all stores/ local store data
           resetStore();
-
-          router.push({ name: "Home" });
         }
       });
     },
@@ -170,7 +176,6 @@ export const useUserStore = defineStore("User", {
               this.resetErrors = `Something went wrong - Try again`;
               break;
           }
-          console.log(`Error code: ${error.code}`);
         });
     },
 
@@ -283,11 +288,13 @@ export const useUserStore = defineStore("User", {
       const publicKey = "Yj_tvHNw9M8KafTN_";
       const serviceID = "service_4pt8037";
       const templateID = "template_7k7a6tp";
+      const emailID = Math.floor(100000 + Math.random() * 900000);
 
       let emailParams = {
         email: ticketForm.email,
         message: ticketForm.message,
         subject: ticketForm.subject,
+        id: emailID,
       };
 
       //check if valid email
@@ -296,20 +303,25 @@ export const useUserStore = defineStore("User", {
         this.emailStatusMsg = "Please enter a valid email";
         return;
       }
-
       // send email
-      await emailjs
-        .send(serviceID, templateID, emailParams, publicKey)
-        .then((result) => {
+      await emailjs.send(serviceID, templateID, emailParams, publicKey).then(
+        (result) => {
           this.emailStatus = result.status;
-          this.emailStatusMsg =
-            "We've recieved your inquiry. We'll get back to you as soon as possible.";
-        })
-        .catch((err) => {
+          this.emailStatusMsg = `We've recieved your inquiry. We'll get back to you as soon as possible. Thank you.`;
+
+          notificationStore().addNotification({
+            type: "success",
+            message: `We appreicate your wait as we process your ticket. If you need to follow up regarding the ticket, please include your ticket ID: ${emailParams.id}.`,
+            title: "Support Ticket",
+          });
+
+          return;
+        },
+        (error) => {
           this.emailStatus = 400;
-          this.emailStatusMsg =
-            "Uh-oh, we're having issues processing tickets right now. Please try again later.";
-        });
+          this.emailStatusMsg = error.text;
+        }
+      );
     },
   },
 });

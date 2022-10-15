@@ -17,13 +17,13 @@
 
           <div v-else class="flex">
             <Icon
-              icon="carbon:notification-filled"
+              icon="clarity:notification-line"
               color="white"
               width="25"
               height="25"
             />
             <span
-              class="absolute text-white bg-red-600 top-0 right-2 bg-white rounded-full p-1"
+              class="absolute text-white bg-red-700 top-0 right-2 bg-white rounded-full p-1"
               >{{ notifications.length }}</span
             >
           </div>

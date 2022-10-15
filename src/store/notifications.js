@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { nanoid } from "nanoid";
 
 export const useNotificationStore = defineStore("Notification", {
   state: () => ({

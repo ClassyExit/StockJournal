@@ -4,7 +4,6 @@
       ref="modal-backdrop"
       class="fixed z-10 inset-0 overflow-y-auto backdrop-blur-md"
       v-show="showEmailModal"
-      @click="hideEmailModal"
     >
       <div class="flex items-center justify-center min-h-screen text-center">
         <div
@@ -13,7 +12,6 @@
           ref="modal"
           aria-modal="true"
           aria-labelledby="modal-headline"
-          @click.stop
         >
           <div
             class="modal-header flex p-2 justify-between border-b-2 border-gray-600"
@@ -43,7 +41,7 @@
           <!-- body -->
           <div class="modal-body">
             <section>
-              <form class="w-full min-w-lg">
+              <form class="w-full min-w-lg" @submit="prevent.default">
                 <div class="flex flex-col md:flex-row md:justify-around w-full">
                   <div class="w-full px-3 md:px-0 md:w-2/5">
                     <label
@@ -57,7 +55,7 @@
                       type="email"
                       v-model="ticketForm.email"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     />
@@ -73,7 +71,7 @@
                       id="subject"
                       v-model="ticketForm.subject"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     >
@@ -109,7 +107,7 @@
                       id="message"
                       v-model="ticketForm.message"
                       :class="{
-                        'border-2 border-danger': emailStatus == 400,
+                        'border-2 border-danger': emailStatus >= 400,
                         'border-2 border-success': emailStatus == 200,
                       }"
                     ></textarea>

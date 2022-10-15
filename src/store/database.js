@@ -277,26 +277,5 @@ export const useDatabaseStore = defineStore("db", {
         console.error("Failed updated watchlist");
       }
     },
-
-    async updateNotifications(userId, notifications) {
-      if (!notifications.length) return;
-
-      try {
-        for (let i = 0; i < notifications.length; i++) {
-          const notificationRef = doc(
-            db,
-            `${userId}`,
-            "Notification",
-            "Notifications",
-            `${notifications[i].alertId}`
-          );
-          await setDoc(notificationRef, notifications[i]);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    },
-
-    async getUserNotification(userId) {},
   },
 });

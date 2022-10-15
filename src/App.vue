@@ -4,7 +4,6 @@
 
 <script>
 import { useUserStore } from "@/store/user.js";
-import { onBeforeUnmount } from "vue";
 
 import "@/assets/tailwind.css";
 

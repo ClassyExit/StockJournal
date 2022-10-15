@@ -180,7 +180,6 @@ import TradeModal from "@/components/Modals/TradeModal.vue";
 
 import Alert from "@/components/Notifications/Alert.vue";
 
-import { useNotificationStore } from "@/store/notifications";
 export default {
   components: {
     BaseTableRows,
